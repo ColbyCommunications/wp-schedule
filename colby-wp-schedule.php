@@ -32,3 +32,24 @@
 
  	register_post_type( 'schedule', $args );
  } );
+
+// Display IDs for schedule custom posts
+add_filter( 'manage_schedule_posts_columns', 'revealid_add_id_column', 5 );
+add_action( 'manage_schedule_posts_custom_column', 'revealid_id_column_content', 5, 2 );
+
+// Make IDs display in the second column, after the post's title
+function revealid_add_id_column( $columns ) {
+  $checkbox = array_slice( $columns , 0, 2 );
+  $columns = array_slice( $columns , 1 );
+
+  $id['revealid_id'] = 'ID';
+
+  $columns = array_merge( $checkbox, $id, $columns );
+  return $columns;
+}
+
+function revealid_id_column_content( $column, $id ) {
+ if( 'revealid_id' == $column ) {
+   echo $id;
+ }
+}
