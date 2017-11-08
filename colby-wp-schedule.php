@@ -54,3 +54,36 @@ function revealid_id_column_content( $column, $id ) {
    echo $id;
  }
 }
+
+add_shortcode( 'schedule', 'handle_schedule_shortcode' );
+
+function handle_schedule_shortcode( $atts ) {
+  $schedule_id = $atts['id'];
+
+  // check if the repeater field has rows of data
+  if ( have_rows('event', $schedule_id) ) {
+    echo '<table>';
+    // loop through the rows of data
+    while ( have_rows('event', $schedule_id) ) {
+      echo '<tr style="border: 1px solid black;">';
+
+      the_row();
+
+      echo '<td style="border: 1px solid black;">';
+      the_sub_field('start_time');
+      echo ' - ';
+      the_sub_field('end_time');
+      echo '</td>';
+
+      echo '<td style="border: 1px solid black;">';
+      the_sub_field('event_details');
+      echo '</td>';
+
+      echo '</tr>';
+    }
+
+    echo '</table>';
+  } else {
+    // no rows found
+  }
+}
