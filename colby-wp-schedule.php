@@ -87,3 +87,25 @@ function handle_schedule_shortcode( $atts ) {
     // no rows found
   }
 }
+
+// Remove some buttons from the HTML (text) editor
+function remove_quicktags( $qtInit ) {
+    $qtInit['buttons'] = 'strong,em,link,img,ul,ol,li';
+    return $qtInit;
+}
+add_filter('quicktags_settings', 'remove_quicktags');
+
+// Add other buttons to the HTML (text) editor
+function add_quicktags() {
+    if (wp_script_is('quicktags')){
+?>
+    <script type="text/javascript">
+    QTags.addButton( 'h2', 'h2', '<h2>', '</h2>', '', 'h2 heading tag', 1 );
+    QTags.addButton( 'h3', 'h3', '<h3>', '</h3>', '', 'h3 heading tag', 2 );
+    QTags.addButton( 'h4', 'h4', '<h4>', '</h4>', '', 'h4 heading tag', 3 );
+    QTags.addButton( 'paragraph', 'p', '<p>', '</p>', 'p', 'Paragraph tag', 1 );
+    </script>
+<?php
+    }
+}
+add_action( 'admin_print_footer_scripts', 'add_quicktags' );
