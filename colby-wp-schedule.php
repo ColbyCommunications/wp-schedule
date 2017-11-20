@@ -56,7 +56,6 @@ function revealid_id_column_content( $column, $id ) {
 }
 
 add_shortcode( 'schedule', 'handle_schedule_shortcode' );
-
 function handle_schedule_shortcode( $atts ) {
   $schedule_id = $atts['id'];
 
@@ -89,13 +88,14 @@ function handle_schedule_shortcode( $atts ) {
 }
 
 // Remove some buttons from the HTML (text) editor
+add_filter('quicktags_settings', 'remove_quicktags');
 function remove_quicktags( $qtInit ) {
     $qtInit['buttons'] = 'strong,em,link,img,ul,ol,li';
     return $qtInit;
 }
-add_filter('quicktags_settings', 'remove_quicktags');
 
 // Add other buttons to the HTML (text) editor
+add_action( 'admin_print_footer_scripts', 'add_quicktags' );
 function add_quicktags() {
     if (wp_script_is('quicktags')){
 ?>
@@ -108,4 +108,14 @@ function add_quicktags() {
 <?php
     }
 }
-add_action( 'admin_print_footer_scripts', 'add_quicktags' );
+
+// Reduce height of Event Details editor
+add_action('admin_head', 'colby_schedule_custom_wysiwyg');
+function colby_schedule_custom_wysiwyg() {
+  echo '<style>
+    .wp-editor-container textarea.wp-editor-area {
+      height: 150px !important;
+      resize: none;
+    }
+  </style>';
+}
