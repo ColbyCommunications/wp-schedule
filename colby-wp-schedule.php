@@ -61,20 +61,24 @@ function handle_schedule_shortcode( $atts ) {
 
   // check if the repeater field has rows of data
   if ( have_rows('event', $schedule_id) ) {
-    echo '<table>';
+    $table_styles = get_field( 'table_styles', $schedule_id );
+    $tr_styles = get_field( 'row_styles', $schedule_id );
+    $td_styles = get_field( 'column_styles', $schedule_id );
+
+    echo "<table style=\"${table_styles}\">";
     // loop through the rows of data
     while ( have_rows('event', $schedule_id) ) {
-      echo '<tr style="border: 1px solid black;">';
+      echo "<tr style=\"${tr_styles}\">";
 
       the_row();
 
-      echo '<td style="border: 1px solid black;">';
+      echo "<td style=\"${td_styles}\">";
       the_sub_field('start_time');
       echo ' - ';
       the_sub_field('end_time');
       echo '</td>';
 
-      echo '<td style="border: 1px solid black;">';
+      echo "<td style=\"${td_styles}\">";
       the_sub_field('event_details');
       echo '</td>';
 
