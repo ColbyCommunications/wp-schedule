@@ -11,6 +11,15 @@
  * @package colby-wp-schedule
  */
 
+register_activation_hook( __FILE__, 'activate' );
+function activate() {
+		// Check if ACF is activated and deactivate and die if it is not.
+    if ( !class_exists('acf') ) {
+			deactivate_plugins( plugin_basename( __FILE__ ) );
+			wp_die( 'This plugin requires the Advanced Custom Fields plugin. Please activate it first.' );
+		}
+}
+
 // Add schedule custom post type
 add_action( 'init', function() {
  $labels = array(
