@@ -7,4 +7,4 @@ A WordPress plugin for creating table-based schedules.
 
 ### Plugin Usage:
 1. Create a new *Schedule* post. Take note of the schedule's ID which is in the second column on the list of all schedule posts (e.g your-site.com/wp-admin/edit.php?post_type=schedule).
-2. Add the following shortcode to a page or post: `[schedule id="<schedule's-ID-number>"]`
+2. Add the following shortcode to a page or post: `[schedule id="<schedule's-ID>"]`
