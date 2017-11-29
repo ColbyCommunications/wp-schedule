@@ -36,7 +36,7 @@ add_action( 'init', function() {
 
 	$args = array(
 		'labels'             => $labels,
-		'public'             => true,
+    'show_ui'            => true,
 		'supports'           => array( 'title' )
 	);
 
