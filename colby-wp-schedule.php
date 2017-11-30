@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Colby Schedule
+ * Plugin Name: Colby Schedules
  *
  * Description: Schedule table creator for Colby College.
  * Version: 0.0.1
@@ -11,13 +11,30 @@
  * @package colby-wp-schedule
  */
 
-register_activation_hook( __FILE__, 'activate' );
-function activate() {
-		// Check if ACF is activated and deactivate and die if it is not.
-    if ( !class_exists('acf') ) {
-			deactivate_plugins( plugin_basename( __FILE__ ) );
-			wp_die( 'This plugin requires the Advanced Custom Fields plugin. Please activate it first.' );
-		}
+add_action( 'admin_init', 'handle_missing_acf_plugin' );
+function handle_missing_acf_plugin() {
+  // If ACF is not activated...
+  if ( !class_exists('acf') ) {
+    // Deactivate Colby Schedules
+    deactivate_plugins( plugin_basename( __FILE__ ) );
+    // Display an admin notice
+    add_action( 'admin_notices', 'display_missing_acf_admin_notice');
+    // Remove "Plugin activated." admin notice
+    if ( isset( $_GET['activate'] ) ) {
+      unset( $_GET['activate'] );
+    }
+  }
+}
+
+// Display an admin notice advising the user to activate ACF
+function display_missing_acf_admin_notice() {
+  $plugin_name = get_plugin_data( __FILE__ )['Name'];
+  ?>
+  <div class="notice notice-warning">
+      <p><?php echo $plugin_name ?> requires the Advanced Custom Fields plugin.
+        Please activate it first before activating <?php echo $plugin_name ?>.</p>
+  </div>
+  <?php
 }
 
 // Add schedule custom post type
