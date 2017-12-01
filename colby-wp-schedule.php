@@ -30,7 +30,7 @@ function handle_missing_acf_plugin() {
 function display_missing_acf_admin_notice() {
   $plugin_name = get_plugin_data( __FILE__ )['Name'];
   ?>
-  <div class="notice notice-warning">
+  <div class="notice notice-error">
       <p><?php echo $plugin_name ?> requires the Advanced Custom Fields plugin.
         Please activate it first before activating <?php echo $plugin_name ?>.</p>
   </div>
