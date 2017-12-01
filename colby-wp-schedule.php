@@ -91,6 +91,8 @@ function handle_schedule_shortcode( $atts ) {
     $tr_styles = get_field( 'row_styles', $schedule_id );
     $td_styles = get_field( 'column_styles', $schedule_id );
 
+    ob_start();
+
     echo "<table style=\"${table_styles}\">";
     // loop through the rows of data
     while ( have_rows('event', $schedule_id) ) {
@@ -112,6 +114,8 @@ function handle_schedule_shortcode( $atts ) {
     }
 
     echo '</table>';
+
+    return ob_get_clean();
   } else {
     // no rows found
   }
