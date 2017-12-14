@@ -1,0 +1,21 @@
+{
+  "name": "colbycollege/colby-wp-schedule",
+  "description": "A WordPress plugin for creating table-based schedules.",
+  "type": "wordpress-plugin",
+  "authors": [
+    {
+      "name": "Iavor Dekov",
+      "email": "ivdekov@colby.edu"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "gambitph/titan-framework": "^1.9"
+  },
+  "autoload": {
+    "psr-4": {
+      "Colby\\Schedules\\": "wp-schedule/"
+    },
+    "files": ["vendor/gambitph/titan-framework/titan-framework-embedder.php"]
+  }
+}
