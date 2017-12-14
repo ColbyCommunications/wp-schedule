@@ -14,7 +14,7 @@ class EventMeta {
 		$this->titan = \TitanFramework::getInstance( 'colby-wp-schedule' );
 
 		add_action( 'tf_create_options', [ $this, 'register_details_meta_box' ] );
-		add_action( 'tf_create_options', [ $this, 'register_details_meta_fields' ] );
+		add_action( 'tf_create_options', [ $this, 'register_details_location_field' ] );
 	}
 
 	/**
@@ -24,17 +24,16 @@ class EventMeta {
 		$this->details_box = $this->titan->createMetaBox(
 			[
 				'name' => 'Event Details',
-				'post_type' => 'schedule',
+				'post_type' => 'schedule', // this will change when new post type is registered
 
 			]
 		);
 	}
 
 	/**
-	 * Adds meta fields to the details box.
+	 * Adds the location field to the details box.
 	 */
-	public function register_details_meta_fields() {
-		// Create the options fields.
+	public function register_details_location_field() {
 		$this->details_box->createOption(
 			[
 				'name' => 'Location',
