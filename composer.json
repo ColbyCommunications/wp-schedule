@@ -10,7 +10,7 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    "gambitph/titan-framework": "^1.9"
+    "htmlburger/carbon-fields": "^2.1"
   },
   "autoload": {
     "psr-4": {
