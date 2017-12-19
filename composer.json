@@ -15,7 +15,6 @@
   "autoload": {
     "psr-4": {
       "Colby\\Schedules\\": "wp-schedule/"
-    },
-    "files": ["vendor/gambitph/titan-framework/titan-framework-embedder.php"]
+    }
   }
 }

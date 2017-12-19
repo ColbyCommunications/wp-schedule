@@ -13,10 +13,13 @@ use Carbon_Fields\Field;
  */
 class EventMeta {
 	public function __construct() {
-		\Carbon_Fields\Carbon_Fields::boot();
-
+		add_action( 'after_setup_theme', [ $this, 'boot_carbon_fields'] );
 		add_action( 'carbon_fields_register_fields', [ $this, 'register_details_meta_box' ] );
 		add_action( 'carbon_fields_register_fields', [ $this, 'register_fields' ] );
+	}
+
+	public function boot_carbon_fields() {
+		\Carbon_Fields\Carbon_Fields::boot();
 	}
 
 	/**
