@@ -27,7 +27,7 @@ class EventMeta {
 	 */
 	public function register_details_meta_box() {
 		$this->details_box = Container::make( 'post_meta', 'Event Details' )
-			->where( 'post_type', '=', 'schedule' ); // this will change when new post type is registered
+			->where( 'post_type', '=', 'event' );
 	}
 
 	/**
