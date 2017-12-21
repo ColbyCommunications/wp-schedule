@@ -11,7 +11,11 @@
  * @package colby-wp-schedule
  */
 
-include 'vendor/autoload.php';
+/**
+ * Main Plugin File
+ */
+
+require 'vendor/autoload.php';
 
 new Colby\Schedules\EventMeta();
 new Colby\Schedules\SchedulePost();
