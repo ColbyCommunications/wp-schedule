@@ -44,10 +44,18 @@ class EventMeta {
 	public function register_fields() {
 		$this->details_box->add_fields(
 			[
-				Field::make( 'date', 'colby_schedule__date', 'Date' ),
-				Field::make( 'time', 'colby_schedule__start_time', 'Start Time' ),
-				Field::make( 'time', 'colby_schedule__end_time', 'End Time' ),
-				Field::make( 'text', 'colby_schedule__location', 'Location' ),
+				Field::make( 'date', 'colby_schedule__date', 'Date' )->set_visible_in_rest_api(
+					$visible = true
+				),
+				Field::make( 'time', 'colby_schedule__start_time', 'Start Time' )->set_visible_in_rest_api(
+					$visible = true
+				),
+				Field::make( 'time', 'colby_schedule__end_time', 'End Time' )->set_visible_in_rest_api(
+					$visible = true
+				),
+				Field::make( 'text', 'colby_schedule__location', 'Location' )->set_visible_in_rest_api(
+					$visible = true
+				),
 			]
 		);
 	}
