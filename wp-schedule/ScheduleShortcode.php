@@ -101,11 +101,14 @@ class ScheduleShortcode {
 			$permalink = get_the_permalink();
 			the_title( "<h2><a href=$permalink>", '</a></h2>' );
 			the_content();
+			echo 'Location: ' . get_post_meta( get_the_ID(), '_colby_schedule__location', true ) . '<br>';
+			echo 'Date: ' . get_post_meta( get_the_ID(), '_colby_schedule__date', true ) . '<br>';
+			echo 'Start Time: ' . get_post_meta( get_the_ID(), '_colby_schedule__start_time', true ) . '<br>';
+			echo 'End Time: ' . get_post_meta( get_the_ID(), '_colby_schedule__end_time', true ) . '<br>';
 		}
 		wp_reset_postdata();
 		return ob_get_clean();
 	}
-
 
 	/**
 	 * Merge user-provided attributes with default attributes.
