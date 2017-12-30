@@ -45,27 +45,47 @@ class ScheduleShortcode {
 	 */
 	private function get_events_query( $atts ) {
 		$query_params = [
-			'post_type'             => 'event',
-			'posts_per_page'    => 99,
-			'orderby'               => 'name',
-			'order'                     => 'ASC',
-			'tax_query'             => [
-				'relation' => 'AND',
-				[
-					'taxonomy'  => 'schedule_category',
-					'field'         => 'name',
-					'terms'         => [ "{$atts['name']}" ],
-				],
-				[
-					'taxonomy'  => 'event_tag',
-					'field'         => 'name',
-					'terms'         => explode( ',', $atts['tags'] ),
-				],
-			],
+			'post_type'      => 'event',
+			'posts_per_page' => 99,
+			'orderby'        => 'name',
+			'order'          => 'ASC',
 		];
 
-		// TODO: Add params for when $atts['include-past-events'] is set to true.
+		$query_params = $this->add_params_from_shortcode_atts( $query_params, $atts );
+
 		return new \WP_Query( $query_params );
+	}
+
+	/**
+	 * Create query parameters from shortcode attributes.
+	 *
+	 * @param array $query_params Query parameters.
+	 * @param array $atts Shortcode attributes.
+	 * @return array Parameters for the WP_Query.
+	 */
+	private function add_params_from_shortcode_atts( $query_params, $atts ) {
+		if ( isset( $atts['name'] ) || isset( $atts['tags'] ) ) {
+			$query_params['tax_query'] = [];
+		}
+
+		if ( isset( $atts['name'] ) ) {
+			$query_params['tax_query'][] = [
+				'taxonomy' => 'schedule_category',
+				'field'    => 'name',
+				'terms'    => [ "{$atts['name']}" ],
+			];
+		}
+
+		if ( isset( $atts['tags'] ) ) {
+			$query_params['tax_query'][] = [
+				'taxonomy' => 'event_tag',
+				'field'    => 'name',
+				'terms'    => explode( ',', $atts['tags'] ),
+			];
+		}
+
+		// TODO: Add params for when $atts['include-past-events'] is set to true.
+		return $query_params;
 	}
 
 	/**
@@ -94,8 +114,8 @@ class ScheduleShortcode {
 	 */
 	private function handle_shortcode_attributes( $atts ) {
 		$default_atts = [
-			'name'                              => null,
-			'tags'                              => null,
+			'name'                => null,
+			'tags'                => null,
 			'include-past-events' => false,
 		];
 		return shortcode_atts( $default_atts, $atts );
