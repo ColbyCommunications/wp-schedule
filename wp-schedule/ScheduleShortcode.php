@@ -47,8 +47,21 @@ class ScheduleShortcode {
 		$query_params = [
 			'post_type'      => 'event',
 			'posts_per_page' => 99,
-			'orderby'        => 'name',
-			'order'          => 'ASC',
+			'meta_query'     => [
+				'relation'     => 'AND',
+				'schedule_date' => [
+					'key'     => '_colby_schedule__date',
+					'compare' => 'EXISTS',
+				],
+				'schedule_time' => [
+					'key'     => '_colby_schedule__start_time',
+					'compare' => 'EXISTS',
+				],
+			],
+			'orderby' => [
+				'schedule_date' => 'ASC',
+				'schedule_time' => 'ASC',
+			],
 		];
 
 		$query_params = $this->add_params_from_shortcode_atts( $query_params, $atts );
