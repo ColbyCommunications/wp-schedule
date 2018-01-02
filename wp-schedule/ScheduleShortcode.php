@@ -98,7 +98,7 @@ class ScheduleShortcode {
 			];
 		}
 
-		// Do not show events that have passed.
+		// Show events that have passed.
 		if ( $atts['include-past-events'] ) {
 			unset( $query_params['meta_query']['schedule_date']['value'] );
 			$query_params['meta_query']['schedule_date']['compare'] = 'EXISTS';
