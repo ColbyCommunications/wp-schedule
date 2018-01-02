@@ -1,5 +1,5 @@
 {
-  "name": "colbycollege/colby-wp-schedule",
+  "name": "colbycomms/colby-wp-schedule",
   "description": "A WordPress plugin for creating table-based schedules.",
   "type": "wordpress-plugin",
   "scripts": {
