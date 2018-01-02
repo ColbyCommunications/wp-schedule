@@ -97,7 +97,12 @@ class ScheduleShortcode {
 			];
 		}
 
-		// TODO: Add params for when $atts['include-past-events'] is set to true.
+		// Do not show events that have passed.
+		if ( $atts['include-past-events'] ) {
+			$query_params['meta_query']['schedule_date']['value'] = date( 'Y-m-d' );
+			$query_params['meta_query']['schedule_date']['compare'] = '>';
+
+		}
 		return $query_params;
 	}
 
