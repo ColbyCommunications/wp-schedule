@@ -5,7 +5,7 @@
  * @package colby-wp-schedule
  */
 
-namespace Colby\Schedules;
+namespace ColbyComms\Schedules;
 
 /**
  * Setup 'schedule' custom post type.

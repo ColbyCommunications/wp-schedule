@@ -15,9 +15,6 @@
  * Main Plugin File
  */
 
-require 'vendor/autoload.php';
-
-new Colby\Schedules\EventMeta();
-new Colby\Schedules\SchedulePost();
-new Colby\Schedules\EventPost();
-new Colby\Schedules\ScheduleShortcode();
+if ( file_exists( 'vendor/autoload.php' ) ) {
+	require 'vendor/autoload.php';
+}

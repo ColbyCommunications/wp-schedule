@@ -5,7 +5,7 @@
  * @package colby-wp-schedule
  */
 
-namespace Colby\Schedules;
+namespace ColbyComms\Schedules;
 
 use Carbon_Fields\Container;
 use Carbon_Fields\Field;

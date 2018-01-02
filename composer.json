@@ -3,7 +3,7 @@
   "description": "A WordPress plugin for creating table-based schedules.",
   "type": "wordpress-plugin",
   "scripts": {
-    "lint": "./vendor/bin/phpcs --extensions=php"
+    "lint": "./vendor/bin/phpcs --extensions=php -s"
   },
   "authors": [
     {
@@ -21,7 +21,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Colby\\Schedules\\": "wp-schedule/"
-    }
+      "ColbyComms\\Schedules\\": "wp-schedule/"
+    },
+    "files": ["wp-schedule/index.php"]
   }
 }
