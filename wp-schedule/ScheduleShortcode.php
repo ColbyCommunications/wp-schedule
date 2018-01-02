@@ -51,7 +51,8 @@ class ScheduleShortcode {
 				'relation'     => 'AND',
 				'schedule_date' => [
 					'key'     => '_colby_schedule__date',
-					'compare' => 'EXISTS',
+					'value'   => date( 'Y-m-d' ),
+					'compare' => '>',
 				],
 				'schedule_time' => [
 					'key'     => '_colby_schedule__start_time',
@@ -97,10 +98,10 @@ class ScheduleShortcode {
 			];
 		}
 
-		// Do not show events that have passed.
+		// Show events that have passed.
 		if ( $atts['include-past-events'] ) {
-			$query_params['meta_query']['schedule_date']['value'] = date( 'Y-m-d' );
-			$query_params['meta_query']['schedule_date']['compare'] = '>';
+			unset( $query_params['meta_query']['schedule_date']['value'] );
+			$query_params['meta_query']['schedule_date']['compare'] = 'EXISTS';
 
 		}
 		return $query_params;
