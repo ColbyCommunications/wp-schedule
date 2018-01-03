@@ -44,6 +44,7 @@ class EventPost extends CustomPostType {
 				'add_new_item'  => "Add New {$taxonomy}",
 				'search_items'  => "Search {$taxonomy}s",
 			],
+			'show_admin_column' => true
 		];
 	}
 
