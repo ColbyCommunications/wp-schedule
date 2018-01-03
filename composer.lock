@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "228ffc1eb7e1c21815ccf964be5fed51",
+    "content-hash": "da1750da9ee7d9f043ef24bf06800c4b",
     "packages": [
         {
             "name": "htmlburger/carbon-fields",
@@ -137,12 +137,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "d7c00c3000ac0ce79c96fcbfef86b49a71158cd1"
+                "reference": "f65ea7e14ac32f397061ad9fe7ff256ece5c60e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/d7c00c3000ac0ce79c96fcbfef86b49a71158cd1",
-                "reference": "d7c00c3000ac0ce79c96fcbfef86b49a71158cd1",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/f65ea7e14ac32f397061ad9fe7ff256ece5c60e8",
+                "reference": "f65ea7e14ac32f397061ad9fe7ff256ece5c60e8",
                 "shasum": ""
             },
             "require": {
@@ -180,7 +180,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2017-12-19T21:44:46+00:00"
+            "time": "2018-01-03T04:08:53+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",

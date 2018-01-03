@@ -9,6 +9,7 @@ namespace ColbyComms\Schedules;
 
 use Carbon_Fields\Container;
 use Carbon_Fields\Field;
+use Carbon_Fields\Carbon_Fields;
 
 /**
  * Add hooks to register meta fields for events posts.
@@ -18,7 +19,7 @@ class EventMeta {
 	 * Constructor function; add all hooks.
 	 */
 	public function __construct() {
-		\add_action( 'after_setup_theme', [ $this, 'boot_carbon_fields' ] );
+		add_action( 'after_setup_theme', [ $this, 'boot_carbon_fields' ] );
 		add_action( 'carbon_fields_register_fields', [ $this, 'register_details_meta_box' ] );
 		add_action( 'carbon_fields_register_fields', [ $this, 'register_fields' ] );
 	}
@@ -27,7 +28,7 @@ class EventMeta {
 	 * Boots the Carbon Fields library.
 	 */
 	public function boot_carbon_fields() {
-		\Carbon_Fields\Carbon_Fields::boot();
+		Carbon_Fields::boot();
 	}
 
 	/**

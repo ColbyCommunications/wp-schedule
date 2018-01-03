@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ruleset>
-	<file>.</file>
+	<file>wp-schedule</file>
 	<exclude-pattern>vendor</exclude-pattern>
 	<exclude-pattern>node_modules</exclude-pattern>
 	<config name="installed_paths" value="vendor/wp-coding-standards/wpcs" />

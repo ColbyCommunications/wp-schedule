@@ -7,6 +7,10 @@
 
 namespace ColbyComms\Schedules;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	return;
+}
+
 new EventMeta();
 new SchedulePost();
 new EventPost();
