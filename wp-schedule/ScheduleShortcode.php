@@ -18,6 +18,7 @@ class ScheduleShortcode {
 		if ( ! shortcode_exists( 'schedule' ) ) {
 			add_shortcode( 'schedule', [ $this, 'render_schedule' ] );
 		}
+		add_filter( 'query_vars', [ $this, 'add_url_query_vars' ] );
 	}
 
 	/**
@@ -35,6 +36,17 @@ class ScheduleShortcode {
 		}
 		$items = $this->get_items_html( $events_query );
 		return $items;
+	}
+
+	/**
+	 * Add 'event-tag' to query vars.
+	 *
+	 * @param array $qvars Query variables.
+	 * @return array Updated query variables.
+	 */
+	public function add_url_query_vars( $qvars ) {
+		$qvars[] = 'event-tag';
+		return $qvars;
 	}
 
 	/**
@@ -66,6 +78,7 @@ class ScheduleShortcode {
 		];
 
 		$query_params = $this->add_params_from_shortcode_atts( $query_params, $atts );
+		$query_params = $this->query_params_from_url_params( $query_params );
 
 		return new \WP_Query( $query_params );
 	}
@@ -104,6 +117,26 @@ class ScheduleShortcode {
 			$query_params['meta_query']['schedule_date']['compare'] = 'EXISTS';
 
 		}
+		return $query_params;
+	}
+
+	/**
+	 * Create query parameters from $_GET url parameters.
+	 *
+	 * @param array $query_params Query parameters.
+	 * @return array Parameters for the WP_Query.
+	 */
+	private function query_params_from_url_params( $query_params ) {
+		if ( ! isset( $query_params['tax_query'] ) ) {
+			$query_params['tax_query'] = [];
+		}
+
+		$query_params['tax_query'][] = [
+			'taxonomy' => 'event_tag',
+			'field'    => 'name',
+			'terms'    => get_query_var( 'event-tag' ),
+		];
+
 		return $query_params;
 	}
 
