@@ -15,6 +15,6 @@
  * Main Plugin File
  */
 
-if ( file_exists( 'vendor/autoload.php' ) ) {
+if ( file_exists( plugin_dir_path( __FILE__ ) . 'vendor/autoload.php' ) ) {
 	require 'vendor/autoload.php';
 }
