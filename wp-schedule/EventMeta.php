@@ -18,7 +18,7 @@ class EventMeta {
 	 * Constructor function; add all hooks.
 	 */
 	public function __construct() {
-		add_action( 'after_setup_theme', [ $this, 'boot_carbon_fields' ] );
+		\add_action( 'after_setup_theme', [ $this, 'boot_carbon_fields' ] );
 		add_action( 'carbon_fields_register_fields', [ $this, 'register_details_meta_box' ] );
 		add_action( 'carbon_fields_register_fields', [ $this, 'register_fields' ] );
 	}
