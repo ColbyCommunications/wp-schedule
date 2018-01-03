@@ -127,6 +127,10 @@ class ScheduleShortcode {
 	 * @return array Parameters for the WP_Query.
 	 */
 	private function query_params_from_url_params( $query_params ) {
+		if ( empty( $event_tag = get_query_var( 'event-tag' ) ) ) {
+			return $query_params;
+		}
+
 		if ( ! isset( $query_params['tax_query'] ) ) {
 			$query_params['tax_query'] = [];
 		}
@@ -134,7 +138,7 @@ class ScheduleShortcode {
 		$query_params['tax_query'][] = [
 			'taxonomy' => 'event_tag',
 			'field'    => 'name',
-			'terms'    => get_query_var( 'event-tag' ),
+			'terms'    => $event_tag,
 		];
 
 		return $query_params;
