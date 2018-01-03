@@ -18,6 +18,7 @@ class ScheduleShortcode {
 		if ( ! shortcode_exists( 'schedule' ) ) {
 			add_shortcode( 'schedule', [ $this, 'render_schedule' ] );
 		}
+		add_filter( 'query_vars', [ $this, 'add_url_query_vars' ] );
 	}
 
 	/**
@@ -35,6 +36,17 @@ class ScheduleShortcode {
 		}
 		$items = $this->get_items_html( $events_query );
 		return $items;
+	}
+
+	/**
+	 * Add 'event-tag' to query vars.
+	 *
+	 * @param array $qvars Query variables.
+	 * @return array Updated query variables.
+	 */
+	public function add_url_query_vars( $qvars ) {
+		$qvars[] = 'event-tag';
+		return $qvars;
 	}
 
 	/**
