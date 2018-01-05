@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "htmlburger/carbon-fields",
-            "version": "2.2.0-beta.3",
+            "version": "2.2.0-beta.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/htmlburger/carbon-fields.git",
-                "reference": "12f7f5c17d152cb304e2610d9e330c89270b5641"
+                "reference": "246380b030a57f06def937c50317cd9175d52495"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/htmlburger/carbon-fields/zipball/12f7f5c17d152cb304e2610d9e330c89270b5641",
-                "reference": "12f7f5c17d152cb304e2610d9e330c89270b5641",
+                "url": "https://api.github.com/repos/htmlburger/carbon-fields/zipball/246380b030a57f06def937c50317cd9175d52495",
+                "reference": "246380b030a57f06def937c50317cd9175d52495",
                 "shasum": ""
             },
             "require": {
@@ -127,7 +127,7 @@
             ],
             "description": "WordPress developer-friendly custom fields for post types, taxonomy terms, users, comments, widgets, options and more.",
             "homepage": "http://carbonfields.net/",
-            "time": "2017-12-07T13:56:22+00:00"
+            "time": "2018-01-04T13:26:54+00:00"
         }
     ],
     "packages-dev": [
@@ -137,12 +137,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "f65ea7e14ac32f397061ad9fe7ff256ece5c60e8"
+                "reference": "8eee3c28936b255a0c1920d81bc7df5796ba592c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/f65ea7e14ac32f397061ad9fe7ff256ece5c60e8",
-                "reference": "f65ea7e14ac32f397061ad9fe7ff256ece5c60e8",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/8eee3c28936b255a0c1920d81bc7df5796ba592c",
+                "reference": "8eee3c28936b255a0c1920d81bc7df5796ba592c",
                 "shasum": ""
             },
             "require": {
@@ -180,7 +180,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2018-01-03T04:08:53+00:00"
+            "time": "2018-01-05T02:24:46+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",

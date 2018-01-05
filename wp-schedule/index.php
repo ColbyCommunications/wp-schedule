@@ -11,7 +11,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	return;
 }
 
-new EventMeta();
-new SchedulePost();
-new EventPost();
-new ScheduleShortcode();
+add_action( 'init', function() {
+	/**
+	 * Filters whether to run. Useful for theme contexts where users opt in to this feature.
+	 * @var bool True to run.
+	 */
+	if ( apply_filters( 'colby_wp_schedule_run', true ) === true ) {
+		new EventMeta();
+		new SchedulePost();
+		new EventPost();
+		new ScheduleShortcode();
+	}
+} );
