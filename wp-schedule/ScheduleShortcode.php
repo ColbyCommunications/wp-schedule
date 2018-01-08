@@ -7,6 +7,8 @@
 
 namespace ColbyComms\Schedules;
 
+use Carbon_Fields\Carbon_Fields;
+
 /**
  * Shortcode [schedule].
  */
@@ -40,13 +42,76 @@ class ScheduleShortcode {
 	 * @return string The shortcode output.
 	 */
 	public static function schedule_shortcode( $atts = [], $content = '' ) {
+		Carbon_Fields::boot();
+
 		$attributes = shortcode_atts( self::$default_atts, $atts );
 		$events_query = self::get_events_query( $attributes );
+
 		if ( ! $events_query->have_posts() ) {
 			return '';
 		}
-		$items = self::get_items_html( $events_query );
-		return $items;
+
+		$days = self::sort_posts_by_day( $events_query->posts );
+		$tags = self::get_all_post_tag_ids( $events_query->posts );
+
+		// Sort by date.
+		ksort( $days );
+
+		ob_start();
+
+		include 'templates/schedule.php';
+
+		return ob_get_clean();
+	}
+
+	/**
+	 * Sort an array of posts into an associative array sorted by date.
+	 *
+	 * @param array $posts A set of WP_Post objects.
+	 * @return array The resulting associative array.
+	 */
+	public static function sort_posts_by_day( $posts = [] ) {
+		return array_reduce(
+			$posts,
+			function( $output, $post ) {
+				$day = get_post_meta( $post->ID, '_colby_schedule__date', 1 );
+				$output[ $day ][] = $post;
+				return $output;
+			},
+			[]
+		);
+	}
+
+	/**
+	 * Gets an array of unique event_tag term objects from a group of posts.
+	 *
+	 * @param array $posts WP_Post objects.
+	 * @return array The tag ids.
+	 */
+	public static function get_all_post_tag_ids( $posts = [] ) {
+		return array_reduce(
+			$posts,
+			function( $output, $post ) {
+				static $term_ids_in_output;
+
+				if ( empty( $term_ids_in_output ) ) {
+					$term_ids_in_output = [];
+				}
+
+				$terms = get_the_terms( $post->ID, 'event_tag' ) ?: [];
+
+				foreach ( $terms as $term ) {
+					// The term has not been captured yet.
+					if ( ! in_array( $term->term_id, $term_ids_in_output, true ) ) {
+						$term_ids_in_output[] = $term->term_id;
+						$output[] = $term;
+					}
+				}
+
+				return $output;
+			},
+			[]
+		);
 	}
 
 	/**

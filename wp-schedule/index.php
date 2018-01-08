@@ -14,10 +14,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 add_action(
 	'init', function() {
 		/**
-	 * Filters whether to run. Useful for theme contexts where users opt in to this feature.
-	 *
-	 * @var bool True to run.
-	 */
+		 * Filters whether to run. Useful for theme contexts where users opt in to this feature.
+		 *
+		 * @var bool True to run.
+		 */
 		if ( apply_filters( 'colby_wp_schedule_run', true ) ) {
 			new EventMeta();
 			new SchedulePost();
@@ -40,3 +40,11 @@ if ( ! function_exists( 'pp' ) ) {
 		}
 	}
 }
+
+add_action( 'wp_enqueue_scripts', function() {
+	if ( strpos( __DIR__, 'wp-content/plugins' ) === false ) {
+		return;
+	}
+	// To-Do: Enqueue scripts if used as a plugin.
+	$url = plugin_dir_url( dirname( __DIR__ ) . '/colby-wp-schedule.php' );
+} );
