@@ -11,15 +11,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 	return;
 }
 
-add_action( 'init', function() {
-	/**
+add_action(
+	'init', function() {
+		/**
 	 * Filters whether to run. Useful for theme contexts where users opt in to this feature.
+	 *
 	 * @var bool True to run.
 	 */
-	if ( apply_filters( 'colby_wp_schedule_run', true ) ) {
-		new EventMeta();
-		new SchedulePost();
-		new EventPost();
-		new ScheduleShortcode();
+		if ( apply_filters( 'colby_wp_schedule_run', true ) ) {
+			new EventMeta();
+			new SchedulePost();
+			new EventPost();
+			new ScheduleShortcode();
+			new SchedulePickerShortcode();
+		}
+	}, 8
+);
+
+
+if ( ! function_exists( 'pp' ) ) {
+	function pp( $data, $die = false ) {
+		echo '<pre>';
+		print_r( $data );
+		echo '</pre>';
+		if ( $die ) {
+			wp_die();
+		}
 	}
-}, 8 );
+}

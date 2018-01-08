@@ -3,7 +3,9 @@
   "description": "A WordPress plugin for creating table-based schedules.",
   "type": "wordpress-plugin",
   "scripts": {
-    "lint": "./vendor/bin/phpcs --extensions=php"
+    "phpcbf": "phpcbf --extensions=php",
+    "lint": "phpcs --extensions=php",
+    "test": "phpunit"
   },
   "authors": [
     {
@@ -13,7 +15,8 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    "htmlburger/carbon-fields": "^2.1"
+    "htmlburger/carbon-fields": "^2.1",
+    "phpunit/phpunit": "^7.0@dev"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "*",
