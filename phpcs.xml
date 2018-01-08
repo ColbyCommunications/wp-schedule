@@ -12,5 +12,7 @@
 		<exclude name="WordPress.XSS.EscapeOutput.OutputNotEscaped" />
 		<exclude name="Generic.Formatting.MultipleStatementAlignment.NotSameWarning" />
 		<exclude name="WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned" />
+		<exclude name="WordPress.VIP.SlowDBQuery.slow_db_query_meta_query" />
+		<exclude name="WordPress.VIP.SlowDBQuery.slow_db_query_tax_query" />
 	</rule>
 </ruleset>
