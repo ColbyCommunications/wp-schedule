@@ -4,7 +4,7 @@
   "type": "wordpress-plugin",
   "scripts": {
     "phpcbf": "phpcbf --extensions=php",
-    "lint": "phpcs --extensions=php",
+    "lint": "phpcs --extensions=php -s",
     "test": "phpunit"
   },
   "authors": [

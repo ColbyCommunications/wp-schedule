@@ -127,7 +127,8 @@ class ScheduleShortcode {
 	 * @return array Parameters for the WP_Query.
 	 */
 	private function query_params_from_url_params( $query_params ) {
-		if ( empty( $event_tag = get_query_var( 'event-tag' ) ) ) {
+		$event_tag = get_query_var( 'event-tag' );
+		if ( empty( $event_tag ) ) {
 			return $query_params;
 		}
 
