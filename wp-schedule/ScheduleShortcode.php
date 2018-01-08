@@ -12,13 +12,24 @@ namespace ColbyComms\Schedules;
  */
 class ScheduleShortcode {
 	/**
+	 * Default shortcode attributes.
+	 *
+	 * @var array
+	 */
+	public static $default_atts = [
+		'name'                => null,
+		'tags'                => null,
+		'include-past-events' => false,
+	];
+
+	/**
 	 * Registers the shortcode callback.
 	 */
 	public function __construct() {
 		if ( ! shortcode_exists( 'schedule' ) ) {
-			add_shortcode( 'schedule', [ $this, 'render_schedule' ] );
+			add_shortcode( 'schedule', [ __CLASS__, 'schedule_shortcode' ] );
 		}
-		add_filter( 'query_vars', [ $this, 'add_url_query_vars' ] );
+		add_filter( 'query_vars', [ __CLASS__, 'add_url_query_vars' ] );
 	}
 
 	/**
@@ -28,13 +39,13 @@ class ScheduleShortcode {
 	 * @param string $content Shortcode content.
 	 * @return string The shortcode output.
 	 */
-	public function render_schedule( $atts = [], $content = '' ) {
-		$attributes = $this->handle_shortcode_attributes( $atts );
-		$events_query = $this->get_events_query( $attributes );
+	public static function schedule_shortcode( $atts = [], $content = '' ) {
+		$attributes = shortcode_atts( self::$default_atts, $atts );
+		$events_query = self::get_events_query( $attributes );
 		if ( ! $events_query->have_posts() ) {
 			return '';
 		}
-		$items = $this->get_items_html( $events_query );
+		$items = self::get_items_html( $events_query );
 		return $items;
 	}
 
@@ -44,7 +55,7 @@ class ScheduleShortcode {
 	 * @param array $qvars Query variables.
 	 * @return array Updated query variables.
 	 */
-	public function add_url_query_vars( $qvars ) {
+	public static function add_url_query_vars( $qvars ) {
 		$qvars[] = 'event-tag';
 		return $qvars;
 	}
@@ -55,7 +66,7 @@ class ScheduleShortcode {
 	 * @param array $atts Shortcode attributes.
 	 * @return WP_Query
 	 */
-	private function get_events_query( $atts ) {
+	public static function get_events_query( $atts ) {
 		$query_params = [
 			'post_type'      => 'event',
 			'posts_per_page' => 99,
@@ -77,8 +88,12 @@ class ScheduleShortcode {
 			],
 		];
 
-		$query_params = $this->add_params_from_shortcode_atts( $query_params, $atts );
-		$query_params = $this->query_params_from_url_params( $query_params );
+		$query_params = self::query_params_from_url_params( $query_params );
+
+		// URL params take precedent.
+		if ( empty( $query_params['tax_query'] ) ) {
+			$query_params = self::add_params_from_shortcode_atts( $query_params, $atts );
+		}
 
 		return new \WP_Query( $query_params );
 	}
@@ -90,7 +105,7 @@ class ScheduleShortcode {
 	 * @param array $atts Shortcode attributes.
 	 * @return array Parameters for the WP_Query.
 	 */
-	private function add_params_from_shortcode_atts( $query_params, $atts ) {
+	private static function add_params_from_shortcode_atts( $query_params, $atts ) {
 		if ( isset( $atts['name'] ) || isset( $atts['tags'] ) ) {
 			$query_params['tax_query'] = [];
 		}
@@ -112,7 +127,7 @@ class ScheduleShortcode {
 		}
 
 		// Show events that have passed.
-		if ( $atts['include-past-events'] ) {
+		if ( false !== $atts['include-past-events'] ) {
 			unset( $query_params['meta_query']['schedule_date']['value'] );
 			$query_params['meta_query']['schedule_date']['compare'] = 'EXISTS';
 
@@ -126,7 +141,7 @@ class ScheduleShortcode {
 	 * @param array $query_params Query parameters.
 	 * @return array Parameters for the WP_Query.
 	 */
-	private function query_params_from_url_params( $query_params ) {
+	private static function query_params_from_url_params( $query_params ) {
 		$event_tag = get_query_var( 'event-tag' );
 		if ( empty( $event_tag ) ) {
 			return $query_params;
@@ -138,7 +153,7 @@ class ScheduleShortcode {
 
 		$query_params['tax_query'][] = [
 			'taxonomy' => 'event_tag',
-			'field'    => 'name',
+			'field'    => 'slug',
 			'terms'    => $event_tag,
 		];
 
@@ -151,7 +166,7 @@ class ScheduleShortcode {
 	 * @param \WP_Query $events_query The wp_query to work with.
 	 * @return string The rendered list.
 	 */
-	private function get_items_html( \WP_Query $events_query ) {
+	private static function get_items_html( \WP_Query $events_query ) {
 		ob_start();
 		while ( $events_query->have_posts() ) {
 			$events_query->the_post();
@@ -167,17 +182,4 @@ class ScheduleShortcode {
 		return ob_get_clean();
 	}
 
-	/**
-	 * Merge user-provided attributes with default attributes.
-	 *
-	 * @param array $atts Shortcode attributes.
-	 */
-	private function handle_shortcode_attributes( $atts ) {
-		$default_atts = [
-			'name'                => null,
-			'tags'                => null,
-			'include-past-events' => false,
-		];
-		return shortcode_atts( $default_atts, $atts );
-	}
 }
