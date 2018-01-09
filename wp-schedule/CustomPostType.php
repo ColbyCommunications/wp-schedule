@@ -57,7 +57,7 @@ abstract class CustomPostType {
 		return [
 			'labels'       => $labels,
 			'show_ui'      => true,
-			'supports'     => [ 'title', 'editor' ],
+			'supports'     => [ 'title', 'editor', 'thumbnail' ],
 			'show_in_rest' => true,
 		];
 	}

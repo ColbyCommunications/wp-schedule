@@ -10,15 +10,15 @@ if ( empty( $days || ! is_array( $days ) ) || ! is_array( $tags ) ) {
 }
 ?>
 <form class="schedule__tag-form">
-	<label>
+	<label class="schedule__all-events-checkbox">
 		<input
 			type="checkbox"
 			name="all-event-types"
 			checked>
-		Show all event types
+		All events
 	</label>
-<?php foreach ( $tags as $tag ) : ?>
 	<ul class="schedule__tag-list">
+	<?php foreach ( $tags as $tag ) : ?>
 		<li>
 			<label>
 				<input
@@ -28,8 +28,8 @@ if ( empty( $days || ! is_array( $days ) ) || ! is_array( $tags ) ) {
 				<?php echo $tag->name; ?>
 			</label>
 		</li>
+	<?php endforeach; ?>
 	</ul>
-<?php endforeach; ?>
 </form>
 <div class="schedule">
 	<?php

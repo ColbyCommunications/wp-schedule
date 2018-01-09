@@ -69,81 +69,10 @@ require = (function (modules, cache, entry) {
 
   // Override the current require with this new one
   return newRequire;
-})({4:[function(require,module,exports) {
-var bundleURL = null;
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
-  }
-
-  return bundleURL;
-}
-
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
-  try {
-    throw new Error;
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp):\/\/[^)\n]+/g);
-    if (matches) {
-      return getBaseURL(matches[0]);
-    }
-  }
-
-  return '/';
-}
-
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp):\/\/.+)\/[^/]+$/, '$1') + '/';
-}
-
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-
-},{}],3:[function(require,module,exports) {
-var bundle = require('./bundle-url');
-
-function updateLink(link) {
-  var newLink = link.cloneNode();
-  newLink.onload = function () {
-    link.remove();
-  };
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
-}
-
-var cssTimeout = null;
-function reloadCSS() {
-  if (cssTimeout) {
-    return;
-  }
-
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
-      }
-    }
-
-    cssTimeout = null;
-  }, 50);
-}
-
-module.exports = reloadCSS;
-
-},{"./bundle-url":4}],2:[function(require,module,exports) {
-
-        var reloadCSS = require('_css_loader');
-        module.hot.dispose(reloadCSS);
-        module.hot.accept(reloadCSS);
-      
-},{"_css_loader":3}],1:[function(require,module,exports) {
+})({1:[function(require,module,exports) {
 "use strict";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-require("../css/colby-wp-schedule.css");
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -152,7 +81,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var EventPicker = function () {
   function EventPicker(_ref) {
     var checkboxes = _ref.checkboxes,
-        events = _ref.events;
+        events = _ref.events,
+        resetBox = _ref.resetBox;
 
     _classCallCheck(this, EventPicker);
 
@@ -162,6 +92,7 @@ var EventPicker = function () {
 
     this.checkboxes = checkboxes;
     this.events = events;
+    this.resetBox = resetBox;
 
     this.activeTags = [];
   }
@@ -175,11 +106,26 @@ var EventPicker = function () {
     key: "run",
     value: function run() {
       [].concat(_toConsumableArray(this.checkboxes)).forEach(this.addCheckboxListener);
+      this.addResetBoxListener();
     }
   }, {
     key: "addCheckboxListener",
     value: function addCheckboxListener(checkbox) {
       checkbox.addEventListener('change', this.handleCheckBoxChange);
+    }
+  }, {
+    key: "addResetBoxListener",
+    value: function addResetBoxListener() {
+      var _this = this;
+
+      this.resetBox.addEventListener('change', function (event) {
+        _this.resetBox.checked = true;
+        _this.activeTags = [];
+        _this.checkboxes.forEach(function (checkbox) {
+          checkbox.checked = false;
+        });
+        _this.filterEvents();
+      });
     }
   }, {
     key: "handleCheckBoxChange",
@@ -190,6 +136,10 @@ var EventPicker = function () {
         this.activeTags = this.activeTags.filter(function (tag) {
           return tag !== event.target.value;
         });
+      }
+
+      if (this.activeTags.length) {
+        this.resetBox.checked = false;
       }
 
       this.filterEvents();
@@ -230,14 +180,15 @@ var EventPicker = function () {
 (function () {
   var eventPicker = new EventPicker({
     checkboxes: document.querySelectorAll('.schedule__tag-list [type="checkbox"]'),
-    events: document.querySelectorAll('.schedule [data-event]')
+    events: document.querySelectorAll('.schedule [data-event]'),
+    resetBox: document.querySelector('.schedule__tag-form [name="all-event-types"]')
   });
 
   if (eventPicker.shouldRun()) {
     eventPicker.run();
   }
 })();
-},{"../css/colby-wp-schedule.css":2}],0:[function(require,module,exports) {
+},{}],0:[function(require,module,exports) {
 var global = (1, eval)('this');
 var OldModule = module.bundle.Module;
 function Module() {
@@ -255,7 +206,7 @@ function Module() {
 module.bundle.Module = Module;
 
 if (!module.bundle.parent && typeof WebSocket !== 'undefined') {
-  var ws = new WebSocket('ws://' + window.location.hostname + ':51732/');
+  var ws = new WebSocket('ws://' + window.location.hostname + ':55813/');
   ws.onmessage = function(event) {
     var data = JSON.parse(event.data);
 

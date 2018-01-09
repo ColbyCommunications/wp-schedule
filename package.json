@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/js/colby-wp-schedule.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel",
     "push": "node node_modules/node-autodeploy-wp"
   },
   "repository": {

@@ -1,13 +1,12 @@
-import '../css/colby-wp-schedule.css';
-
 class EventPicker {
   handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
   addCheckboxListener = this.addCheckboxListener.bind(this);
   maybeToggleEvent = this.maybeToggleEvent.bind(this);
 
-  constructor({ checkboxes, events }) {
+  constructor({ checkboxes, events, resetBox }) {
     this.checkboxes = checkboxes;
     this.events = events;
+    this.resetBox = resetBox;
 
     this.activeTags = [];
   }
@@ -18,10 +17,22 @@ class EventPicker {
 
   run() {
     [...this.checkboxes].forEach(this.addCheckboxListener);
+    this.addResetBoxListener();
   }
 
   addCheckboxListener(checkbox) {
     checkbox.addEventListener('change', this.handleCheckBoxChange);
+  }
+
+  addResetBoxListener() {
+    this.resetBox.addEventListener('change', event => {
+      this.resetBox.checked = true;
+      this.activeTags = [];
+      this.checkboxes.forEach(checkbox => {
+        checkbox.checked = false;
+      });
+      this.filterEvents();
+    });
   }
 
   handleCheckBoxChange(event) {
@@ -37,6 +48,10 @@ class EventPicker {
       this.activeTags = this.activeTags.filter(
         tag => tag !== event.target.value
       );
+    }
+
+    if (this.activeTags.length) {
+      this.resetBox.checked = false;
     }
 
     this.filterEvents();
@@ -75,6 +90,9 @@ class EventPicker {
       '.schedule__tag-list [type="checkbox"]'
     ),
     events: document.querySelectorAll('.schedule [data-event]'),
+    resetBox: document.querySelector(
+      '.schedule__tag-form [name="all-event-types"]'
+    ),
   });
 
   if (eventPicker.shouldRun()) {
