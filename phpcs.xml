@@ -14,5 +14,6 @@
 		<exclude name="WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned" />
 		<exclude name="WordPress.VIP.SlowDBQuery.slow_db_query_meta_query" />
 		<exclude name="WordPress.VIP.SlowDBQuery.slow_db_query_tax_query" />
+		<exclude name="Generic.ControlStructures.InlineControlStructure.NotAllowed" />
 	</rule>
 </ruleset>

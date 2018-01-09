@@ -40,11 +40,3 @@ if ( ! function_exists( 'pp' ) ) {
 		}
 	}
 }
-
-add_action( 'wp_enqueue_scripts', function() {
-	if ( strpos( __DIR__, 'wp-content/plugins' ) === false ) {
-		return;
-	}
-	// To-Do: Enqueue scripts if used as a plugin.
-	$url = plugin_dir_url( dirname( __DIR__ ) . '/colby-wp-schedule.php' );
-} );
