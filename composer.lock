@@ -4,8 +4,106 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1fc942b44db6c0f3f5bdf65d13e31520",
+    "content-hash": "a8e8d93f8976a5f0cd54deafa4e0da24",
     "packages": [
+        {
+            "name": "colbycomms/colby-svg",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ColbyCommunications/colby-svg.git",
+                "reference": "4922d427ba87c214fd5ed1b01180b0d2012bc68f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ColbyCommunications/colby-svg/zipball/4922d427ba87c214fd5ed1b01180b0d2012bc68f",
+                "reference": "4922d427ba87c214fd5ed1b01180b0d2012bc68f",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "5.6.*",
+                "squizlabs/php_codesniffer": "*",
+                "wp-coding-standards/wpcs": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ColbyComms\\SVG\\": "wp/classes/"
+                },
+                "files": [
+                    "wp/index.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "John Watkins",
+                    "email": "jwatkins@colby.edu"
+                }
+            ],
+            "description": "A library of SVGs used across projects, with a PHP class for loading and echoing them, plus a shortcode for use in WordPress.",
+            "time": "2018-01-10T13:36:37+00:00"
+        },
+        {
+            "name": "colbycomms/wp-collapsible",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ColbyCommunications/wp-collapsible.git",
+                "reference": "0dd01e4b97b6dc6e630a2ed76cb51d053a9ccfa5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ColbyCommunications/wp-collapsible/zipball/0dd01e4b97b6dc6e630a2ed76cb51d053a9ccfa5",
+                "reference": "0dd01e4b97b6dc6e630a2ed76cb51d053a9ccfa5",
+                "shasum": ""
+            },
+            "require": {
+                "colbycomms/colby-svg": "dev-master",
+                "htmlburger/carbon-fields": "*"
+            },
+            "require-dev": {
+                "johnpbloch/wordpress-core": "dev-master",
+                "phpunit/phpunit": ">=5.0",
+                "squizlabs/php_codesniffer": "^3.0@dev",
+                "wp-coding-standards/wpcs": "dev-master"
+            },
+            "type": "wordpress-plugin",
+            "autoload": {
+                "psr-4": {
+                    "ColbyComms\\Collapsible\\": "wp/"
+                },
+                "files": [
+                    "wp/index.php"
+                ]
+            },
+            "scripts": {
+                "lint": [
+                    "./vendor/bin/phpcs --extensions=php -s"
+                ],
+                "fix": [
+                    "./vendor/bin/phpcbf --extensions=php -s"
+                ],
+                "test": [
+                    "composer lint && vendor/bin/phpunit"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "John Watkins",
+                    "email": "john.watkins@colby.edu"
+                }
+            ],
+            "description": "A WordPress shortcode for collapsible HTML drawers.",
+            "support": {
+                "source": "https://github.com/ColbyCommunications/wp-collapsible/tree/master",
+                "issues": "https://github.com/ColbyCommunications/wp-collapsible/issues"
+            },
+            "time": "2018-01-10T15:03:40+00:00"
+        },
         {
             "name": "doctrine/instantiator",
             "version": "dev-master",
@@ -393,12 +491,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "3bf31c9f4eed9b89c5a4fdbe0100dfd26d08fa8e"
+                "reference": "9ff23ace62fe82ef78bcfb3eca6d270728ce51ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/3bf31c9f4eed9b89c5a4fdbe0100dfd26d08fa8e",
-                "reference": "3bf31c9f4eed9b89c5a4fdbe0100dfd26d08fa8e",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/9ff23ace62fe82ef78bcfb3eca6d270728ce51ab",
+                "reference": "9ff23ace62fe82ef78bcfb3eca6d270728ce51ab",
                 "shasum": ""
             },
             "require": {
@@ -435,7 +533,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2018-01-07T20:52:59+00:00"
+            "time": "2018-01-09T20:25:16+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -880,12 +978,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "93dd0a952bfe157ee21914ae9ec8fb0038c333fe"
+                "reference": "74826a1c994735b37d40a981ede631872f85747d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/93dd0a952bfe157ee21914ae9ec8fb0038c333fe",
-                "reference": "93dd0a952bfe157ee21914ae9ec8fb0038c333fe",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/74826a1c994735b37d40a981ede631872f85747d",
+                "reference": "74826a1c994735b37d40a981ede631872f85747d",
                 "shasum": ""
             },
             "require": {
@@ -928,7 +1026,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2018-01-06T06:53:47+00:00"
+            "time": "2018-01-09T05:32:02+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -1587,12 +1685,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "8eee3c28936b255a0c1920d81bc7df5796ba592c"
+                "reference": "b0f9b9b8f93dec104c59cb728c60bf0d371bce41"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/8eee3c28936b255a0c1920d81bc7df5796ba592c",
-                "reference": "8eee3c28936b255a0c1920d81bc7df5796ba592c",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/b0f9b9b8f93dec104c59cb728c60bf0d371bce41",
+                "reference": "b0f9b9b8f93dec104c59cb728c60bf0d371bce41",
                 "shasum": ""
             },
             "require": {
@@ -1630,7 +1728,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2018-01-05T02:24:46+00:00"
+            "time": "2018-01-09T23:49:12+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",
@@ -1676,6 +1774,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "colbycomms/wp-collapsible": 20,
         "wp-coding-standards/wpcs": 20
     },
     "prefer-stable": false,

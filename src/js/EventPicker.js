@@ -1,3 +1,6 @@
+/**
+ * Filters events based on the checked/unchecked states of taxonomy checkboxes.
+ */
 class EventPicker {
   handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
   addCheckboxListener = this.addCheckboxListener.bind(this);
@@ -35,19 +38,23 @@ class EventPicker {
     });
   }
 
-  handleCheckBoxChange(event) {
-    if (
-      event.target.checked === true &&
-      this.activeTags.indexOf(event.target.value) === -1
-    ) {
-      this.activeTags.push(event.target.value);
-    } else if (
-      event.target.checked === false &&
-      this.activeTags.indexOf(event.target.value) !== -1
-    ) {
-      this.activeTags = this.activeTags.filter(
-        tag => tag !== event.target.value
-      );
+  isActive(tag) {
+    return this.activeTags.indexOf(tag) !== -1;
+  }
+
+  activate(tag) {
+    this.activeTags.push(tag);
+  }
+
+  deactivate(tag) {
+    this.activeTags = this.activeTags.filter(activeTag => activeTag !== tag);
+  }
+
+  handleCheckBoxChange({ target: { checked, value: tag } }) {
+    if (checked === true && !this.isActive(tag)) {
+      this.activate(tag);
+    } else if (checked === false && this.isActive(tag)) {
+      this.deactivate(tag);
     }
 
     if (this.activeTags.length) {
@@ -61,41 +68,32 @@ class EventPicker {
     [...this.events].forEach(this.maybeToggleEvent);
   }
 
-  maybeToggleEvent(event) {
-    if (!event.hasAttribute('data-event-tag-ids')) {
-      if (this.activeTags.length) {
-        event.style.display = 'none';
-      } else {
-        event.style.display = 'initial';
-      }
-
-      return;
+  eventShouldShow(event) {
+    // Everything shows when there are no active tags.
+    if (!this.activeTags.length) {
+      return true;
     }
 
+    // The event is not tagged.
+    if (!event.hasAttribute('data-event-tag-ids')) {
+      return false;
+    }
+
+    // Check whether at least one of the event's tags is active.
     const tagIds = event.getAttribute('data-event-tag-ids').split(',');
     for (var i = 0; i < tagIds.length; i += 1) {
       if (this.activeTags.indexOf(tagIds[i]) !== -1) {
-        event.style.display = 'initial';
-        return;
+        return true;
       }
     }
 
-    event.style.display = 'none';
+    // None of the event's tags are active.
+    return false;
+  }
+
+  maybeToggleEvent(event) {
+    event.style.display = this.eventShouldShow(event) ? 'initial' : 'none';
   }
 }
 
-(() => {
-  const eventPicker = new EventPicker({
-    checkboxes: document.querySelectorAll(
-      '.schedule__tag-list [type="checkbox"]'
-    ),
-    events: document.querySelectorAll('.schedule [data-event]'),
-    resetBox: document.querySelector(
-      '.schedule__tag-form [name="all-event-types"]'
-    ),
-  });
-
-  if (eventPicker.shouldRun()) {
-    eventPicker.run();
-  }
-})();
+export default EventPicker;

@@ -19,16 +19,8 @@ class EventMeta {
 	 * Constructor function; add all hooks.
 	 */
 	public function __construct() {
-		add_action( 'after_setup_theme', [ $this, 'boot_carbon_fields' ] );
 		add_action( 'carbon_fields_register_fields', [ $this, 'register_details_meta_box' ] );
 		add_action( 'carbon_fields_register_fields', [ $this, 'register_fields' ] );
-	}
-
-	/**
-	 * Boots the Carbon Fields library.
-	 */
-	public function boot_carbon_fields() {
-		Carbon_Fields::boot();
 	}
 
 	/**
@@ -57,6 +49,19 @@ class EventMeta {
 				Field::make( 'text', 'colby_schedule__location', 'Location' )->set_visible_in_rest_api(
 					$visible = true
 				),
+				Field::make( 'checkbox', 'colby_schedule__do_map', 'Show map location?' )
+					->set_default_value( false ),
+				Field::make( 'map', 'colby_schedule__map', 'Location (Map)' )
+					->set_position( 44.563869, -69.662636, 18 )
+					->set_help_text( 'drag and drop the pin on the map to select location' )
+					->set_conditional_logic(
+						[
+							[
+								'field' => 'colby_schedule__do_map',
+								'value' => true,
+							],
+						]
+					),
 			]
 		);
 	}

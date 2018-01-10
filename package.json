@@ -4,8 +4,10 @@
   "description": "",
   "main": "src/js/colby-wp-schedule.js",
   "scripts": {
-    "start": "parcel",
-    "push": "node node_modules/node-autodeploy-wp"
+    "start": "webpack -w",
+    "build": "webpack -p",
+    "lint": "eslint src/js",
+    "prepare": "build"
   },
   "repository": {
     "type": "git",
@@ -19,14 +21,18 @@
   },
   "homepage": "https://github.com/ivdekov/colby-wp-schedule#readme",
   "dependencies": {
-    "node-autodeploy-wp": "^1.0.20"
+    "colby-wp-collapsible": "^1.0.14"
   },
   "devDependencies": {
+    "autoprefixer": "^7.2.4",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.1.2",
+    "babel-loader": "^7.1.2",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-0": "^6.24.1",
+    "css-loader": "^0.28.8",
+    "cssnano": "^3.10.0",
     "eslint": "^4.14.0",
     "eslint-config-fbjs": "^2.0.1",
     "eslint-config-prettier": "^2.9.0",
@@ -35,9 +41,14 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
     "eslint-plugin-relay": "^0.0.20",
-    "parcel-bundler": "^1.4.1",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "node-autodeploy-wp": "^1.0.20",
+    "postcss-cli": "^4.1.1",
+    "postcss-loader": "^2.0.10",
+    "style-loader": "^0.19.1",
     "stylelint": "^8.4.0",
     "stylelint-config-standard": "^18.0.0",
-    "stylelint-order": "^0.8.0"
+    "stylelint-order": "^0.8.0",
+    "webpack": "^3.10.0"
   }
 }

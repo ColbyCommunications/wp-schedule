@@ -59,6 +59,34 @@ function term_ids( array $terms = [] ) {
 }
 endif;
 
+if ( ! function_exists( 'google_map_attributes' ) ) :
+/**
+ * Render the map fields as data attributes.
+ *
+ * @param array $map Map fields.
+ * @return void
+ */
+function google_map_attributes( $map ) {
+	echo array_reduce(
+		array_keys( $map ),
+		function( $output, $key ) use ( $map ) {
+			if ( ! $key || empty( $map[ $key ] ) ) {
+				return '';
+			}
+
+			$value = esc_attr( $map[ $key ] );
+			return $output .= " data-$key=\"$value\"";
+		},
+		''
+	);
+}
+endif;
+
+$do_map = carbon_get_the_post_meta( 'colby_schedule__do_map' );
+if ( $do_map ) {
+	$map = carbon_get_the_post_meta( 'colby_schedule__map' );
+}
+
 ?>
 <div data-event class="col-12 <?php term_classes( $terms ); ?>" data-event-tag-ids="<?php term_ids( $terms ); ?>">
 	<div class="collapsible event" data-collapsible>
@@ -77,14 +105,14 @@ endif;
 					<span class="event__details">
 						<span class="event__time">
 							<?php
-								$time = get_post_meta( get_the_id(), '_colby_schedule__start_time', true );
+								$time = carbon_get_the_post_meta( 'colby_schedule__start_time' );
 								$formatted_time = str_replace( [ 'am', 'pm' ], [ 'a.m.', 'p.m.' ], date_format( date_create( $time ), 'g:i a' ) );
 								echo $formatted_time;
 							?>
 						</span>
 						<span class="event__location">
 							<?php
-								echo get_post_meta( get_the_id(), '_colby_schedule__location', true );
+								echo carbon_get_the_post_meta( 'colby_schedule__location' );
 							?>
 						</span>
 					</span>
@@ -98,7 +126,21 @@ endif;
 			</button>
 		</div>
 		<div class="collapsible-panel" aria-hidden="true">
+			<?php if ( ! $do_map ) : ?>
 			<?php the_content(); ?>
+			<?php else : ?>
+			<div class="row">
+				<?php if ( trim( get_the_content() ) ) : ?>
+				<div class="col-12 col-md-6">
+					<?php the_content(); ?>
+				</div>
+				<?php endif; ?>
+				<div class="col-12<?php echo trim( get_the_content() ) ? ' col-md-6' : ''; ?>"
+					style="height: 100%; min-height: 250px;"
+					data-google-map<?php google_map_attributes( $map ); ?>>
+				</div>
+			</div>
+			<?php endif; ?>
 		</div>
 	</div>
 </div>

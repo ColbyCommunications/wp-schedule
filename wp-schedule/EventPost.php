@@ -20,7 +20,6 @@ class EventPost extends CustomPostType {
 		add_action( 'init', [ $this, 'register_event_post_type' ] );
 		add_action( 'init', [ $this, 'register_custom_taxonomies' ] );
 		add_filter( "rest_{$this->post_type}_query", [ $this, 'handle_rest_taxonomies' ], 10, 2 );
-		add_filter( "rest_{$this->post_type}_collection_params", function(){} );
 	}
 
 	/**
