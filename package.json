@@ -7,7 +7,7 @@
     "start": "webpack -w",
     "build": "webpack -p",
     "lint": "eslint src/js",
-    "prepare": "build"
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
