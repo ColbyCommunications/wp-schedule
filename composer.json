@@ -13,12 +13,6 @@
       "email": "ivdekov@colby.edu"
     }
   ],
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/ColbyCommunications/wp-collapsible"
-    }
-  ],
   "minimum-stability": "dev",
   "require": {
     "htmlburger/carbon-fields": "^2.1",

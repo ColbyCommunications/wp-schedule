@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a8e8d93f8976a5f0cd54deafa4e0da24",
+    "content-hash": "ab317b0cd75b2f9e32922492cad5b950",
     "packages": [
         {
             "name": "colbycomms/colby-svg",
@@ -53,12 +53,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ColbyCommunications/wp-collapsible.git",
-                "reference": "0dd01e4b97b6dc6e630a2ed76cb51d053a9ccfa5"
+                "reference": "69d516cec36996de89a36096cd6978abd6b0110b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ColbyCommunications/wp-collapsible/zipball/0dd01e4b97b6dc6e630a2ed76cb51d053a9ccfa5",
-                "reference": "0dd01e4b97b6dc6e630a2ed76cb51d053a9ccfa5",
+                "url": "https://api.github.com/repos/ColbyCommunications/wp-collapsible/zipball/69d516cec36996de89a36096cd6978abd6b0110b",
+                "reference": "69d516cec36996de89a36096cd6978abd6b0110b",
                 "shasum": ""
             },
             "require": {
@@ -80,17 +80,7 @@
                     "wp/index.php"
                 ]
             },
-            "scripts": {
-                "lint": [
-                    "./vendor/bin/phpcs --extensions=php -s"
-                ],
-                "fix": [
-                    "./vendor/bin/phpcbf --extensions=php -s"
-                ],
-                "test": [
-                    "composer lint && vendor/bin/phpunit"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "authors": [
                 {
                     "name": "John Watkins",
@@ -98,11 +88,7 @@
                 }
             ],
             "description": "A WordPress shortcode for collapsible HTML drawers.",
-            "support": {
-                "source": "https://github.com/ColbyCommunications/wp-collapsible/tree/master",
-                "issues": "https://github.com/ColbyCommunications/wp-collapsible/issues"
-            },
-            "time": "2018-01-10T15:03:40+00:00"
+            "time": "2018-01-10T21:55:02+00:00"
         },
         {
             "name": "doctrine/instantiator",
