@@ -5,7 +5,7 @@
  * @package colbycomms/wp-schedule
  */
 
-if ( empty( $days || ! is_array( $days ) ) || ! is_array( $tags ) ) {
+if ( empty( $days || ! is_array( $days ) ) || ! is_array( $tags ) || ! isset( $active_tags ) ) {
 	return;
 }
 ?>
@@ -14,7 +14,7 @@ if ( empty( $days || ! is_array( $days ) ) || ! is_array( $tags ) ) {
 		<input
 			type="checkbox"
 			name="all-event-types"
-			checked>
+			<?php echo count( $active_tags ) ? '' : 'checked'; ?>>
 		All events
 	</label>
 	<ul class="schedule__tag-list">
@@ -24,7 +24,8 @@ if ( empty( $days || ! is_array( $days ) ) || ! is_array( $tags ) ) {
 				<input
 					type="checkbox"
 					name="event-tag"
-					value="<?php echo esc_attr( $tag->term_id ); ?>">
+					value="<?php echo esc_attr( $tag->term_id ); ?>"
+					<?php echo in_array( $tag->name, $active_tags, true ) ? 'checked' : ''; ?>>
 				<?php echo $tag->name; ?>
 			</label>
 		</li>

@@ -11,13 +11,13 @@ class EventPicker {
   maybeToggleEvent = this.maybeToggleEvent.bind(this);
 
   constructor({ checkboxes, events, resetBox }) {
-    this.checkboxes = [...checkboxes].map(checkbox => new CheckBox(checkbox));
+    this.checkboxElements = [...checkboxes];
+    this.resetBoxElement = resetBox;
     this.events = events;
-    this.resetBox = new CheckBox(resetBox);
-    this.activeTags = [];
   }
 
-  shouldRun = () => this.checkboxes.length && this.events;
+  shouldRun = () =>
+    this.checkboxElements.length && this.events && this.resetBoxElement;
 
   shouldShow(event) {
     // Everything shows when there are no active tags.
@@ -37,8 +37,17 @@ class EventPicker {
   }
 
   run() {
+    this.checkboxes = this.checkboxElements.map(
+      checkbox => new CheckBox(checkbox)
+    );
+    this.resetBox = new CheckBox(this.resetBoxElement);
+    this.activeTags = this.checkboxElements
+      .map(element => (element.checked ? element.getAttribute('value') : null))
+      .filter(element => element);
+
     [...this.checkboxes].forEach(this.addCheckboxListener);
     this.addResetBoxListener();
+    this.showActiveEvents();
   }
 
   addCheckboxListener(checkbox) {
@@ -49,9 +58,7 @@ class EventPicker {
     this.resetBox.addEventListener('change', this.onResetBoxChange);
   }
 
-  activeTagsInclude(tag) {
-    return this.activeTags.indexOf(tag) !== -1;
-  }
+  activeTagsInclude = tag => this.activeTags.indexOf(tag) !== -1;
 
   activeTagsIntersect(eventTags) {
     for (var i = 0; i < eventTags.length; i += 1) {
