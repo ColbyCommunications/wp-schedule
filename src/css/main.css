@@ -1,6 +1,24 @@
+/** Checkboxes. */
 .schedule__all-events-checkbox {
   font-weight: 600;
   color: #214280;
+  text-transform: uppercase;
+}
+
+@media screen and (min-width: 768px) {
+  .schedule__tag-list {
+    column-count: 2;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .schedule__tag-list {
+    column-count: 4;
+  }
+}
+
+.schedule__tag-list li {
+  font-size: 89.1%;
   text-transform: uppercase;
 }
 
@@ -25,6 +43,7 @@
   border-top-width: 0;
 }
 
+/* Hide WordPress-added <br> */
 .event + br {
   display: none;
 }
@@ -47,7 +66,7 @@
   transition: background-color 0.2s;
 }
 
-.day [data-event].signature-events .event__heading {
+.signature-events .event__heading {
   color: white;
   background-color: #214280;
   border: 2px solid #d14124;
@@ -58,17 +77,17 @@
   background-color: rgba(0, 0, 0, 0.125);
 }
 
-.day [data-event].signature-events .event__heading:hover,
-.day [data-event].signature-events .event__heading[aria-pressed="true"] {
+.signature-events .event__heading:hover,
+.signature-events .event__heading[aria-pressed="true"] {
   background-color: #d14124;
   opacity: 0.9;
 }
 
-.day [data-event]:nth-of-type(even):not(.signature-events) .event__heading {
+[data-event]:nth-of-type(even):not(.signature-events) .event__heading {
   background-color: rgba(0, 0, 0, 0.01);
 }
 
-.day [data-event]:nth-of-type(even):not(.signature-events) .event__heading:hover {
+[data-event]:nth-of-type(even):not(.signature-events) .event__heading:hover {
   background-color: rgba(0, 0, 0, 0.13);
 }
 
@@ -127,21 +146,4 @@
 .event .collapsible-panel p:last-of-type,
 .event .collapsible-panel p:not(:empty):last-of-type {
   margin-bottom: 0;
-}
-
-@media screen and (min-width: 768px) {
-  .schedule__tag-list {
-    column-count: 2;
-  }
-}
-
-@media screen and (min-width: 992px) {
-  .schedule__tag-list {
-    column-count: 4;
-  }
-}
-
-.schedule__tag-list li {
-  font-size: 89.1%;
-  text-transform: uppercase;
 }
