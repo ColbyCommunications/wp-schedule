@@ -68,7 +68,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(1);
-module.exports = __webpack_require__(6);
+module.exports = __webpack_require__(7);
 
 
 /***/ }),
@@ -86,7 +86,7 @@ var _EventPicker = __webpack_require__(4);
 
 var _EventPicker2 = _interopRequireDefault(_EventPicker);
 
-var _GoogleMap = __webpack_require__(5);
+var _GoogleMap = __webpack_require__(6);
 
 var _GoogleMap2 = _interopRequireDefault(_GoogleMap);
 
@@ -155,15 +155,13 @@ var Collapsibles = function () {
     key: 'run',
     value: function run() {
       Collapsibles.hasStarted = true;
-      window.addEventListener('load', function () {
-        [].concat(_toConsumableArray(document.querySelectorAll('[data-collapsible]'))).forEach(function (container) {
-          var heading = container.querySelector('.collapsible-heading');
-          var panel = container.querySelector('.collapsible-panel');
+      [].concat(_toConsumableArray(document.querySelectorAll('[data-collapsible]'))).forEach(function (container) {
+        var heading = container.querySelector('.collapsible-heading');
+        var panel = container.querySelector('.collapsible-panel');
 
-          if (heading && panel) {
-            (0, _collapsiblize.collapsiblize)({ heading: heading, panel: panel });
-          }
-        });
+        if (heading && panel) {
+          (0, _collapsiblize.collapsiblize)({ heading: heading, panel: panel });
+        }
       });
     }
   }]);
@@ -211,7 +209,6 @@ var ensureAriaHiddenAttribute = function ensureAriaHiddenAttribute(panel) {
 };
 
 var togglePress = function togglePress(heading) {
-  console.log(heading.getAttribute('aria-pressed'));
   heading.setAttribute('aria-pressed', heading.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
 };
 
@@ -251,26 +248,21 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _CheckBox = __webpack_require__(5);
+
+var _CheckBox2 = _interopRequireDefault(_CheckBox);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
- * Filters visibility of events based on the checked/unchecked states of taxonomy checkboxes.
+ * Filters visibility of events based on the checked/unchecked states
+ * of taxonomy checkboxes.
  */
 var EventPicker = function () {
-  _createClass(EventPicker, null, [{
-    key: 'check',
-    value: function check(checkbox) {
-      checkbox.checked = true;
-    }
-  }, {
-    key: 'uncheck',
-    value: function uncheck(checkbox) {
-      checkbox.checked = false;
-    }
-  }]);
-
   function EventPicker(_ref) {
     var _this = this;
 
@@ -286,13 +278,16 @@ var EventPicker = function () {
     this.maybeToggleEvent = this.maybeToggleEvent.bind(this);
 
     this.shouldRun = function () {
-      return _this.checkboxes && _this.events;
+      return _this.checkboxElements.length && _this.events && _this.resetBoxElement;
     };
 
-    this.checkboxes = checkboxes;
+    this.activeTagsInclude = function (tag) {
+      return _this.activeTags.indexOf(tag) !== -1;
+    };
+
+    this.checkboxElements = [].concat(_toConsumableArray(checkboxes));
+    this.resetBoxElement = resetBox;
     this.events = events;
-    this.resetBox = resetBox;
-    this.activeTags = [];
   }
 
   _createClass(EventPicker, [{
@@ -314,8 +309,19 @@ var EventPicker = function () {
   }, {
     key: 'run',
     value: function run() {
+      this.checkboxes = this.checkboxElements.map(function (checkbox) {
+        return new _CheckBox2.default(checkbox);
+      });
+      this.resetBox = new _CheckBox2.default(this.resetBoxElement);
+      this.activeTags = this.checkboxElements.map(function (element) {
+        return element.checked ? element.getAttribute('value') : null;
+      }).filter(function (element) {
+        return element;
+      });
+
       [].concat(_toConsumableArray(this.checkboxes)).forEach(this.addCheckboxListener);
       this.addResetBoxListener();
+      this.showActiveEvents();
     }
   }, {
     key: 'addCheckboxListener',
@@ -326,11 +332,6 @@ var EventPicker = function () {
     key: 'addResetBoxListener',
     value: function addResetBoxListener() {
       this.resetBox.addEventListener('change', this.onResetBoxChange);
-    }
-  }, {
-    key: 'activeTagsInclude',
-    value: function activeTagsInclude(tag) {
-      return this.activeTags.indexOf(tag) !== -1;
     }
   }, {
     key: 'activeTagsIntersect',
@@ -362,14 +363,16 @@ var EventPicker = function () {
           checked = _ref2$target.checked,
           tag = _ref2$target.value;
 
-      if (checked && !this.activeTagsInclude(tag)) {
+      if (checked) {
         this.activate(tag);
-      } else if (checked === false && this.activeTagsInclude(tag)) {
+      } else {
         this.deactivate(tag);
       }
 
       if (this.activeTags.length) {
-        EventPicker.uncheck(this.resetBox);
+        this.resetBox.uncheck();
+      } else {
+        this.resetBox.check();
       }
 
       this.showActiveEvents();
@@ -377,9 +380,11 @@ var EventPicker = function () {
   }, {
     key: 'onResetBoxChange',
     value: function onResetBoxChange() {
-      EventPicker.check(this.resetBox);
+      this.resetBox.check();
       this.activeTags = [];
-      this.checkboxes.forEach(EventPicker.uncheck);
+      this.checkboxes.forEach(function (checkbox) {
+        checkbox.uncheck();
+      });
       this.showActiveEvents();
     }
   }, {
@@ -414,6 +419,50 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var Checkbox = function () {
+  function Checkbox(element) {
+    _classCallCheck(this, Checkbox);
+
+    this.element = element;
+  }
+
+  _createClass(Checkbox, [{
+    key: "addEventListener",
+    value: function addEventListener(eventTag, callback) {
+      this.element.addEventListener(eventTag, callback);
+    }
+  }, {
+    key: "check",
+    value: function check() {
+      this.element.checked = true;
+    }
+  }, {
+    key: "uncheck",
+    value: function uncheck() {
+      this.element.checked = false;
+    }
+  }]);
+
+  return Checkbox;
+}();
+
+exports.default = Checkbox;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 var GoogleMap = function () {
   function GoogleMap(_ref) {
     var _this = this;
@@ -431,7 +480,6 @@ var GoogleMap = function () {
     this.lat = Number(this.mapContainer.getAttribute('data-lat'));
     this.lng = Number(this.mapContainer.getAttribute('data-lng'));
     this.zoom = Number(this.mapContainer.getAttribute('data-zoom'));
-    this.address = this.mapContainer.getAttribute('data-address');
 
     this.panel.addEventListener('change', function (event) {
       if (event.detail.open === true && _this.started === false) {
@@ -460,7 +508,7 @@ var GoogleMap = function () {
       });
 
       this.infowindow = new google.maps.InfoWindow({
-        content: '<a target=\"_blank\" href="' + ('https://www.google.com/maps/dir/Current+Location/' + this.lat + ',' + this.lng) + '">Get Directions</a>'
+        content: '<a target="_blank" href="' + ('https://www.google.com/maps/dir/Current+Location/' + this.lat + ',' + this.lng) + '">Get Directions</a>'
       });
 
       this.marker.addListener('click', function () {
@@ -475,7 +523,7 @@ var GoogleMap = function () {
 exports.default = GoogleMap;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

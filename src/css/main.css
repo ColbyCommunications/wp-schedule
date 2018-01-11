@@ -47,9 +47,10 @@
   transition: background-color 0.2s;
 }
 
-.featured .event__heading {
+.day [data-event].signature-events .event__heading {
   color: white;
-  background-color: #d14124;
+  background-color: #214280;
+  border: 2px solid #d14124;
 }
 
 .event__heading:hover,
@@ -57,17 +58,17 @@
   background-color: rgba(0, 0, 0, 0.125);
 }
 
-.featured .event__heading:hover,
-.featured .event__heading[aria-pressed="true"] {
+.day [data-event].signature-events .event__heading:hover,
+.day [data-event].signature-events .event__heading[aria-pressed="true"] {
   background-color: #d14124;
   opacity: 0.9;
 }
 
-.day [data-event]:nth-of-type(even) .event__heading {
+.day [data-event]:nth-of-type(even):not(.signature-events) .event__heading {
   background-color: rgba(0, 0, 0, 0.01);
 }
 
-.day [data-event]:nth-of-type(even) .event__heading:hover {
+.day [data-event]:nth-of-type(even):not(.signature-events) .event__heading:hover {
   background-color: rgba(0, 0, 0, 0.13);
 }
 

@@ -71,7 +71,7 @@ function google_map_attributes( $map ) {
 		array_keys( $map ),
 		function( $output, $key ) use ( $map ) {
 			if ( ! $key || empty( $map[ $key ] ) ) {
-				return '';
+				return $output;
 			}
 
 			$value = esc_attr( $map[ $key ] );
@@ -83,6 +83,7 @@ function google_map_attributes( $map ) {
 endif;
 
 $do_map = carbon_get_the_post_meta( 'colby_schedule__do_map' );
+
 if ( $do_map ) {
 	$map = carbon_get_the_post_meta( 'colby_schedule__map' );
 }

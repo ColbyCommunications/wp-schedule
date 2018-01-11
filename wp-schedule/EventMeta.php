@@ -52,7 +52,7 @@ class EventMeta {
 				Field::make( 'checkbox', 'colby_schedule__do_map', 'Show map location?' )
 					->set_default_value( false ),
 				Field::make( 'map', 'colby_schedule__map', 'Location (Map)' )
-					->set_position( 44.563869, -69.662636, 18 )
+					->set_position( 44.563869, -69.662636, 17 )
 					->set_help_text( 'drag and drop the pin on the map to select location' )
 					->set_conditional_logic(
 						[

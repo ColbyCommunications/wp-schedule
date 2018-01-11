@@ -8,7 +8,6 @@ class GoogleMap {
     this.lat = Number(this.mapContainer.getAttribute('data-lat'));
     this.lng = Number(this.mapContainer.getAttribute('data-lng'));
     this.zoom = Number(this.mapContainer.getAttribute('data-zoom'));
-    this.address = this.mapContainer.getAttribute('data-address');
 
     this.panel.addEventListener('change', event => {
       if (event.detail.open === true && this.started === false) {
@@ -34,7 +33,7 @@ class GoogleMap {
 
     this.infowindow = new google.maps.InfoWindow({
       content:
-        '<a target=\"_blank\" href="' +
+        '<a target="_blank" href="' +
         `https://www.google.com/maps/dir/Current+Location/${this.lat},${
           this.lng
         }` +
