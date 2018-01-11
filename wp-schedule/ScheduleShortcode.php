@@ -22,7 +22,7 @@ class ScheduleShortcode {
 		'name'                => null,
 		'tags'                => null,
 		'include-past-events' => false,
-		'active' => ''
+		'active' => '',
 	];
 
 	/**
@@ -51,7 +51,7 @@ class ScheduleShortcode {
 		if ( ! $events_query->have_posts() ) {
 			return '';
 		}
-	
+
 		$days = self::sort_posts_by_day( $events_query->posts );
 		$tags = self::get_all_post_tag_ids( $events_query->posts );
 		$active_tags = array_map( 'trim', explode( ',', $atts['active'] ) );
