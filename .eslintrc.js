@@ -1,8 +1,12 @@
 module.exports = {
-  parser: "babel-eslint",
+  parser: 'babel-eslint',
   env: { browser: true, es6: true },
-  extends: ["fbjs"],
+  extends: ['fbjs'],
   rules: {
-    "import/prefer-default-export": 0
-  }
+    'import/prefer-default-export': 0,
+    'no-new': 0
+  },
+  globals: {
+    google: true,
+  },
 };
