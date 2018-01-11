@@ -8,11 +8,11 @@
   padding-top: 2.25rem;
 }
 
-.day > heading {
+.day > header {
   text-align: center;
 }
 
-.day > heading h3 {
+.day > header h3 {
   padding: 0.75rem 0;
   margin-bottom: 0;
   color: white;
@@ -52,6 +52,11 @@
   background-color: #d14124;
 }
 
+.event__heading:hover,
+.event__heading[aria-pressed="true"] {
+  background-color: rgba(0, 0, 0, 0.125);
+}
+
 .featured .event__heading:hover,
 .featured .event__heading[aria-pressed="true"] {
   background-color: #d14124;
@@ -64,11 +69,6 @@
 
 .day [data-event]:nth-of-type(even) .event__heading:hover {
   background-color: rgba(0, 0, 0, 0.13);
-}
-
-.event__heading:hover,
-.event__heading[aria-pressed="true"] {
-  background-color: rgba(0, 0, 0, 0.125);
 }
 
 .event__info {

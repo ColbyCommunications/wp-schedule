@@ -7,6 +7,7 @@
     "start": "webpack -w",
     "build": "webpack -p",
     "lint": "eslint src/js",
+    "stylelint": "stylelint src/css --fix",
     "prepare": "npm run build"
   },
   "repository": {
@@ -21,6 +22,7 @@
   },
   "homepage": "https://github.com/ivdekov/colby-wp-schedule#readme",
   "dependencies": {
+    "array-intersection": "^0.1.2",
     "colby-wp-collapsible": "^1.0.14"
   },
   "devDependencies": {
