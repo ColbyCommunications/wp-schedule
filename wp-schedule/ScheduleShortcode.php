@@ -54,7 +54,7 @@ class ScheduleShortcode {
 
 		$days = self::sort_posts_by_day( $events_query->posts );
 		$tags = self::get_all_post_tag_ids( $events_query->posts );
-		$active_tags = array_map( 'trim', explode( ',', $atts['active'] ) );
+		$active_tags = array_map( 'trim', explode( ',', isset( $atts['active'] ) ? $atts['active'] : '' ) );
 
 		// Sort by date.
 		ksort( $days );
