@@ -47,12 +47,19 @@ class EventPost extends CustomPostType {
 		];
 	}
 
+
 	/**
 	 * Register taxonomies for 'event' post type.
 	 */
 	public function register_custom_taxonomies() {
 		$schedule_taxonomy_args = array_merge(
-			$this->get_taxonomy_label_args( 'Schedule' ), [ 'hierarchical' => true ]
+			$this->get_taxonomy_label_args( 'Schedule' ),
+			[
+				'hierarchical' => true,
+				'rewrite' => [
+					'slug' => 'schedule',
+				],
+			]
 		);
 
 		register_taxonomy( 'schedule_category', $this->post_type, $schedule_taxonomy_args );

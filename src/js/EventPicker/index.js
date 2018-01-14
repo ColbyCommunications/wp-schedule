@@ -6,22 +6,24 @@ import CheckBox from './CheckBox';
  */
 class EventPicker {
   onCheckBoxChange = this.onCheckBoxChange.bind(this);
-  onResetBoxChange = this.onResetBoxChange.bind(this);
   addCheckboxListener = this.addCheckboxListener.bind(this);
   maybeToggleEvent = this.maybeToggleEvent.bind(this);
 
-  constructor({ checkboxes, events, resetBox }) {
+  constructor({ checkboxes, events }) {
     this.checkboxElements = [...checkboxes];
-    this.resetBoxElement = resetBox;
     this.events = events;
   }
 
-  shouldRun = () =>
-    this.checkboxElements.length && this.events && this.resetBoxElement;
+  shouldRun = () => this.checkboxElements.length && this.events;
 
+  /**
+   * True if the event post should be visible.
+   * @param {HTMLDivElement} event
+   * @return {bool}
+   */
   shouldShow(event) {
     // Everything shows when there are no active tags.
-    if (!this.activeTags.length) {
+    if (event.getAttribute('data-event-always-visible') === 'true') {
       return true;
     }
 
@@ -40,22 +42,17 @@ class EventPicker {
     this.checkboxes = this.checkboxElements.map(
       checkbox => new CheckBox(checkbox)
     );
-    this.resetBox = new CheckBox(this.resetBoxElement);
+
     this.activeTags = this.checkboxElements
       .map(element => (element.checked ? element.getAttribute('value') : null))
       .filter(element => element);
 
     [...this.checkboxes].forEach(this.addCheckboxListener);
-    this.addResetBoxListener();
     this.showActiveEvents();
   }
 
   addCheckboxListener(checkbox) {
     checkbox.addEventListener('change', this.onCheckBoxChange);
-  }
-
-  addResetBoxListener() {
-    this.resetBox.addEventListener('change', this.onResetBoxChange);
   }
 
   activeTagsInclude = tag => this.activeTags.indexOf(tag) !== -1;
@@ -85,21 +82,6 @@ class EventPicker {
       this.deactivate(tag);
     }
 
-    if (this.activeTags.length) {
-      this.resetBox.uncheck();
-    } else {
-      this.resetBox.check();
-    }
-
-    this.showActiveEvents();
-  }
-
-  onResetBoxChange() {
-    this.resetBox.check();
-    this.activeTags = [];
-    this.checkboxes.forEach(checkbox => {
-      checkbox.uncheck();
-    });
     this.showActiveEvents();
   }
 

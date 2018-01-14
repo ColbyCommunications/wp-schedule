@@ -267,18 +267,16 @@ var EventPicker = function () {
     var _this = this;
 
     var checkboxes = _ref.checkboxes,
-        events = _ref.events,
-        resetBox = _ref.resetBox;
+        events = _ref.events;
 
     _classCallCheck(this, EventPicker);
 
     this.onCheckBoxChange = this.onCheckBoxChange.bind(this);
-    this.onResetBoxChange = this.onResetBoxChange.bind(this);
     this.addCheckboxListener = this.addCheckboxListener.bind(this);
     this.maybeToggleEvent = this.maybeToggleEvent.bind(this);
 
     this.shouldRun = function () {
-      return _this.checkboxElements.length && _this.events && _this.resetBoxElement;
+      return _this.checkboxElements.length && _this.events;
     };
 
     this.activeTagsInclude = function (tag) {
@@ -286,15 +284,21 @@ var EventPicker = function () {
     };
 
     this.checkboxElements = [].concat(_toConsumableArray(checkboxes));
-    this.resetBoxElement = resetBox;
     this.events = events;
   }
 
   _createClass(EventPicker, [{
     key: 'shouldShow',
+
+
+    /**
+     * True if the event post should be visible.
+     * @param {HTMLDivElement} event
+     * @return {bool}
+     */
     value: function shouldShow(event) {
       // Everything shows when there are no active tags.
-      if (!this.activeTags.length) {
+      if (event.getAttribute('data-event-always-visible') === 'true') {
         return true;
       }
 
@@ -312,7 +316,7 @@ var EventPicker = function () {
       this.checkboxes = this.checkboxElements.map(function (checkbox) {
         return new _CheckBox2.default(checkbox);
       });
-      this.resetBox = new _CheckBox2.default(this.resetBoxElement);
+
       this.activeTags = this.checkboxElements.map(function (element) {
         return element.checked ? element.getAttribute('value') : null;
       }).filter(function (element) {
@@ -320,18 +324,12 @@ var EventPicker = function () {
       });
 
       [].concat(_toConsumableArray(this.checkboxes)).forEach(this.addCheckboxListener);
-      this.addResetBoxListener();
       this.showActiveEvents();
     }
   }, {
     key: 'addCheckboxListener',
     value: function addCheckboxListener(checkbox) {
       checkbox.addEventListener('change', this.onCheckBoxChange);
-    }
-  }, {
-    key: 'addResetBoxListener',
-    value: function addResetBoxListener() {
-      this.resetBox.addEventListener('change', this.onResetBoxChange);
     }
   }, {
     key: 'activeTagsIntersect',
@@ -369,22 +367,6 @@ var EventPicker = function () {
         this.deactivate(tag);
       }
 
-      if (this.activeTags.length) {
-        this.resetBox.uncheck();
-      } else {
-        this.resetBox.check();
-      }
-
-      this.showActiveEvents();
-    }
-  }, {
-    key: 'onResetBoxChange',
-    value: function onResetBoxChange() {
-      this.resetBox.check();
-      this.activeTags = [];
-      this.checkboxes.forEach(function (checkbox) {
-        checkbox.uncheck();
-      });
       this.showActiveEvents();
     }
   }, {

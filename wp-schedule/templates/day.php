@@ -12,11 +12,11 @@ if ( empty( $date ) || empty( $events ) ) {
 ?>
 
 <section class="row day">
-	<heading class="col-12">
+	<header class="col-12">
 		<h3>
 			<?php echo date_create( $date )->format( 'l, F j' ); ?>
 		</h3>
-	</heading>
+	</header>
 	<?php foreach ( $events as $event ) : ?>
 	<?php include 'event.php'; ?>
 	<?php endforeach; ?>

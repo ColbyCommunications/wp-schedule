@@ -32,7 +32,31 @@ class ScheduleShortcode {
 		if ( ! shortcode_exists( 'schedule' ) ) {
 			add_shortcode( 'schedule', [ __CLASS__, 'schedule_shortcode' ] );
 		}
+
 		add_filter( 'query_vars', [ __CLASS__, 'add_url_query_vars' ] );
+	}
+
+	/**
+	 * Set up variables to send to the template.
+	 *
+	 * @param \WP_Query $events_query A query for events posts.
+	 * @param array $atts Shortcode attributes.
+	 * @param mixed $term The term if we're on a term archive page.
+	 * @return string The shortcode output.
+	 */
+	public static function render( \WP_Query $events_query, array $atts = [], $term = null ) : string {
+		$days = self::sort_posts_by_day( $events_query->posts );
+		$tags = self::get_all_post_tag_ids( $events_query->posts );
+		$active_tags = array_map( 'trim', explode( ',', isset( $atts['active'] ) ? $atts['active'] : '' ) );
+
+		// Sort by date.
+		ksort( $days );
+
+		ob_start();
+
+		include 'templates/schedule.php';
+
+		return ob_get_clean();
 	}
 
 	/**
@@ -52,18 +76,7 @@ class ScheduleShortcode {
 			return '';
 		}
 
-		$days = self::sort_posts_by_day( $events_query->posts );
-		$tags = self::get_all_post_tag_ids( $events_query->posts );
-		$active_tags = array_map( 'trim', explode( ',', isset( $atts['active'] ) ? $atts['active'] : '' ) );
-
-		// Sort by date.
-		ksort( $days );
-
-		ob_start();
-
-		include 'templates/schedule.php';
-
-		return ob_get_clean();
+		return self::render( $events_query, $atts );
 	}
 
 	/**
@@ -102,6 +115,14 @@ class ScheduleShortcode {
 
 				$terms = get_the_terms( $post->ID, 'event_tag' ) ?: [];
 
+				if ( ! $terms && ! in_array( 0, $term_ids_in_output, true ) ) {
+					$term_ids_in_output[] = 0;
+					$output[] = (object) [
+						'term_id' => 0,
+						'name' => 'Uncategorized',
+					];
+				}
+
 				foreach ( $terms as $term ) {
 					// The term has not been captured yet.
 					if ( ! in_array( $term->term_id, $term_ids_in_output, true ) ) {
@@ -123,7 +144,7 @@ class ScheduleShortcode {
 	 * @return array Updated query variables.
 	 */
 	public static function add_url_query_vars( $qvars ) {
-		$qvars[] = 'event-tag';
+		$qvars[] = 'invitee-group';
 		return $qvars;
 	}
 
@@ -147,6 +168,13 @@ class ScheduleShortcode {
 				'schedule_time' => [
 					'key'     => '_colby_schedule__start_time',
 					'compare' => 'EXISTS',
+				],
+			],
+			'tax_query' => [
+				[
+					'taxonomy' => 'invitee_group',
+					'field'    => 'slug',
+					'terms'    => 'all',
 				],
 			],
 			'orderby' => [
@@ -209,8 +237,17 @@ class ScheduleShortcode {
 	 * @return array Parameters for the WP_Query.
 	 */
 	private static function query_params_from_url_params( $query_params ) {
-		$event_tag = get_query_var( 'event-tag' );
-		if ( empty( $event_tag ) ) {
+		global $post;
+
+		$invitee_group = get_query_var( 'invitee-group' );
+		if ( empty( $invitee_group ) ) {
+			$term = get_term_by( 'name', $post->post_name, 'invitee_group' );
+			if ( $term ) {
+				$invitee_group = $term->slug;
+			}
+		}
+
+		if ( empty( $invitee_group ) ) {
 			return $query_params;
 		}
 
@@ -219,9 +256,9 @@ class ScheduleShortcode {
 		}
 
 		$query_params['tax_query'][] = [
-			'taxonomy' => 'event_tag',
+			'taxonomy' => 'invitee_group',
 			'field'    => 'slug',
-			'terms'    => $event_tag,
+			'terms'    => $invitee_group,
 		];
 
 		return $query_params;

@@ -46,6 +46,7 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "node-autodeploy-wp": "^1.0.20",
     "postcss-cli": "^4.1.1",
+    "postcss-color-function": "^4.0.1",
     "postcss-loader": "^2.0.10",
     "style-loader": "^0.19.1",
     "stylelint": "^8.4.0",
