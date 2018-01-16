@@ -5,6 +5,8 @@
  * @package colbycomms/wp-schedule
  */
 
+use ColbyComms\Schedules\WpFunctions as WP;
+
 if ( empty( $days || ! is_array( $days ) ) || ! is_array( $tags ) || ! isset( $active_tags ) ) {
 	return;
 }
@@ -18,7 +20,7 @@ if ( empty( $days || ! is_array( $days ) ) || ! is_array( $tags ) || ! isset( $a
 				<input
 					type="checkbox"
 					name="event-tag"
-					value="<?php echo esc_attr( $tag->term_id ); ?>"
+					value="<?php echo WP::esc_attr( $tag->term_id ); ?>"
 					<?php echo null === $term || in_array( $tag->name, $active_tags, true ) ? 'checked' : ''; ?>>
 				<?php echo $tag->name; ?>
 			</label>

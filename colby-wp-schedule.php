@@ -2,19 +2,19 @@
 /**
  * Plugin Name: Colby Schedules
  *
- * Description: Schedule table creator for Colby College.
+ * Description: Shortcodes for providings events listings.
  * Version: 0.0.1
- * Author: Iavor Dekov
- * Author Email: ivdekov@gmail.com
+ * Author: John Watkins
+ * Author Email: john.watkins@colby.edu
  * Text Domain: colby-schedule
  *
- * @package colby-wp-schedule
+ * @package colbycomms/colby-wp-schedule
  */
 
 /**
  * Main Plugin File
  */
 
-if ( file_exists( plugin_dir_path( __FILE__ ) . 'vendor/autoload.php' ) ) {
-	require 'vendor/autoload.php';
+if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+	require __DIR__ . '/vendor/autoload.php';
 }

@@ -5,9 +5,9 @@
  * @package colby-wp-schedule
  */
 
-namespace ColbyComms\Schedules;
+namespace ColbyComms\Schedules\Shortcodes;
 
-use Carbon_Fields\Carbon_Fields;
+use ColbyComms\Schedules\{WpQuery, WpFunctions as WP};
 
 /**
  * Shortcode [schedule].
@@ -29,24 +29,26 @@ class ScheduleShortcode {
 	 * Registers the shortcode callback.
 	 */
 	public function __construct() {
-		if ( ! shortcode_exists( 'schedule' ) ) {
-			add_shortcode( 'schedule', [ __CLASS__, 'schedule_shortcode' ] );
+		if ( ! WP::shortcode_exists( 'schedule' ) ) {
+			WP::add_shortcode( 'schedule', [ __CLASS__, 'schedule_shortcode' ] );
 		}
 
-		add_filter( 'query_vars', [ __CLASS__, 'add_url_query_vars' ] );
+		WP::add_filter( 'query_vars', [ __CLASS__, 'add_url_query_vars' ] );
 	}
 
 	/**
 	 * Set up variables to send to the template.
 	 *
-	 * @param \WP_Query $events_query A query for events posts.
+	 * @param WpQuery $events_query A query for events posts.
 	 * @param array $atts Shortcode attributes.
 	 * @param mixed $term The term if we're on a term archive page.
 	 * @return string The shortcode output.
 	 */
-	public static function render( \WP_Query $events_query, array $atts = [], $term = null ) : string {
+	public static function render( WpQuery $events_query, array $atts = [], $term = null ) : string {
 		$days = self::sort_posts_by_day( $events_query->posts );
 		$tags = self::get_all_post_tag_ids( $events_query->posts );
+
+		// Make an array from the active tags passed to the shortcode.
 		$active_tags = array_map( 'trim', explode( ',', isset( $atts['active'] ) ? $atts['active'] : '' ) );
 
 		// Sort by date.
@@ -54,7 +56,7 @@ class ScheduleShortcode {
 
 		ob_start();
 
-		include 'templates/schedule.php';
+		include dirname( __DIR__ ) . '/templates/schedule.php';
 
 		return ob_get_clean();
 	}
@@ -67,9 +69,7 @@ class ScheduleShortcode {
 	 * @return string The shortcode output.
 	 */
 	public static function schedule_shortcode( $atts = [], $content = '' ) {
-		Carbon_Fields::boot();
-
-		$attributes = shortcode_atts( self::$default_atts, $atts );
+		$attributes = WP::shortcode_atts( self::$default_atts, $atts );
 		$events_query = self::get_events_query( $attributes );
 
 		if ( ! $events_query->have_posts() ) {
@@ -89,7 +89,7 @@ class ScheduleShortcode {
 		return array_reduce(
 			$posts,
 			function( $output, $post ) {
-				$day = get_post_meta( $post->ID, '_colby_schedule__date', 1 );
+				$day = WP::get_post_meta( $post->ID, '_colby_schedule__date', 1 );
 				$output[ $day ][] = $post;
 				return $output;
 			},
@@ -113,7 +113,7 @@ class ScheduleShortcode {
 					$term_ids_in_output = [];
 				}
 
-				$terms = get_the_terms( $post->ID, 'event_tag' ) ?: [];
+				$terms = WP::get_the_terms( $post->ID, 'event_tag' ) ?: [];
 
 				if ( ! $terms && ! in_array( 0, $term_ids_in_output, true ) ) {
 					$term_ids_in_output[] = 0;
@@ -152,9 +152,9 @@ class ScheduleShortcode {
 	 * Gets a query for posts with the event post_type.
 	 *
 	 * @param array $atts Shortcode attributes.
-	 * @return WP_Query
+	 * @return WpQuery The query wrapper.
 	 */
-	public static function get_events_query( $atts ) {
+	public static function get_events_query( array $atts = [] ) : WpQuery {
 		$query_params = [
 			'post_type'      => 'event',
 			'posts_per_page' => 99,
@@ -190,7 +190,7 @@ class ScheduleShortcode {
 			$query_params = self::add_params_from_shortcode_atts( $query_params, $atts );
 		}
 
-		return new \WP_Query( $query_params );
+		return new WpQuery( $query_params );
 	}
 
 	/**
@@ -239,9 +239,9 @@ class ScheduleShortcode {
 	private static function query_params_from_url_params( $query_params ) {
 		global $post;
 
-		$invitee_group = get_query_var( 'invitee-group' );
+		$invitee_group = WP::get_query_var( 'invitee-group' );
 		if ( empty( $invitee_group ) ) {
-			$term = get_term_by( 'name', $post->post_name, 'invitee_group' );
+			$term = WP::get_term_by( 'name', $post->post_name, 'invitee_group' );
 			if ( $term ) {
 				$invitee_group = $term->slug;
 			}
@@ -263,27 +263,4 @@ class ScheduleShortcode {
 
 		return $query_params;
 	}
-
-	/**
-	 * Renders all the events in a schedule.
-	 *
-	 * @param \WP_Query $events_query The wp_query to work with.
-	 * @return string The rendered list.
-	 */
-	private static function get_items_html( \WP_Query $events_query ) {
-		ob_start();
-		while ( $events_query->have_posts() ) {
-			$events_query->the_post();
-			$permalink = get_the_permalink();
-			the_title( "<h2><a href=$permalink>", '</a></h2>' );
-			the_content();
-			echo 'Location: ' . get_post_meta( get_the_ID(), '_colby_schedule__location', true ) . '<br>';
-			echo 'Date: ' . get_post_meta( get_the_ID(), '_colby_schedule__date', true ) . '<br>';
-			echo 'Start Time: ' . get_post_meta( get_the_ID(), '_colby_schedule__start_time', true ) . '<br>';
-			echo 'End Time: ' . get_post_meta( get_the_ID(), '_colby_schedule__end_time', true ) . '<br>';
-		}
-		wp_reset_postdata();
-		return ob_get_clean();
-	}
-
 }

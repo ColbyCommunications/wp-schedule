@@ -7,9 +7,8 @@
 
 namespace ColbyComms\Schedules;
 
-use Carbon_Fields\Container;
-use Carbon_Fields\Field;
-use Carbon_Fields\Carbon_Fields;
+use Carbon_Fields\{Container, Field};
+use ColbyComms\Schedules\WpFunctions as WP;
 
 /**
  * Sets up an options page using Carbon Fields.
@@ -19,8 +18,8 @@ class Options {
 	 * Adds hooks.
 	 */
 	public function __construct() {
-		add_action( 'carbon_fields_register_fields', [ $this, 'create_container' ] );
-		add_action( 'carbon_fields_register_fields', [ $this, 'add_plugin_options' ] );
+		WP::add_action( 'carbon_fields_register_fields', [ $this, 'create_container' ] );
+		WP::add_action( 'carbon_fields_register_fields', [ $this, 'add_plugin_options' ] );
 	}
 
 	/**
