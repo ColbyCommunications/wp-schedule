@@ -11,7 +11,11 @@ if ( empty( $date ) || empty( $events ) ) {
 
 ?>
 
-<section class="row day">
+<section class="row day"
+	<?php if ( 'true' === $atts['tag-selector'] ) : ?>
+	style="display: none;"
+	<?php endif; ?>
+>
 	<header class="col-12">
 		<h3>
 			<?php echo date_create( $date )->format( 'l, F j' ); ?>

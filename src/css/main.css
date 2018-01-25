@@ -176,7 +176,7 @@ button.event__heading {
   background-color: rgba(0, 0, 0, 0.01);
 }
 
-.event-container:nth-of-type(even):not(.signature-events) .event__heading:hover {
+.event-container:nth-of-type(even):not(.signature-events) button.event__heading:hover {
   background-color: color(rgba(0, 0, 0, 0.13) shade(10%));
 }
 

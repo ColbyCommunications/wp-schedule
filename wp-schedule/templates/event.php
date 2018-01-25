@@ -28,14 +28,17 @@ if ( $do_map ) {
 }
 
 $do_expandable = $do_map || ( WP::get_the_content() && 'true' !== $atts['show-description'] );
-
 $always_visible = null !== $term ? WP::has_term( $term->term_id, 'schedule_category', $event ) : false;
 
 ?>
 	<div data-event
 		class="col-12 event-container <?php Templates::term_classes( $terms ); ?>"
 		data-event-always-visible="<?php echo $always_visible ? 'true' : 'false'; ?>"
-		data-event-tag-ids="<?php Templates::term_ids( $terms ); ?>">
+		data-event-tag-ids="<?php Templates::term_ids( $terms ); ?>"
+		<?php if ( 'true' === $atts['tag-selector'] && ! $always_visible ) : ?>
+		style="display: none"
+		<?php endif; ?>
+		>
 		<div class="collapsible event" data-collapsible>
 			<<?php echo $do_expandable ? 'button' : 'div'; ?> class="collapsible-heading event__heading"
 				aria-pressed="false">

@@ -35,7 +35,22 @@ class TemplateUtils {
 	}
 
 	/**
-	 * Get the term IDs separated by commas.
+	 * Get the term ids.
+	 *
+	 * @param array $terms Term objects.
+	 * @return array The term ids.
+	 */
+	public static function get_term_ids( array $terms = [] ) : array {
+		return array_map(
+			function( $term ) {
+				return $term->term_id;
+			},
+			$terms
+		);
+	}
+
+	/**
+	 * Echo the term IDs separated by commas.
 	 *
 	 * @param array $terms Term objects.
 	 * @return void
@@ -44,12 +59,7 @@ class TemplateUtils {
 		echo $terms
 			? implode(
 				',',
-				array_map(
-					function( $term ) {
-						return $term->term_id;
-					},
-					$terms
-				)
+				self::get_term_ids( $terms )
 			)
 			: '0';
 	}

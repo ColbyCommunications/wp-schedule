@@ -72,7 +72,8 @@ class ScheduleShortcode {
 	 * @return string The shortcode output.
 	 */
 	public static function schedule_shortcode( $atts = [], $content = '' ) {
-		$events_query = self::get_events_query( $attributes );
+		$atts = WP::shortcode_atts( self::$default_atts, $atts );
+		$events_query = self::get_events_query( $atts );
 
 		if ( ! $events_query->have_posts() ) {
 			return '';

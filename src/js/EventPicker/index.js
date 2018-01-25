@@ -8,10 +8,12 @@ class EventPicker {
   onCheckBoxChange = this.onCheckBoxChange.bind(this);
   addCheckboxListener = this.addCheckboxListener.bind(this);
   maybeToggleEvent = this.maybeToggleEvent.bind(this);
+  mayneHideDay = this.maybeHideDay.bind(this);
 
-  constructor({ checkboxes, events }) {
+  constructor({ checkboxes, events, days }) {
     this.checkboxElements = [...checkboxes];
     this.events = events;
+    this.days = days;
     this.handleEmailButton();
   }
 
@@ -86,8 +88,21 @@ class EventPicker {
     this.showActiveEvents();
   }
 
+  maybeHideDay(day) {
+    const visibleEvents = day.querySelectorAll(
+      '.event-container[style*="display: initial"]'
+    );
+
+    if (visibleEvents.length) {
+      day.removeAttribute('style');
+    } else {
+      day.style.display = 'none';
+    }
+  }
+
   showActiveEvents() {
     [...this.events].forEach(this.maybeToggleEvent);
+    [...this.days].forEach(this.maybeHideDay);
   }
 
   maybeToggleEvent(event) {

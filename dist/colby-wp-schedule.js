@@ -98,7 +98,8 @@ var initEventPicker = function initEventPicker() {
   var eventPicker = new _EventPicker2.default({
     checkboxes: document.querySelectorAll('.schedule__tag-list [type="checkbox"]'),
     events: document.querySelectorAll('.schedule [data-event]'),
-    resetBox: document.querySelector('.schedule__tag-form [name="all-event-types"]')
+    resetBox: document.querySelector('.schedule__tag-form [name="all-event-types"]'),
+    days: document.querySelectorAll('.schedule .day')
   });
 
   if (eventPicker.shouldRun()) {
@@ -116,9 +117,9 @@ var initMaps = function initMaps() {
   });
 };
 
+window.addEventListener('load', initEventPicker);
 window.addEventListener('load', _colbyWpCollapsible2.default.init);
 window.addEventListener('load', initMaps);
-window.addEventListener('load', initEventPicker);
 
 /***/ }),
 /* 2 */
@@ -238,13 +239,15 @@ var EventPicker = function () {
     var _this = this;
 
     var checkboxes = _ref.checkboxes,
-        events = _ref.events;
+        events = _ref.events,
+        days = _ref.days;
 
     _classCallCheck(this, EventPicker);
 
     this.onCheckBoxChange = this.onCheckBoxChange.bind(this);
     this.addCheckboxListener = this.addCheckboxListener.bind(this);
     this.maybeToggleEvent = this.maybeToggleEvent.bind(this);
+    this.mayneHideDay = this.maybeHideDay.bind(this);
 
     this.shouldRun = function () {
       return _this.checkboxElements.length && _this.events;
@@ -256,6 +259,7 @@ var EventPicker = function () {
 
     this.checkboxElements = [].concat(_toConsumableArray(checkboxes));
     this.events = events;
+    this.days = days;
     this.handleEmailButton();
   }
 
@@ -342,9 +346,21 @@ var EventPicker = function () {
       this.showActiveEvents();
     }
   }, {
+    key: 'maybeHideDay',
+    value: function maybeHideDay(day) {
+      var visibleEvents = day.querySelectorAll('.event-container[style*="display: initial"]');
+
+      if (visibleEvents.length) {
+        day.removeAttribute('style');
+      } else {
+        day.style.display = 'none';
+      }
+    }
+  }, {
     key: 'showActiveEvents',
     value: function showActiveEvents() {
       [].concat(_toConsumableArray(this.events)).forEach(this.maybeToggleEvent);
+      [].concat(_toConsumableArray(this.days)).forEach(this.maybeHideDay);
     }
   }, {
     key: 'maybeToggleEvent',

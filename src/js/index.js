@@ -12,6 +12,7 @@ const initEventPicker = () => {
     resetBox: document.querySelector(
       '.schedule__tag-form [name="all-event-types"]'
     ),
+    days: document.querySelectorAll('.schedule .day'),
   });
 
   if (eventPicker.shouldRun()) {
@@ -29,6 +30,6 @@ const initMaps = () => {
   });
 };
 
+window.addEventListener('load', initEventPicker);
 window.addEventListener('load', Collapsibles.init);
 window.addEventListener('load', initMaps);
-window.addEventListener('load', initEventPicker);
