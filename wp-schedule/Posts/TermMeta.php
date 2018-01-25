@@ -42,7 +42,7 @@ class TermMeta {
 				->set_help_text( 'Set to true to show a list of checkboxes to filter the events on this schedule\'s archive page.' ),
 			Field::make( 'checkbox', 'colby_schedule__hide_description', 'Hide descriptions?' )
 				->set_default_value( true )
-				->set_help_text( 'Set to true to show the event descriptions in an expandable drawer. If this is set to false, events\' maps will not be shown.' )
+				->set_help_text( 'Set to true to show the event descriptions in an expandable drawer. If this is set to false, events\' maps will not be shown.' ),
 		];
 	}
 
