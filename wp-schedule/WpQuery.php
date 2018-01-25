@@ -23,7 +23,7 @@ class WpQuery {
 		}
 
 		$this->query = class_exists( '\WP_Query' )
-			? new WP_Query( $args )
+			? new \WP_Query( $args )
 			: (object) [
 				'posts' => [],
 			];

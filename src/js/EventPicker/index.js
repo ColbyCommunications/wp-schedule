@@ -12,6 +12,7 @@ class EventPicker {
   constructor({ checkboxes, events }) {
     this.checkboxElements = [...checkboxes];
     this.events = events;
+    this.handleEmailButton();
   }
 
   shouldRun = () => this.checkboxElements.length && this.events;
@@ -91,6 +92,43 @@ class EventPicker {
 
   maybeToggleEvent(event) {
     event.style.display = this.shouldShow(event) ? 'initial' : 'none';
+  }
+
+  handleEmailButton() {
+    const button = document.querySelector('[data-email-to]');
+
+    if (!button) {
+      return;
+    }
+
+    button.addEventListener('click', event => {
+      const div = document.createElement('DIV');
+      const content = document.querySelector('.schedule');
+      div.innerHTML = content.innerHTML;
+      [...div.querySelectorAll('.day')].forEach(day => {
+        [...day.querySelectorAll('.event-container')].forEach(event => {
+          if (event.getAttribute('style') === 'display: none;') {
+            day.removeChild(event);
+          }
+        });
+      });
+
+      const textContent = div.textContent
+        .replace(/Show More/g, '')
+        .split('\n')
+        .filter(line => line.trim())
+        .join('\n')
+        .replace(/\t\t\t\t/g, '\t\t\t')
+        .replace(/\t\t\t/g, '\t\t')
+        .replace(/\t\t/g, '\t')
+        .replace(/\n\t/g, '\n')
+        .trim()
+        .replace(/\n\t([1-9]|Noon|Midnight)/g, match => `\n${match}`);
+
+      window.location.href = `mailto:?subject=${
+        document.title
+      }&body=${encodeURIComponent(textContent)}`;
+    });
   }
 }
 

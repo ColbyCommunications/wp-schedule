@@ -2,6 +2,7 @@
   column-count: 2;
   max-width: 540px;
   margin: 0 auto;
+  list-style: none;
 }
 
 /** Checkboxes. */
@@ -10,6 +11,11 @@
   font-weight: 600;
   color: #214280;
   text-transform: uppercase;
+}
+
+.schedule__tag-list {
+  margin-left: 0;
+  list-style: none;
 }
 
 @media screen and (min-width: 768px) {
@@ -31,8 +37,46 @@
   text-transform: uppercase;
 }
 
+.schedule__print-email {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  padding-bottom: 0.5rem;
+}
+
+.schedule__print-email a,
+.schedule__print-email button {
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
+  color: #214280;
+  transition: all 0.2s;
+}
+
+.schedule__print-email a:hover,
+.schedule__print-email button:hover {
+  color: color(#214280 shade(10%));
+  transform: scale(1.03);
+}
+
+.schedule__print-email svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.schedule__print svg {
+  width: 1.375rem;
+  height: 1.375rem;
+}
+
 .day {
   padding-top: 2.25rem;
+}
+
+.day:first-of-type {
+  padding-top: 0;
 }
 
 .day > header {
@@ -77,15 +121,25 @@
   margin-bottom: -0.75rem;
 }
 
-.event__heading {
+button.event__heading,
+div.event__heading {
   display: flex;
   align-items: center;
   align-items: stretch;
   width: 100%;
   padding: 0;
   text-transform: none;
+  cursor: default;
   background-color: rgba(0, 0, 0, 0.0375);
   transition: background-color 0.2s;
+}
+
+div.event__heading:hover {
+  background-color: rgba(0, 0, 0, 0.0375);
+}
+
+button.event__heading {
+  cursor: pointer;
 }
 
 .signature-events .event {
@@ -158,6 +212,7 @@
 .event__info {
   display: flex;
   flex: 1 1 auto;
+  flex-wrap: wrap;
   justify-content: space-between;
   padding: 2.25rem 1.5rem;
 }
@@ -212,6 +267,7 @@
 
 .event__title {
   display: block;
+  width: 100%;
   margin-bottom: 1rem;
   font-family: var(--serif);
   font-size: 126%;
@@ -220,9 +276,14 @@
 }
 
 .event__location {
+  width: 100%;
   font-size: 84.1%;
   line-height: 1.5;
   text-transform: uppercase;
+}
+
+.event__description {
+  margin-top: 1rem;
 }
 
 .event__arrow-container {

@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ColbyCommunications/colby-svg.git",
-                "reference": "4922d427ba87c214fd5ed1b01180b0d2012bc68f"
+                "reference": "c6979d5cf1a010a3ecacd065407efdbd9079485b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ColbyCommunications/colby-svg/zipball/4922d427ba87c214fd5ed1b01180b0d2012bc68f",
-                "reference": "4922d427ba87c214fd5ed1b01180b0d2012bc68f",
+                "url": "https://api.github.com/repos/ColbyCommunications/colby-svg/zipball/c6979d5cf1a010a3ecacd065407efdbd9079485b",
+                "reference": "c6979d5cf1a010a3ecacd065407efdbd9079485b",
                 "shasum": ""
             },
             "require-dev": {
@@ -45,7 +45,7 @@
                 }
             ],
             "description": "A library of SVGs used across projects, with a PHP class for loading and echoing them, plus a shortcode for use in WordPress.",
-            "time": "2018-01-10T13:36:37+00:00"
+            "time": "2018-01-25T16:08:19+00:00"
         },
         {
             "name": "colbycomms/wp-collapsible",

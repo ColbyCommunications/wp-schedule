@@ -23,6 +23,7 @@
   "homepage": "https://github.com/ivdekov/colby-wp-schedule#readme",
   "dependencies": {
     "array-intersection": "^0.1.2",
+    "cheerio-html-to-text": "^0.4.4",
     "colby-wp-collapsible": "^1.0.14"
   },
   "devDependencies": {

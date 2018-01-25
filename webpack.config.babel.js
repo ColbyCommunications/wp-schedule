@@ -9,6 +9,7 @@ const main = () => {
   const min = PROD ? '.min' : '';
   const entry = {
     [packageJson.name]: ['./src/js/index.js', './src/css/main.css'],
+    [`${packageJson.name}-print`]: './src/css/print.css',
   };
   const filename = `[name]${min}.js`;
   const plugins = [new ExtractTextPlugin(`[name]${min}.css`)];

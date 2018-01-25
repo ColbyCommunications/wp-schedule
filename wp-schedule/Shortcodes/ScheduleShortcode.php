@@ -21,8 +21,10 @@ class ScheduleShortcode {
 	public static $default_atts = [
 		'name'                => null,
 		'tags'                => null,
-		'include-past-events' => false,
+		'include-past-events' => 'false',
 		'active' => '',
+		'tag-selector' => 'true',
+		'show-description' => 'false',
 	];
 
 	/**
@@ -45,6 +47,7 @@ class ScheduleShortcode {
 	 * @return string The shortcode output.
 	 */
 	public static function render( WpQuery $events_query, array $atts = [], $term = null ) : string {
+		$atts = WP::shortcode_atts( self::$default_atts, $atts );
 		$days = self::sort_posts_by_day( $events_query->posts );
 		$tags = self::get_all_post_tag_ids( $events_query->posts );
 
@@ -69,7 +72,6 @@ class ScheduleShortcode {
 	 * @return string The shortcode output.
 	 */
 	public static function schedule_shortcode( $atts = [], $content = '' ) {
-		$attributes = WP::shortcode_atts( self::$default_atts, $atts );
 		$events_query = self::get_events_query( $attributes );
 
 		if ( ! $events_query->have_posts() ) {
@@ -170,20 +172,11 @@ class ScheduleShortcode {
 					'compare' => 'EXISTS',
 				],
 			],
-			'tax_query' => [
-				[
-					'taxonomy' => 'invitee_group',
-					'field'    => 'slug',
-					'terms'    => 'all',
-				],
-			],
 			'orderby' => [
 				'schedule_date' => 'ASC',
 				'schedule_time' => 'ASC',
 			],
 		];
-
-		$query_params = self::query_params_from_url_params( $query_params );
 
 		// URL params take precedent.
 		if ( empty( $query_params['tax_query'] ) ) {
@@ -227,40 +220,6 @@ class ScheduleShortcode {
 			$query_params['meta_query']['schedule_date']['compare'] = 'EXISTS';
 
 		}
-		return $query_params;
-	}
-
-	/**
-	 * Create query parameters from $_GET url parameters.
-	 *
-	 * @param array $query_params Query parameters.
-	 * @return array Parameters for the WP_Query.
-	 */
-	private static function query_params_from_url_params( $query_params ) {
-		global $post;
-
-		$invitee_group = WP::get_query_var( 'invitee-group' );
-		if ( empty( $invitee_group ) ) {
-			$term = WP::get_term_by( 'name', $post->post_name, 'invitee_group' );
-			if ( $term ) {
-				$invitee_group = $term->slug;
-			}
-		}
-
-		if ( empty( $invitee_group ) ) {
-			return $query_params;
-		}
-
-		if ( ! isset( $query_params['tax_query'] ) ) {
-			$query_params['tax_query'] = [];
-		}
-
-		$query_params['tax_query'][] = [
-			'taxonomy' => 'invitee_group',
-			'field'    => 'slug',
-			'terms'    => $invitee_group,
-		];
-
 		return $query_params;
 	}
 }

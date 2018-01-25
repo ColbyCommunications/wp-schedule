@@ -127,49 +127,20 @@ window.addEventListener('load', initEventPicker);
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _collapsiblize = __webpack_require__(3);
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+window.addEventListener('load', function () {
+  [].concat(_toConsumableArray(document.querySelectorAll('[data-collapsible]'))).forEach(function (container) {
+    var heading = container.querySelector('.collapsible-heading');
+    var panel = container.querySelector('.collapsible-panel');
 
-var Collapsibles = function () {
-  function Collapsibles() {
-    _classCallCheck(this, Collapsibles);
-  }
-
-  _createClass(Collapsibles, null, [{
-    key: 'init',
-    value: function init() {
-      if (!Collapsibles.hasStarted) {
-        Collapsibles.run();
-      }
+    if (heading && panel) {
+      (0, _collapsiblize.collapsiblize)({ heading: heading, panel: panel });
     }
-  }, {
-    key: 'run',
-    value: function run() {
-      Collapsibles.hasStarted = true;
-      [].concat(_toConsumableArray(document.querySelectorAll('[data-collapsible]'))).forEach(function (container) {
-        var heading = container.querySelector('.collapsible-heading');
-        var panel = container.querySelector('.collapsible-panel');
-
-        if (heading && panel) {
-          (0, _collapsiblize.collapsiblize)({ heading: heading, panel: panel });
-        }
-      });
-    }
-  }]);
-
-  return Collapsibles;
-}();
-
-exports.default = Collapsibles;
+  });
+});
 
 /***/ }),
 /* 3 */
@@ -285,6 +256,7 @@ var EventPicker = function () {
 
     this.checkboxElements = [].concat(_toConsumableArray(checkboxes));
     this.events = events;
+    this.handleEmailButton();
   }
 
   _createClass(EventPicker, [{
@@ -378,6 +350,36 @@ var EventPicker = function () {
     key: 'maybeToggleEvent',
     value: function maybeToggleEvent(event) {
       event.style.display = this.shouldShow(event) ? 'initial' : 'none';
+    }
+  }, {
+    key: 'handleEmailButton',
+    value: function handleEmailButton() {
+      var button = document.querySelector('[data-email-to]');
+
+      if (!button) {
+        return;
+      }
+
+      button.addEventListener('click', function (event) {
+        var div = document.createElement('DIV');
+        var content = document.querySelector('.schedule');
+        div.innerHTML = content.innerHTML;
+        [].concat(_toConsumableArray(div.querySelectorAll('.day'))).forEach(function (day) {
+          [].concat(_toConsumableArray(day.querySelectorAll('.event-container'))).forEach(function (event) {
+            if (event.getAttribute('style') === 'display: none;') {
+              day.removeChild(event);
+            }
+          });
+        });
+
+        var textContent = div.textContent.replace(/Show More/g, '').split('\n').filter(function (line) {
+          return line.trim();
+        }).join('\n').replace(/\t\t\t\t/g, '\t\t\t').replace(/\t\t\t/g, '\t\t').replace(/\t\t/g, '\t').replace(/\n\t/g, '\n').trim().replace(/\n\t([1-9]|Noon|Midnight)/g, function (match) {
+          return '\n' + match;
+        });
+
+        window.location.href = 'mailto:?subject=' + document.title + '&body=' + encodeURIComponent(textContent);
+      });
     }
   }]);
 
