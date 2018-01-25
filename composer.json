@@ -1,7 +1,7 @@
 {
   "name": "colbycomms/colby-wp-schedule",
   "description": "A WordPress plugin for creating table-based schedules.",
-  "type": "wordpress-plugin",
+  "type": "library",
   "scripts": {
     "phpcbf": "phpcbf --extensions=php",
     "lint": "phpcs --extensions=php -s",

@@ -135,6 +135,6 @@ class Plugin {
 			return plugin_dir_url( dirname( __DIR__ ) . '/index.php' ) . '/dist/';
 		}
 
-		return get_template_directory_uri() . '/vendor/colbycomms/whos-coming/dist/';
+		return get_template_directory_uri() . '/vendor/colbycomms/colby-wp-schedule/dist/';
 	}
 }
