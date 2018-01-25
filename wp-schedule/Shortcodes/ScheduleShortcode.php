@@ -7,7 +7,7 @@
 
 namespace ColbyComms\Schedules\Shortcodes;
 
-use ColbyComms\Schedules\{WpQuery, WpFunctions as WP};
+use ColbyComms\Schedules\Utils\{WpQuery, WpFunctions as WP};
 
 /**
  * Shortcode [schedule].

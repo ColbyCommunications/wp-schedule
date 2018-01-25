@@ -6,7 +6,7 @@
  */
 
 use Carbon_Fields\Helper\Helper;
-use ColbyComms\Schedules\{TemplateUtils as Templates, WpFunctions as WP};
+use ColbyComms\Schedules\Utils\{TemplateUtils as Templates, WpFunctions as WP};
 
 global $post;
 
@@ -21,7 +21,7 @@ WP::setup_postdata( $post );
 
 $terms = WP::get_the_terms( WP::get_the_id(), 'event_tag' ) ?: [];
 
-$do_map = Helper::get_the_post_meta( 'colby_schedule__do_map' ) && ! isset( $_GET['print'] );
+$do_map = Helper::get_the_post_meta( 'colby_schedule__do_map' ) && ! get_query_var( 'print' );
 
 if ( $do_map ) {
 	$map = Helper::get_the_post_meta( 'colby_schedule__map' );

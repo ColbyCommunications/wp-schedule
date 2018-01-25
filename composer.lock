@@ -53,12 +53,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ColbyCommunications/wp-collapsible.git",
-                "reference": "b3983000454cdd746913d12981eb074898f5ff06"
+                "reference": "eb7d50cab8b3e54b60fa98627837ae45f87cd411"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ColbyCommunications/wp-collapsible/zipball/b3983000454cdd746913d12981eb074898f5ff06",
-                "reference": "b3983000454cdd746913d12981eb074898f5ff06",
+                "url": "https://api.github.com/repos/ColbyCommunications/wp-collapsible/zipball/eb7d50cab8b3e54b60fa98627837ae45f87cd411",
+                "reference": "eb7d50cab8b3e54b60fa98627837ae45f87cd411",
                 "shasum": ""
             },
             "require": {
@@ -89,7 +89,7 @@
                 }
             ],
             "description": "A WordPress shortcode for collapsible HTML drawers.",
-            "time": "2018-01-15T22:07:10+00:00"
+            "time": "2018-01-19T12:43:28+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -424,19 +424,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionCommon.git",
-                "reference": "4bd3e3fbae45054ebbe8a2e1aba921aae477742c"
+                "reference": "e8e68dc40f300e50f5a3b254bd7b41eecdc4ddca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/4bd3e3fbae45054ebbe8a2e1aba921aae477742c",
-                "reference": "4bd3e3fbae45054ebbe8a2e1aba921aae477742c",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/e8e68dc40f300e50f5a3b254bd7b41eecdc4ddca",
+                "reference": "e8e68dc40f300e50f5a3b254bd7b41eecdc4ddca",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.1"
             },
             "require-dev": {
-                "phpstan/phpstan": "^0.9.0",
                 "phpunit/phpunit": "^6.5"
             },
             "type": "library",
@@ -471,7 +470,7 @@
                 "reflection",
                 "static analysis"
             ],
-            "time": "2018-01-12T10:28:45+00:00"
+            "time": "2018-01-18T22:08:35+00:00"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -637,12 +636,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "6f71fc195a60573380713751ed1fc887b4a4186a"
+                "reference": "66a25f3df567f2ed4845c0f56ea4e333ff1ee80d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/6f71fc195a60573380713751ed1fc887b4a4186a",
-                "reference": "6f71fc195a60573380713751ed1fc887b4a4186a",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/66a25f3df567f2ed4845c0f56ea4e333ff1ee80d",
+                "reference": "66a25f3df567f2ed4845c0f56ea4e333ff1ee80d",
                 "shasum": ""
             },
             "require": {
@@ -692,7 +691,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-12-29T08:56:48+00:00"
+            "time": "2018-01-25T05:21:37+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -886,12 +885,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "eae3fa30f3eb34c0dc05a155cd212ae30dd1553a"
+                "reference": "3e2ff3bb45b13f11b8fd958fb30068e6e11a4f7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/eae3fa30f3eb34c0dc05a155cd212ae30dd1553a",
-                "reference": "eae3fa30f3eb34c0dc05a155cd212ae30dd1553a",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3e2ff3bb45b13f11b8fd958fb30068e6e11a4f7e",
+                "reference": "3e2ff3bb45b13f11b8fd958fb30068e6e11a4f7e",
                 "shasum": ""
             },
             "require": {
@@ -958,7 +957,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-01-14T15:48:38+00:00"
+            "time": "2018-01-25T13:54:51+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -1673,12 +1672,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "9f56110922e6c20c7021291cdf3bfcff5bd72d64"
+                "reference": "977feae69ad0323d2aed9407c665a552aea28632"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/9f56110922e6c20c7021291cdf3bfcff5bd72d64",
-                "reference": "9f56110922e6c20c7021291cdf3bfcff5bd72d64",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/977feae69ad0323d2aed9407c665a552aea28632",
+                "reference": "977feae69ad0323d2aed9407c665a552aea28632",
                 "shasum": ""
             },
             "require": {
@@ -1716,7 +1715,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2018-01-15T03:22:29+00:00"
+            "time": "2018-01-18T00:31:32+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",

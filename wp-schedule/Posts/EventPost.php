@@ -5,10 +5,10 @@
  * @package colby-wp-schedule
  */
 
-namespace ColbyComms\Schedules;
+namespace ColbyComms\Schedules\Posts;
 
 use \WP_Query;
-use ColbyComms\Schedules\WpFunctions as WP;
+use ColbyComms\Schedules\Utils\WpFunctions as WP;
 
 /**
  * Setup 'event' custom post type.
@@ -24,6 +24,7 @@ class EventPost extends CustomPostType {
 		WP::add_action( 'init', [ $this, 'register_custom_taxonomies' ] );
 		WP::add_filter( "rest_{$this->post_type}_query", [ $this, 'handle_rest_taxonomies' ], 10, 2 );
 		WP::add_action( 'pre_get_posts', [ __CLASS__, 'include_terms_from_parent_in_query' ] );
+		WP::add_action( 'pre_get_posts', [ __CLASS__, 'order_events_by_date_and_time' ] );
 	}
 
 	/**
@@ -143,6 +144,40 @@ class EventPost extends CustomPostType {
 			[
 				'relation' => 'OR',
 				$term_parents_query,
+			]
+		);
+	}
+
+	/**
+	 * Order events in a schedule term by time and date meta fields.
+	 *
+	 * @param \WP_Query $query A query.
+	 * @return void
+	 */
+	public static function order_events_by_date_and_time( \WP_Query $query ) : void {
+		if ( ! $query->is_main_query() || ! $query->is_tax( 'schedule_category' ) ) {
+			return;
+		}
+
+		$query->set(
+			'meta_query', [
+				'relation'     => 'AND',
+				'schedule_date' => [
+					'key'     => '_colby_schedule__date',
+					'value'   => date( 'Y-m-d' ),
+					'compare' => '>',
+				],
+				'schedule_time' => [
+					'key'     => '_colby_schedule__start_time',
+					'compare' => 'EXISTS',
+				],
+			]
+		);
+
+		$query->set(
+			'orderby', [
+				'schedule_date' => 'ASC',
+				'schedule_time' => 'ASC',
 			]
 		);
 	}

@@ -6,7 +6,7 @@
  */
 
 use ColbyComms\SVG\SVG;
-use ColbyComms\Schedules\WpFunctions as WP;
+use ColbyComms\Schedules\Utils\WpFunctions as WP;
 
 if ( empty( $days || ! is_array( $days ) ) || ! is_array( $tags ) || ! isset( $active_tags ) ) {
 	return;

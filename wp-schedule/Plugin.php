@@ -8,7 +8,7 @@
 namespace ColbyComms\Schedules;
 
 use Carbon_Fields\Helper\Helper;
-use ColbyComms\Schedules\WpFunctions as WP;
+use ColbyComms\Schedules\Utils\WpFunctions as WP;
 
 /**
  * Add general hooks for this plugin.
@@ -22,6 +22,19 @@ class Plugin {
 		WP::add_action( 'init', [ __CLASS__, 'maybe_run' ], 8 );
 		WP::add_action( 'wp_enqueue_scripts', [ __CLASS__, 'enqueue_google_script' ], 1 );
 		WP::add_action( 'wp_enqueue_scripts', [ __CLASS__, 'enqueue_scripts_and_styles' ] );
+		WP::add_filter( 'query_vars', [ __CLASS__, 'add_print_query_var' ] );
+	}
+
+	/**
+	 * Add 'print' to accepted query vars.
+	 *
+	 * @param array $query_vars Query vars array.
+	 * @return array Modified array.
+	 */
+	public static function add_print_query_var( array $query_vars ) : array {
+		$query_vars[] = 'print';
+
+		return $query_vars;
 	}
 
 	/**
@@ -45,7 +58,7 @@ class Plugin {
 		 * @param bool True to run.
 		 */
 		if ( WP::apply_filters( 'colby_wp_schedule_run', true ) ) {
-			new EventPost();
+			new Posts\EventPost();
 			new Shortcodes\ScheduleShortcode();
 			new Shortcodes\SchedulePickerShortcode();
 		}
@@ -109,7 +122,7 @@ class Plugin {
 			"{$dist}colby-wp-schedule-print$min.css",
 			[],
 			VERSION,
-			isset( $_GET['print'] ) ? 'all' : 'print'
+			get_query_var( 'print' ) ? 'all' : 'print'
 		);
 	}
 

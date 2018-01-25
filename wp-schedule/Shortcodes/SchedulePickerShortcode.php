@@ -7,7 +7,7 @@
 
 namespace ColbyComms\Schedules\Shortcodes;
 
-use ColbyComms\Schedules\WpFunctions as WP;
+use ColbyComms\Schedules\Utils\WpFunctions as WP;
 
 /**
  * Shortcode [schedule-picker].

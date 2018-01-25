@@ -1,5 +1,5 @@
 <?php
-
+// @codingStandardsIgnoreFile
 if ( ! function_exists( 'pp' ) ) {
 	function pp( $data, $die = 0 ) {
 		echo '<pre>';

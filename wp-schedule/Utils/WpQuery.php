@@ -5,7 +5,7 @@
  * @package colbycomms/wp-collapsible
  */
 
-namespace ColbyComms\Schedules;
+namespace ColbyComms\Schedules\Utils;
 
 /**
  * A testable wrapper for WP's WP_Query class.

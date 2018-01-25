@@ -5,10 +5,10 @@
  * @package colby-wp-schedule
  */
 
-namespace ColbyComms\Schedules;
+namespace ColbyComms\Schedules\Posts;
 
 use Carbon_Fields\{Field, Container};
-use ColbyComms\Schedules\WpFunctions as WP;
+use ColbyComms\Schedules\Utils\WpFunctions as WP;
 
 /**
  * Add hooks to register meta fields for events posts.

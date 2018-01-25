@@ -5,7 +5,7 @@
  * @package colbycomms/colby-wp-schedule
  */
 
-namespace ColbyComms\Schedules;
+namespace ColbyComms\Schedules\Utils;
 
 /**
  * Wrapper for WP functions called in this plugin. Provides fallbacks for testing.

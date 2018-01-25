@@ -5,10 +5,10 @@
  * @package colbycomms/colby-wp-schedule
  */
 
-namespace ColbyComms\Schedules;
+namespace ColbyComms\Schedules\Utils;
 
 use Carbon_Fields\Helper\Helper;
-use ColbyComms\Schedules\WpFunctions as WP;
+use ColbyComms\Schedules\Utils\WpFunctions as WP;
 
 /**
  * Provides utilities for the template files.
