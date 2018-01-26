@@ -18,7 +18,7 @@ class ScheduleCategoryArchive {
 	 * Add hooks.
 	 */
 	public function __construct() {
-		WP::add_action( 'pre_get_posts', [ __CLASS__, 'query_all_posts' ] );
+		WP::add_action( 'pre_get_posts', [ __CLASS__, 'query_all_event_posts' ] );
 		WP::add_action( 'pre_get_posts', [ __CLASS__, 'include_posts_from_parent_in_query' ] );
 		WP::add_action( 'pre_get_posts', [ __CLASS__, 'order_events_by_date_and_time' ] );
 	}
@@ -29,7 +29,8 @@ class ScheduleCategoryArchive {
 	 * @param \WP_Query $query A query instance.
 	 * @return boolean Yes or no.
 	 */
-	public static function doing_category_archive( \WP_Query $query ) : bool {
+	public static function doing_schedule_category_archive( \WP_Query $query = null ) : bool {
+		$query = $query ?: $GLOBALS['wp_query'];
 		return $query->is_main_query() && $query->is_tax( Schedule::CATEGORY_NAME );
 	}
 
@@ -39,8 +40,8 @@ class ScheduleCategoryArchive {
 	 * @param \WP_Query $query A WP_Query instance.
 	 * @return void
 	 */
-	public static function query_all_posts( \WP_Query $query ) : void {
-		if ( ! self::doing_category_archive( $query ) ) {
+	public static function query_all_event_posts( \WP_Query $query ) : void {
+		if ( ! self::doing_schedule_category_archive( $query ) ) {
 			return;
 		}
 
@@ -56,7 +57,7 @@ class ScheduleCategoryArchive {
 	 * @return void
 	 */
 	public static function include_posts_from_parent_in_query( \WP_Query $query ) {
-		if ( ! self::doing_category_archive( $query ) ) {
+		if ( ! self::doing_schedule_category_archive( $query ) ) {
 			return;
 		}
 
@@ -96,7 +97,7 @@ class ScheduleCategoryArchive {
 	 * @return void
 	 */
 	public static function order_events_by_date_and_time( \WP_Query $query ) : void {
-		if ( ! self::doing_category_archive( $query ) ) {
+		if ( ! self::doing_schedule_category_archive( $query ) ) {
 			return;
 		}
 

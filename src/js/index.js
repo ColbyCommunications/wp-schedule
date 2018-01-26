@@ -30,6 +30,6 @@ const initMaps = () => {
   });
 };
 
-window.addEventListener('load', initEventPicker);
-window.addEventListener('load', Collapsibles.init);
+initEventPicker();
+Collapsibles.init();
 window.addEventListener('load', initMaps);
