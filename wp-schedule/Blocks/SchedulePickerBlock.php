@@ -5,14 +5,14 @@
  * @package colby-wp-schedule
  */
 
-namespace ColbyComms\Schedules\Shortcodes;
+namespace ColbyComms\Schedules\Blocks;
 
 use ColbyComms\Schedules\Utils\WpFunctions as WP;
 
 /**
- * Shortcode [schedule-picker].
+ * Block [schedule-picker].
  */
-class SchedulePickerShortcode {
+class SchedulePickerBlock {
 	/**
 	 * Add shortcode.
 	 */
@@ -25,7 +25,7 @@ class SchedulePickerShortcode {
 	/**
 	 * The shortcode callback.
 	 *
-	 * @param array $atts Shortcode attributes.
+	 * @param array $atts Block attributes.
 	 * @return string The shortcode output.
 	 */
 	public static function schedule_picker( $atts = [] ) : string {
@@ -34,19 +34,22 @@ class SchedulePickerShortcode {
 		}
 
 		$parent_term = WP::get_term_by( 'name', $atts['schedule'], 'schedule_category' );
+
 		if ( empty( $parent_term ) ) {
 			return '';
 		}
 
 		$terms = WP::get_term_children( $parent_term->term_id, 'schedule_category' );
+
 		if ( empty( $terms ) ) {
 			return '';
 		}
 
-		$extra = '
-			<h4 class="mt-4">
-				<a href="' . WP::get_term_link( $parent_term->term_id ) . '">View all events</a>
-			</h4>';
+		$link = WP::get_term_link( $parent_term->term_id );
+		$extra = "
+			<h4 class=\"mt-4\">
+				<a href=\"$link\">View all events</a>
+			</h4>";
 		$output = '
 			<section class="text-center">
 				<h2 class="section-title">Choose Your Class Year</h2>

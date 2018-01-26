@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Colby Schedules
  *
- * Description: Shortcodes for providings events listings.
+ * Description: Blocks for providings events listings.
  * Version: 0.0.1
  * Author: John Watkins
  * Author Email: john.watkins@colby.edu

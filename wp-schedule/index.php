@@ -23,5 +23,5 @@ WP::add_action( 'after_setup_theme', [ 'Carbon_Fields\\Carbon_Fields', 'boot' ] 
 
 new Options();
 new Plugin();
-new Posts\EventMeta();
-new Posts\TermMeta();
+new Event\EventMeta();
+new Schedule\ScheduleMeta();

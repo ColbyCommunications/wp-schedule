@@ -5,15 +5,30 @@
  * @package colby-wp-schedule
  */
 
-namespace ColbyComms\Schedules\Posts;
+namespace ColbyComms\Schedules\Schedule;
 
+use Carbon_Fields\Helper\Helper as Carbon;
 use Carbon_Fields\{Field, Container};
 use ColbyComms\Schedules\Utils\WpFunctions as WP;
 
 /**
  * Add hooks to register meta fields for events posts.
  */
-class TermMeta {
+class ScheduleMeta {
+	/**
+	 * Meta key.
+	 *
+	 * @param string
+	 */
+	const DO_TAG_LIST_KEY = 'colby_schedule__do_tag_list';
+
+	/**
+	 * Meta key.
+	 *
+	 * @param string
+	 */
+	const DO_HIDE_DESCRIPTION_KEY = 'colby_schedule__hide_description';
+
 	/**
 	 * Constructor function; add all hooks.
 	 */
@@ -37,10 +52,11 @@ class TermMeta {
 	 */
 	public static function get_fields() {
 		return [
-			Field::make( 'checkbox', 'colby_schedule__do_tag_list', 'Show tag list?' )
+			Field::make( 'checkbox', self::DO_TAG_LIST_KEY, 'Show tag list?' )
 				->set_default_value( true )
 				->set_help_text( 'Set to true to show a list of checkboxes to filter the events on this schedule\'s archive page.' ),
-			Field::make( 'checkbox', 'colby_schedule__hide_description', 'Hide descriptions?' )
+
+			Field::make( 'checkbox', self::DO_HIDE_DESCRIPTION_KEY, 'Hide descriptions?' )
 				->set_default_value( true )
 				->set_help_text( 'Set to true to show the event descriptions in an expandable drawer. If this is set to false, events\' maps will not be shown.' ),
 		];
@@ -51,5 +67,16 @@ class TermMeta {
 	 */
 	public function register_fields() {
 		$this->details_box->add_fields( self::get_fields() );
+	}
+
+	/**
+	 * Get a meta field.
+	 *
+	 * @param string $key A meta key.
+	 * @param int|string $id A term id.
+	 * @return mixed The retrieved value.
+	 */
+	public static function get( string $key, $id = null ) {
+		return Carbon::get_term_meta( $id, $key );
 	}
 }

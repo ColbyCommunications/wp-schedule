@@ -10,6 +10,12 @@
     "stylelint": "stylelint src/css --fix",
     "prepare": "npm run build"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && composer phpcbf && composer lint",
+      "pre-push": "npm run prepare && composer lint"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ivdekov/colby-wp-schedule.git"
@@ -45,6 +51,7 @@
     "eslint-plugin-react": "^7.5.1",
     "eslint-plugin-relay": "^0.0.20",
     "extract-text-webpack-plugin": "^3.0.2",
+    "husky": "^0.15.0-rc.3",
     "node-autodeploy-wp": "^1.0.20",
     "postcss-cli": "^4.1.1",
     "postcss-color-function": "^4.0.1",

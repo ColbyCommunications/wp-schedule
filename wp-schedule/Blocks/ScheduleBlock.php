@@ -5,20 +5,25 @@
  * @package colby-wp-schedule
  */
 
-namespace ColbyComms\Schedules\Shortcodes;
+namespace ColbyComms\Schedules\Blocks;
 
+use ColbyComms\SVG\SVG;
+use ColbyComms\Schedules\Event\EventMeta;
+use ColbyComms\Schedules\Schedule\Schedule;
 use ColbyComms\Schedules\Utils\{WpQuery, WpFunctions as WP};
 
 /**
- * Shortcode [schedule].
+ * Block [schedule].
  */
-class ScheduleShortcode {
+class ScheduleBlock {
+	const SHORTCODE_TAG = 'schedule';
+
 	/**
 	 * Default shortcode attributes.
 	 *
 	 * @var array
 	 */
-	public static $default_atts = [
+	const DEFAULT_ATTS = [
 		'name'                => null,
 		'tags'                => null,
 		'include-past-events' => 'false',
@@ -31,23 +36,76 @@ class ScheduleShortcode {
 	 * Registers the shortcode callback.
 	 */
 	public function __construct() {
-		if ( ! WP::shortcode_exists( 'schedule' ) ) {
-			WP::add_shortcode( 'schedule', [ __CLASS__, 'schedule_shortcode' ] );
+		if ( ! WP::shortcode_exists( self::SHORTCODE_TAG ) ) {
+			WP::add_shortcode( self::SHORTCODE_TAG, [ __CLASS__, 'render_shortcode' ] );
 		}
 
 		WP::add_filter( 'query_vars', [ __CLASS__, 'add_url_query_vars' ] );
 	}
 
 	/**
+	 * Renders the block.
+	 *
+	 * @param array $atts Arguments.
+	 * @param array $days Associative array of posts sorted by day.
+	 * @param array $tags The tags applicable to the page.
+	 * @param array $active_tags The initially active tag.
+	 * @param \WP_Term $term If we're on a schedule archive page, the WP_Term object.
+	 * @return string HTML.
+	 */
+	public static function render( array $atts = [], array $days = [], array $tags = [], array $active_tags = [], \WP_Term $term = null ) : string {
+		ob_start();
+
+		if ( isset( $atts['tag-selector'] ) && 'true' === $atts['tag-selector'] ) : ?>
+<form class="schedule__tag-form">
+	<ul class="schedule__tag-list">
+	<?php foreach ( $tags as $tag ) : ?>
+		<li>
+			<label>
+				<input
+					type="checkbox"
+					name="event-tag"
+					value="<?php echo WP::esc_attr( $tag->term_id ); ?>"
+					<?php echo null === $term || in_array( $tag->name, $active_tags, true ) ? 'checked' : ''; ?>>
+				<?php echo $tag->name; ?>
+			</label>
+		</li>
+	<?php endforeach; ?>
+	</ul>
+</form>
+<?php endif; ?>
+<aside class="schedule__print-email">
+	<div class="schedule__print">
+		<a href="javascript:window.print()"><?php SVG::show( 'print' ); ?></a>
+	</div>
+	<div class="schedule__email">
+		<button data-email-to type="submit"><?php SVG::show( 'email' ); ?></button>
+	</div>
+</aside>
+<div class="schedule">
+	<?php
+	foreach ( $days as $date => $events ) :
+
+		echo DayBlock::render( $atts, $date, $events, $term );
+
+	endforeach;
+	?>
+</div>
+
+		<?php
+		return ob_get_clean();
+	}
+
+	/**
 	 * Set up variables to send to the template.
 	 *
-	 * @param WpQuery $events_query A query for events posts.
-	 * @param array $atts Shortcode attributes.
+	 * @param \WP_Query $events_query A query for events posts.
+	 * @param array $atts Block attributes.
 	 * @param mixed $term The term if we're on a term archive page.
 	 * @return string The shortcode output.
 	 */
-	public static function render( WpQuery $events_query, array $atts = [], $term = null ) : string {
-		$atts = WP::shortcode_atts( self::$default_atts, $atts );
+	public static function render_block( \WP_Query $events_query, array $atts = [], $term = null ) : string {
+		$atts = WP::shortcode_atts( self::DEFAULT_ATTS, $atts );
 		$days = self::sort_posts_by_day( $events_query->posts );
 		$tags = self::get_all_post_tag_ids( $events_query->posts );
 
@@ -57,29 +115,25 @@ class ScheduleShortcode {
 		// Sort by date.
 		ksort( $days );
 
-		ob_start();
-
-		include dirname( __DIR__ ) . '/templates/schedule.php';
-
-		return ob_get_clean();
+		return self::render( $atts, $days, $tags, $active_tags, $term );
 	}
 
 	/**
 	 * The [schedule] shortcode callback.
 	 *
-	 * @param array  $atts Shortcode attributes.
-	 * @param string $content Shortcode content.
+	 * @param array  $atts Block attributes.
+	 * @param string $content Block content.
 	 * @return string The shortcode output.
 	 */
-	public static function schedule_shortcode( $atts = [], $content = '' ) {
-		$atts = WP::shortcode_atts( self::$default_atts, $atts );
+	public static function render_shortcode( $atts = [], $content = '' ) {
+		$atts = WP::shortcode_atts( self::DEFAULT_ATTS, $atts );
 		$events_query = self::get_events_query( $atts );
 
 		if ( ! $events_query->have_posts() ) {
 			return '';
 		}
 
-		return self::render( $events_query, $atts );
+		return self::render_block( $events_query, $atts );
 	}
 
 	/**
@@ -92,7 +146,7 @@ class ScheduleShortcode {
 		return array_reduce(
 			$posts,
 			function( $output, $post ) {
-				$day = WP::get_post_meta( $post->ID, '_colby_schedule__date', 1 );
+				$day = EventMeta::get( EventMeta::DATE_KEY, $post->ID );
 				$output[ $day ][] = $post;
 				return $output;
 			},
@@ -154,10 +208,10 @@ class ScheduleShortcode {
 	/**
 	 * Gets a query for posts with the event post_type.
 	 *
-	 * @param array $atts Shortcode attributes.
-	 * @return WpQuery The query wrapper.
+	 * @param array $atts Block attributes.
+	 * @return \WP_Query
 	 */
-	public static function get_events_query( array $atts = [] ) : WpQuery {
+	public static function get_events_query( array $atts = [] ) : \WP_Query {
 		$query_params = [
 			'post_type'      => 'event',
 			'posts_per_page' => 99,
@@ -184,14 +238,14 @@ class ScheduleShortcode {
 			$query_params = self::add_params_from_shortcode_atts( $query_params, $atts );
 		}
 
-		return new WpQuery( $query_params );
+		return new \WP_Query( $query_params );
 	}
 
 	/**
 	 * Create query parameters from shortcode attributes.
 	 *
 	 * @param array $query_params Query parameters.
-	 * @param array $atts Shortcode attributes.
+	 * @param array $atts Block attributes.
 	 * @return array Parameters for the WP_Query.
 	 */
 	private static function add_params_from_shortcode_atts( $query_params, $atts ) {

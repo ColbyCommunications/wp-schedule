@@ -58,9 +58,11 @@ class Plugin {
 		 * @param bool True to run.
 		 */
 		if ( WP::apply_filters( 'colby_wp_schedule_run', true ) ) {
-			new Posts\EventPost();
-			new Shortcodes\ScheduleShortcode();
-			new Shortcodes\SchedulePickerShortcode();
+			new Event\Event();
+			new Schedule\Schedule();
+			new Blocks\ScheduleBlock();
+			new Blocks\SchedulePickerBlock();
+			new Blocks\EventBlock();
 		}
 	}
 
@@ -117,13 +119,20 @@ class Plugin {
 			);
 		}
 
-		wp_enqueue_style(
-			TEXT_DOMAIN . '-print',
-			"{$dist}colby-wp-schedule-print$min.css",
-			[],
-			VERSION,
-			get_query_var( 'print' ) ? 'all' : 'print'
-		);
+		/**
+		 * Filters whether to enqueue this plugin's print stylesheet.
+		 *
+		 * @param bool Yes or no.
+		 */
+		if ( apply_filters( 'colbycomms__wp_schedule__enqueue_print_style', true ) === true ) {
+			wp_enqueue_style(
+				TEXT_DOMAIN . '-print',
+				"{$dist}colby-wp-schedule-print$min.css",
+				[],
+				VERSION,
+				get_query_var( 'print' ) ? 'all' : 'print'
+			);
+		}
 	}
 
 	/**
