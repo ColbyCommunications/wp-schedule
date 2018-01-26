@@ -7,22 +7,73 @@
 
 namespace ColbyComms\Schedules;
 
-use Carbon_Fields\Helper\Helper;
 use ColbyComms\Schedules\Utils\WpFunctions as WP;
+use ColbyComms\Schedules\Schedule\ScheduleCategoryArchive;
+use ColbyComms\Schedules\Blocks\EventBlock;
 
 /**
  * Add general hooks for this plugin.
  */
-class Plugin {
+class Schedules {
+	/**
+	 * This plugin's package name.
+	 *
+	 * @var string
+	 */
+	const PACKAGE_NAME = 'colbycomms/wp-schedule';
+
+	/**
+	 * The plugin text domain.
+	 *
+	 * @var string
+	 */
+	const TEXT_DOMAIN = 'wp-schedule';
+
+	/**
+	 * Plugin version.
+	 *
+	 * @var string
+	 */
+	const VERSION = '1.0.0';
+
+	/**
+	 * Whether this is a production environment.
+	 *
+	 * @var bool
+	 */
+	const PROD = false;
+
+	/**
+	 * A string prepended to all filter names.
+	 *
+	 * @var string
+	 */
+	const FILTER_NAMESPACE = 'colbycomms__wp_schedule__';
+
+	const BEFORE_SCHEDULE_ARCHIVE_FILTER = self::FILTER_NAMESPACE . 'before_schedule_archive';
+	const AFTER_SCHEDULE_ARCHIVE_FILTER = self::FILTER_NAMESPACE . 'after_schedule_archive';
+	const USE_SCHEDULE_CATEGORY_TEMPLATE_FILTER = self::FILTER_NAMESPACE . 'use_schedule_category_template';
+	const DO_EVENT_SHORTCODE_FILTER = self::FILTER_NAMESPACE . 'add_' . EventBlock::SHORTCODE_TAG . '_shortcode';
+	const ENQUEUE_SCRIPT_FILTER = self::FILTER_NAMESPACE . 'enqueue_script';
+	const ENQUEUE_STYLE_FILTER = self::FILTER_NAMESPACE . 'enqueue_style';
+	const ENQUEUE_PRINT_STYLE_FILTER = self::FILTER_NAMESPACE . 'enqueue_print_style';
+	const DIST = self::FILTER_NAMESPACE . 'dist';
+
 	/**
 	 * Add action hooks.
 	 */
 	public function __construct() {
+		new ThemeOptions();
+		new Event\EventMeta();
+		new Schedule\ScheduleMeta();
+
+		WP::add_action( 'after_setup_theme', [ '\\Carbon_Fields\\Carbon_Fields', 'boot' ] );
 		WP::add_filter( 'carbon_fields_map_field_api_key', [ __CLASS__, 'get_google_maps_api_key' ] );
 		WP::add_action( 'init', [ __CLASS__, 'maybe_run' ], 8 );
 		WP::add_action( 'wp_enqueue_scripts', [ __CLASS__, 'enqueue_google_script' ], 1 );
 		WP::add_action( 'wp_enqueue_scripts', [ __CLASS__, 'enqueue_scripts_and_styles' ] );
 		WP::add_filter( 'query_vars', [ __CLASS__, 'add_print_query_var' ] );
+		WP::add_filter( 'template_include', [ __CLASS__, 'use_schedule_category_template' ] );
 	}
 
 	/**
@@ -43,7 +94,7 @@ class Plugin {
 	 * @return string The key.
 	 */
 	public static function get_google_maps_api_key() : string {
-		return Helper::get_theme_option( 'wp_schedule_google_maps_api_key' ) ?: '';
+		return ThemeOptions::get( ThemeOptions::GOOGLE_MAPS_API_KEY_KEY ) ?: '';
 	}
 
 	/**
@@ -72,7 +123,12 @@ class Plugin {
 	 * @return void
 	 */
 	public static function enqueue_google_script() {
-		$key = Helper::get_theme_option( 'wp_schedule_google_maps_api_key' );
+		$key = ThemeOptions::get( ThemeOptions::GOOGLE_MAPS_API_KEY_KEY );
+
+		if ( ! $key ) {
+			return;
+		}
+
 		WP::wp_enqueue_script(
 			'google-maps',
 			"https://maps.googleapis.com/maps/api/js?key=$key",
@@ -89,18 +145,19 @@ class Plugin {
 	 */
 	public static function enqueue_scripts_and_styles() : void {
 		$dist = self::get_dist_directory();
-		$min = defined( 'PROD' ) && PROD ? '.min' : '';
+		$min = self::PROD ? '.min' : '';
+
 		/**
 		 * Filters whether to enqueue this plugin's script.
 		 *
 		 * @param bool Yes or no.
 		 */
-		if ( apply_filters( 'colbycomms__wp_schedule__enqueue_script', true ) === true ) {
+		if ( apply_filters( self::ENQUEUE_SCRIPT_FILTER, true ) === true ) {
 			wp_enqueue_script(
-				TEXT_DOMAIN,
+				self::TEXT_DOMAIN,
 				"{$dist}colby-wp-schedule$min.js",
 				[],
-				VERSION,
+				self::VERSION,
 				true
 			);
 		}
@@ -110,12 +167,12 @@ class Plugin {
 		 *
 		 * @param bool Yes or no.
 		 */
-		if ( apply_filters( 'colbycomms__wp_schedule__enqueue_style', true ) === true ) {
+		if ( apply_filters( self::ENQUEUE_STYLE_FILTER, true ) ) {
 			wp_enqueue_style(
-				TEXT_DOMAIN,
+				self::TEXT_DOMAIN,
 				"{$dist}colby-wp-schedule$min.css",
 				[],
-				VERSION
+				self::VERSION
 			);
 		}
 
@@ -124,12 +181,12 @@ class Plugin {
 		 *
 		 * @param bool Yes or no.
 		 */
-		if ( apply_filters( 'colbycomms__wp_schedule__enqueue_print_style', true ) === true ) {
+		if ( apply_filters( self::ENQUEUE_PRINT_STYLE_FILTER, true ) ) {
 			wp_enqueue_style(
-				TEXT_DOMAIN . '-print',
+				self::TEXT_DOMAIN . '-print',
 				"{$dist}colby-wp-schedule-print$min.css",
 				[],
-				VERSION,
+				self::VERSION,
 				get_query_var( 'print' ) ? 'all' : 'print'
 			);
 		}
@@ -148,7 +205,7 @@ class Plugin {
 		 *
 		 * @param string The URL.
 		 */
-		$dist = apply_filters( 'colbycomms__whos_coming__dist', '' );
+		$dist = apply_filters( self::DIST, '' );
 		if ( ! empty( $dist ) ) {
 			return $dist;
 		}
@@ -158,5 +215,28 @@ class Plugin {
 		}
 
 		return get_template_directory_uri() . '/vendor/colbycomms/colby-wp-schedule/dist/';
+	}
+
+	/**
+	 * Maybe use the schedule_category archive template provided by this plugin.
+	 *
+	 * @param string $template_path The template path provided by WordPress.
+	 * @return string The possibly modified template path.
+	 */
+	public static function use_schedule_category_template( string $template_path ) : string {
+		if ( ! ScheduleCategoryArchive::doing_schedule_category_archive() ) {
+			return $template_path;
+		}
+
+		/**
+		 * Filters whether to use the schedule_category archive template this plugin provides.
+		 *
+		 * @param bool True by default.
+		 */
+		if ( ! apply_filters( self::USE_SCHEDULE_CATEGORY_TEMPLATE_FILTER, true ) ) {
+			return $template_path;
+		}
+
+		return __DIR__ . '/taxonomy-schedule_category.php';
 	}
 }

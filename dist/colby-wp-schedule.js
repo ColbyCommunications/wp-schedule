@@ -117,8 +117,8 @@ var initMaps = function initMaps() {
   });
 };
 
-window.addEventListener('load', initEventPicker);
-window.addEventListener('load', _colbyWpCollapsible2.default.init);
+initEventPicker();
+_colbyWpCollapsible2.default.init();
 window.addEventListener('load', initMaps);
 
 /***/ }),

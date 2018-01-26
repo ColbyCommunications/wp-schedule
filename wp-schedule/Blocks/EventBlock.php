@@ -7,6 +7,7 @@
 
 namespace ColbyComms\Schedules\Blocks;
 
+use ColbyComms\Schedules\Schedules;
 use ColbyComms\Schedules\Utils\{WpFunctions as WP};
 use ColbyComms\Schedules\Event\{Event, EventMeta};
 use ColbyComms\Schedules\Schedule\Schedule;
@@ -62,7 +63,7 @@ class EventBlock {
 		 *
 		 * @param boolean Default false.
 		 */
-		if ( ! WP::apply_filters( sprintf( 'colbycomms__add_%s_shortcode', self::SHORTCODE_TAG ), false ) ) {
+		if ( ! WP::apply_filters( Schedules::DO_EVENT_SHORTCODE_FILTER, false ) ) {
 			return;
 		}
 
