@@ -2,7 +2,7 @@
 /**
  * Initialize the main classes. This file autoloads.
  *
- * @package colby-wp-schedule
+ * @package wp-schedule
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

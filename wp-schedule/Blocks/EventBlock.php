@@ -277,7 +277,7 @@ class EventBlock {
 		<?php endif; ?>
 		>
 		<div class="collapsible event" data-collapsible>
-			<<?php echo $this->do_expandable ? 'button' : 'div'; ?> class="collapsible-heading event__heading"
+			<<?php echo 'true' !== $this->atts['show-description'] ? 'button' : 'div'; ?> class="collapsible-heading event__heading"
 				aria-pressed="false">
 				<span class="event__time">
 					<?php echo Event::get_formatted_event_time(); ?>
@@ -299,9 +299,10 @@ class EventBlock {
 						<span class="event__description">
 							<?php the_content(); ?>
 						</span>
+						<?php echo Event::get_calendar_data(); ?>
 						<?php endif; ?>
 					</span>
-					<?php if ( $this->do_expandable ) : ?>
+					<?php if ( 'true' !== $this->atts['show-description'] ) : ?>
 					<span class="event__arrow-container">
 						<svg width="1792" height="1792" viewBox="0 0 1792 1792" class="down-arrow-svg">
 							<title>Show More</title>
@@ -310,18 +311,20 @@ class EventBlock {
 					</span>
 					<?php endif; ?>
 				</span>
-			</<?php echo $this->do_expandable ? 'button' : 'div'; ?>>
-			<?php if ( $this->do_expandable ) : ?>
+			</<?php echo 'true' !== $this->atts['show-description'] ? 'button' : 'div'; ?>>
+			<?php if ( 'true' !== $this->atts['show-description'] ) : ?>
 			<div class="collapsible-panel" aria-hidden="true">
 				<?php if ( ! $this->do_map ) : ?>
 				<?php WP::the_content(); ?>
+				<?php echo Event::get_calendar_data(); ?>
 				<?php else : ?>
 				<div class="row">
-					<?php if ( trim( WP::get_the_content() ) ) : ?>
 					<div class="col-12 col-md-6">
+						<?php if ( trim( WP::get_the_content() ) ) : ?>
 							<?php WP::the_content(); ?>
+						<?php endif; ?>
+						<?php echo Event::get_calendar_data(); ?>
 					</div>
-					<?php endif; ?>
 					<div class="col-12<?php echo trim( WP::get_the_content() ) ? ' col-md-6' : ''; ?>">
 						<div style="height: 100%; min-height: 250px;"
 							data-google-map<?php self::google_map_attributes( $this->map ); ?>>

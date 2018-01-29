@@ -2,11 +2,12 @@
 /**
  * EventPost.php
  *
- * @package colby-wp-schedule
+ * @package wp-schedule
  */
 
 namespace ColbyComms\Schedules\Event;
 
+use ColbyComms\SVG\SVG;
 use ColbyComms\Schedules\Utils\WpFunctions as WP;
 
 /**
@@ -24,6 +25,7 @@ class Event {
 	 * Add hooks.
 	 */
 	public function __construct() {
+
 		WP::add_action( 'init', [ __CLASS__, 'register_event_post_type' ] );
 	}
 
@@ -118,5 +120,31 @@ class Event {
 			[ 'noon', 'midnight', 'a.m.', 'p.m.', '' ],
 			$string
 		);
+	}
+
+	/**
+	 * Echos calendar data on a span as data attributes.
+	 *
+	 * @return string HTML.
+	 */
+	public static function get_calendar_data() : string {
+		$start_time = EventMeta::get( EventMeta::START_TIME_KEY );
+		$end_time = EventMeta::get( EventMeta::END_TIME_KEY );
+		$date = EventMeta::get( EventMeta::DATE_KEY );
+
+		$title = esc_attr( get_the_title() );
+		$description = esc_attr( get_the_content() );
+		$location = esc_attr( EventMeta::get( EventMeta::LOCATION_KEY ) );
+		$start_time = esc_attr( date_format( date_create( "$date $start_time" ), 'Y-m-d\\TH:i:00-04:00' ) );
+		$end_time = esc_attr( date_format( date_create( "$date $end_time" ), 'Y-m-d\\TH:i:00-04:00' ) );
+
+		return "<span
+			data-add-to-calendar
+			data-title=\"$title\"
+			data-description=\"$description\"
+			data-location=\"$location\"
+			data-start-time=\"$start_time\"
+			data-end-time=\"$end_time\">
+			</span>";
 	}
 }

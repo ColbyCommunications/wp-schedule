@@ -25,7 +25,22 @@ const main = () => {
       rules: [
         {
           test: /\.js$/,
-          use: ['babel-loader'],
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['react', 'env', 'stage-0'],
+              plugins: [
+                [
+                  'transform-runtime',
+                  {
+                    helpers: false,
+                    polyfill: false,
+                    regenerator: true,
+                  },
+                ],
+              ],
+            },
+          },
         },
         {
           test: /\.css$/,

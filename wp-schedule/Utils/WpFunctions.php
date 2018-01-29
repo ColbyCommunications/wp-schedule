@@ -2,7 +2,7 @@
 /**
  * WpFunctions.php
  *
- * @package colbycomms/colby-wp-schedule
+ * @package colbycomms/wp-schedule
  */
 
 namespace ColbyComms\Schedules\Utils;

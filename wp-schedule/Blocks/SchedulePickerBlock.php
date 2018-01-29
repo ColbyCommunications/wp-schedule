@@ -2,7 +2,7 @@
 /**
  * Creates a shortcode which renders a list of schedules to pick from.
  *
- * @package colby-wp-schedule
+ * @package wp-schedule
  */
 
 namespace ColbyComms\Schedules\Blocks;

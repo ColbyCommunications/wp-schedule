@@ -200,6 +200,16 @@ button.event__heading {
   }
 }
 
+.event__calendar-link {
+  position: relative;
+  display: block;
+}
+
+.event__calendar-link svg {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
 .has-post-thumbnail .event__time {
   color: white;
   background: #214280;
@@ -315,4 +325,77 @@ button.event__heading {
 .event .collapsible-panel p:last-of-type,
 .event .collapsible-panel p:not(:empty):last-of-type {
   margin-bottom: 0;
+}
+
+.react-add-to-calendar {
+  position: relative;
+  width: 100%;
+  max-width: 200px;
+  padding-top: 1rem;
+}
+
+.react-add-to-calendar__wrapper {
+  cursor: pointer;
+  zoom: 1;
+}
+
+.react-add-to-calendar__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 200px;
+  padding: 10px;
+  font-size: 89.1%;
+  color: #000;
+  text-transform: uppercase;
+  background-color: #f9f9f9;
+  border: 1px solid #aab9d4;
+  border-radius: 3px;
+}
+
+.react-add-to-calendar__button--light {
+  background-color: #fff;
+}
+
+.react-add-to-calendar__icon--right {
+  padding-left: 5px;
+}
+
+.react-add-to-calendar__icon--left {
+  padding-right: 5px;
+}
+
+.react-add-to-calendar__dropdown {
+  position: absolute;
+  top: -2.5rem;
+  left: 100%;
+  left: calc(100% + 0.5rem);
+  z-index: 1;
+  width: 93%;
+  max-width: 200px;
+  padding: 5px 0 5px 8px;
+  text-align: left;
+  background-color: #fff;
+  border: 1px solid #a8a8a8;
+  box-shadow: 1px 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.react-add-to-calendar__dropdown ul {
+  margin: 0;
+  list-style: none;
+}
+
+.react-add-to-calendar__dropdown ul li a {
+  color: #000;
+  text-decoration: none;
+}
+
+.react-add-to-calendar__dropdown ul li a i {
+  display: none;
+  padding-right: 10px;
+}
+
+.react-add-to-calendar__icon--right {
+  display: none;
 }

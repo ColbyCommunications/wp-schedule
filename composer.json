@@ -17,7 +17,8 @@
   "require": {
     "htmlburger/carbon-fields": "^2.1",
     "phpunit/phpunit": "*",
-    "colbycomms/wp-collapsible": "dev-master"
+    "colbycomms/wp-collapsible": "dev-master",
+    "colbycomms/colby-svg": "dev-master"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "*",

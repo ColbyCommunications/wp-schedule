@@ -1,8 +1,8 @@
 {
-  "name": "colby-wp-schedule",
+  "name": "wp-schedule",
   "version": "1.0.0",
   "description": "",
-  "main": "src/js/colby-wp-schedule.js",
+  "main": "src/js/wp-schedule.js",
   "scripts": {
     "start": "webpack -w",
     "build": "webpack -p",
@@ -18,19 +18,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ivdekov/colby-wp-schedule.git"
+    "url": "git+https://github.com/ivdekov/wp-schedule.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ivdekov/colby-wp-schedule/issues"
+    "url": "https://github.com/ivdekov/wp-schedule/issues"
   },
-  "homepage": "https://github.com/ivdekov/colby-wp-schedule#readme",
+  "homepage": "https://github.com/ivdekov/wp-schedule#readme",
   "dependencies": {
     "array-intersection": "^0.1.2",
     "cheerio-html-to-text": "^0.4.4",
-    "colby-wp-collapsible": "^1.0.14"
+    "colby-wp-collapsible": "^1.0.14",
+    "react": "^16.2.0",
+    "react-add-to-calendar": "^0.1.5",
+    "react-dom": "^16.2.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.2.4",
@@ -39,6 +42,7 @@
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "css-loader": "^0.28.8",
     "cssnano": "^3.10.0",

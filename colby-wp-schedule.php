@@ -8,7 +8,7 @@
  * Author Email: john.watkins@colby.edu
  * Text Domain: colby-schedule
  *
- * @package colbycomms/colby-wp-schedule
+ * @package colbycomms/wp-schedule
  */
 
 /**

@@ -2,7 +2,7 @@
 /**
  * Plugin class
  *
- * @package colbycomms/colby-wp-schedule
+ * @package colbycomms/wp-schedule
  */
 
 namespace ColbyComms\Schedules;
@@ -155,7 +155,7 @@ class Schedules {
 		if ( apply_filters( self::ENQUEUE_SCRIPT_FILTER, true ) === true ) {
 			wp_enqueue_script(
 				self::TEXT_DOMAIN,
-				"{$dist}colby-wp-schedule$min.js",
+				"{$dist}wp-schedule$min.js",
 				[],
 				self::VERSION,
 				true
@@ -170,7 +170,7 @@ class Schedules {
 		if ( apply_filters( self::ENQUEUE_STYLE_FILTER, true ) ) {
 			wp_enqueue_style(
 				self::TEXT_DOMAIN,
-				"{$dist}colby-wp-schedule$min.css",
+				"{$dist}wp-schedule$min.css",
 				[],
 				self::VERSION
 			);
@@ -184,7 +184,7 @@ class Schedules {
 		if ( apply_filters( self::ENQUEUE_PRINT_STYLE_FILTER, true ) ) {
 			wp_enqueue_style(
 				self::TEXT_DOMAIN . '-print',
-				"{$dist}colby-wp-schedule-print$min.css",
+				"{$dist}wp-schedule-print$min.css",
 				[],
 				self::VERSION,
 				get_query_var( 'print' ) ? 'all' : 'print'
@@ -214,7 +214,7 @@ class Schedules {
 			return plugin_dir_url( dirname( __DIR__ ) . '/index.php' ) . '/dist/';
 		}
 
-		return get_template_directory_uri() . '/vendor/colbycomms/colby-wp-schedule/dist/';
+		return get_template_directory_uri() . '/vendor/colbycomms/wp-schedule/dist/';
 	}
 
 	/**

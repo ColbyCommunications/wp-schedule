@@ -2,7 +2,7 @@
 /**
  * EventMeta.php
  *
- * @package colby-wp-schedule
+ * @package wp-schedule
  */
 
 namespace ColbyComms\Schedules\Event;
@@ -127,8 +127,20 @@ class EventMeta {
 	 * @return mixed The retrieved value.
 	 */
 	public static function get( string $key, $id = null ) {
+		static $cache;
+
+		$cache = $cache ?: [];
+
 		$id = $id ?: WP::get_the_id();
 
-		return Carbon::get_post_meta( $id, $key );
+		if ( isset( $cache[ "$key$id" ] ) ) {
+			return $cache[ "$key$id" ];
+		}
+
+		$value = Carbon::get_post_meta( $id, $key );
+
+		$cache[ "$key$id" ] = $value;
+
+		return $value;
 	}
 }

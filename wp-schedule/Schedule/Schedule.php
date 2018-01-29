@@ -2,7 +2,7 @@
 /**
  * EventPost.php
  *
- * @package colby-wp-schedule
+ * @package wp-schedule
  */
 
 namespace ColbyComms\Schedules\Schedule;

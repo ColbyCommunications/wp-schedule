@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "30150ca5fa4510bee1b14cc430abcb9f",
+    "content-hash": "6b7cc80bf0813a9053a49b1867993b17",
     "packages": [
         {
             "name": "colbycomms/colby-svg",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ColbyCommunications/colby-svg.git",
-                "reference": "c6979d5cf1a010a3ecacd065407efdbd9079485b"
+                "reference": "e48459793888a5296de2e8c169a15d64c525bf68"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ColbyCommunications/colby-svg/zipball/c6979d5cf1a010a3ecacd065407efdbd9079485b",
-                "reference": "c6979d5cf1a010a3ecacd065407efdbd9079485b",
+                "url": "https://api.github.com/repos/ColbyCommunications/colby-svg/zipball/e48459793888a5296de2e8c169a15d64c525bf68",
+                "reference": "e48459793888a5296de2e8c169a15d64c525bf68",
                 "shasum": ""
             },
             "require-dev": {
@@ -45,7 +45,7 @@
                 }
             ],
             "description": "A library of SVGs used across projects, with a PHP class for loading and echoing them, plus a shortcode for use in WordPress.",
-            "time": "2018-01-25T16:08:19+00:00"
+            "time": "2018-01-29T12:42:49+00:00"
         },
         {
             "name": "colbycomms/wp-collapsible",
@@ -1762,6 +1762,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "colbycomms/wp-collapsible": 20,
+        "colbycomms/colby-svg": 20,
         "wp-coding-standards/wpcs": 20
     },
     "prefer-stable": false,
