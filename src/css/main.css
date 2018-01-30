@@ -134,6 +134,11 @@ div.event__heading {
   transition: background-color 0.2s;
 }
 
+button.event__heading:hover,
+div.event__heading:hover {
+  opacity: 1;
+}
+
 div.event__heading:hover {
   background-color: rgba(0, 0, 0, 0.0375);
 }
@@ -174,10 +179,6 @@ button.event__heading {
 
 .event-container:nth-of-type(even):not(.signature-events) .event__heading {
   background-color: rgba(0, 0, 0, 0.01);
-}
-
-.event-container:nth-of-type(even):not(.signature-events) button.event__heading:hover {
-  background-color: color(rgba(0, 0, 0, 0.13) shade(10%));
 }
 
 .event__time {
