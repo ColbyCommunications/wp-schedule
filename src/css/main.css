@@ -327,11 +327,19 @@ button.event__heading {
   margin-bottom: 0;
 }
 
+/** Styles for the "Add to Calendar" button. */
 .react-add-to-calendar {
   position: relative;
   width: 100%;
   max-width: 200px;
   padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+@media print {
+  .react-add-to-calendar {
+    display: none;
+  }
 }
 
 .react-add-to-calendar__wrapper {
@@ -368,9 +376,8 @@ button.event__heading {
 
 .react-add-to-calendar__dropdown {
   position: absolute;
-  top: -2.5rem;
-  left: 100%;
-  left: calc(100% + 0.5rem);
+  top: 3.5rem;
+  left: 0;
   z-index: 1;
   width: 93%;
   max-width: 200px;

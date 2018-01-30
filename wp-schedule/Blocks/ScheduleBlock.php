@@ -78,9 +78,6 @@ class ScheduleBlock {
 	<div class="schedule__print">
 		<a href="javascript:window.print()"><?php SVG::show( 'print' ); ?></a>
 	</div>
-	<div class="schedule__email">
-		<button data-email-to type="submit"><?php SVG::show( 'email' ); ?></button>
-	</div>
 </aside>
 <div class="schedule">
 	<?php
@@ -106,7 +103,8 @@ class ScheduleBlock {
 	 */
 	public static function render_block( \WP_Query $events_query, array $atts = [], $term = null ) : string {
 		$atts = WP::shortcode_atts( self::DEFAULT_ATTS, $atts );
-		$days = self::sort_posts_by_day( $events_query->posts );
+		$posts = self::filter_posts_not_in_this_category( $events_query->posts );
+		$days = self::sort_posts_by_day( $posts );
 		$tags = self::get_all_post_tag_ids( $events_query->posts );
 
 		// Make an array from the active tags passed to the shortcode.
@@ -116,6 +114,51 @@ class ScheduleBlock {
 		ksort( $days );
 
 		return self::render( $atts, $days, $tags, $active_tags, $term );
+	}
+
+	/**
+	 * Filters out posts that have a category that isn't the parent and are not in the current category.
+	 *
+	 * @param array $posts Post objects.
+	 * @return array Filtered posts.
+	 */
+	public static function filter_posts_not_in_this_category( array $posts = [] ) : array {
+		static $parent_term;
+
+		return array_filter(
+			$posts,
+			function( $post ) use ( &$parent_term ) {
+				$terms = get_the_terms( $post, 'schedule_category' );
+
+				$parent_term = $parent_term ?? array_filter(
+					$terms,
+					function( $term ) {
+						return in_array( $term->parent, [ 0, '0' ], true );
+					}
+				)[0]->term_id;
+
+				if ( count( $terms ) === 1 ) {
+					return true;
+				}
+
+				$has_other_term = false;
+				foreach ( $terms as $term ) {
+					if ( ! in_array( $term->term_id, [ get_queried_object_id(), $parent_term ], true ) ) {
+						$has_other_term = true;
+					}
+
+					if ( get_queried_object_id() === $term->term_id ) {
+						return true;
+					}
+				}
+
+				if ( $has_other_term ) {
+					return false;
+				}
+
+				return true;
+			}
+		);
 	}
 
 	/**

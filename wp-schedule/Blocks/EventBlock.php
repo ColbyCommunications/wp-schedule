@@ -262,11 +262,36 @@ class EventBlock {
 	}
 
 	/**
+	 * Sets the term if no term exists and the post has a term that is not the top-level parent.
+	 *
+	 * @return void
+	 */
+	public function maybe_set_term() {
+		if ( empty( $this->term ) ) {
+			$terms = WP::get_the_terms( WP::get_the_id(), 'schedule_category' );
+
+			$terms = array_filter(
+				$terms,
+				function( $term ) {
+					return ! in_array( $term->parent, [ 0, '0' ], true );
+				}
+			);
+
+			if ( count( $terms ) ) {
+				$this->term = $terms[0];
+				$this->always_visible = true;
+			}
+		}
+	}
+
+	/**
 	 * Renders the HTML.
 	 *
 	 * @return string HTML.
 	 */
 	public function render() : string {
+		$this->maybe_set_term();
+
 		ob_start(); ?>
 		<div data-event
 		class="col-12 event-container <?php self::term_slugs_to_class_list( $this->terms ); ?>"
