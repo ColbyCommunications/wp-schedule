@@ -17662,6 +17662,7 @@ var EventPicker = function () {
     this.checkboxElements = [].concat(_toConsumableArray(checkboxes));
     this.events = events;
     this.days = days;
+    this.allButton = document.querySelector('[data-all-events-button]');
   }
 
   /**
@@ -17709,6 +17710,26 @@ var EventPicker = function () {
 
       [].concat(_toConsumableArray(this.checkboxes)).forEach(this.addCheckboxListener);
       this.showActiveEvents();
+
+      if (this.allButton) {
+        this.runAllButton();
+      }
+    }
+  }, {
+    key: 'runAllButton',
+    value: function runAllButton() {
+      var _this2 = this;
+
+      this.allButton.addEventListener('click', function () {
+        _this2.checkboxes.forEach(function (checkbox) {
+          checkbox.check();
+        });
+
+        _this2.activeTags = _this2.checkboxElements.map(function (element) {
+          return element.getAttribute('value');
+        });
+        _this2.showActiveEvents();
+      });
     }
   }, {
     key: 'addCheckboxListener',
@@ -17740,15 +17761,13 @@ var EventPicker = function () {
     }
   }, {
     key: 'onCheckBoxChange',
-    value: function onCheckBoxChange(_ref2) {
-      var _ref2$target = _ref2.target,
-          checked = _ref2$target.checked,
-          tag = _ref2$target.value;
-
-      if (checked) {
-        this.activate(tag);
+    value: function onCheckBoxChange(event) {
+      if (event.target.checked) {
+        this.activate(event.target.value);
+        event.target.setAttribute('checked', true);
       } else {
-        this.deactivate(tag);
+        this.deactivate(event.target.value);
+        event.target.removeAttribute('checked');
       }
 
       this.showActiveEvents();
@@ -17805,19 +17824,22 @@ var Checkbox = function () {
   }
 
   _createClass(Checkbox, [{
-    key: "addEventListener",
+    key: 'addEventListener',
     value: function addEventListener(eventTag, callback) {
       this.element.addEventListener(eventTag, callback);
     }
   }, {
-    key: "check",
+    key: 'check',
     value: function check() {
       this.element.checked = true;
+      console.log(this.element);
+      this.element.setAttribute('checked', true);
     }
   }, {
-    key: "uncheck",
+    key: 'uncheck',
     value: function uncheck() {
       this.element.checked = false;
+      this.element.removeAttribute('checked');
     }
   }]);
 

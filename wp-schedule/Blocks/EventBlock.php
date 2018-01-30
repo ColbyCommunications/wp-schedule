@@ -262,26 +262,25 @@ class EventBlock {
 	}
 
 	/**
-	 * Sets the term if no term exists and the post has a term that is not the top-level parent.
+	 * Gets the term name to display above the event title (if one exists).
 	 *
-	 * @return void
+	 * @return string The term name or an empty string.
 	 */
-	public function maybe_set_term() {
-		if ( empty( $this->term ) ) {
-			$terms = WP::get_the_terms( WP::get_the_id(), 'schedule_category' );
+	public function get_term_name() {
+		$terms = WP::get_the_terms( WP::get_the_id(), Schedule::CATEGORY_NAME );
 
-			$terms = array_filter(
-				$terms,
-				function( $term ) {
-					return ! in_array( $term->parent, [ 0, '0' ], true );
-				}
-			);
-
-			if ( count( $terms ) ) {
-				$this->term = $terms[0];
-				$this->always_visible = true;
+		$terms = array_filter(
+			$terms,
+			function( $term ) {
+				return ! in_array( $term->parent, [ 0, '0' ], true );
 			}
+		);
+
+		if ( count( $terms ) ) {
+			return $terms[0]->name;
 		}
+
+		return '';
 	}
 
 	/**
@@ -290,7 +289,7 @@ class EventBlock {
 	 * @return string HTML.
 	 */
 	public function render() : string {
-		$this->maybe_set_term();
+		$name = $this->get_term_name();
 
 		ob_start(); ?>
 		<div data-event
@@ -309,9 +308,9 @@ class EventBlock {
 				</span>	
 				<span class="event__info">
 					<span class="event__details">
-						<?php if ( $this->always_visible ) : ?>
+						<?php if ( $name ) : ?>
 						<span class="event__always-visible-text">
-							<?php echo $this->term->name; ?>
+							<?php echo $name; ?>
 						</span>
 						<?php endif; ?>
 						<span class="event__title">
@@ -327,15 +326,15 @@ class EventBlock {
 						<?php echo Event::get_calendar_data(); ?>
 						<?php endif; ?>
 					</span>
-					<?php if ( 'true' !== $this->atts['show-description'] ) : ?>
-					<span class="event__arrow-container">
-						<svg width="1792" height="1792" viewBox="0 0 1792 1792" class="down-arrow-svg">
-							<title>Show More</title>
-							<path d="M1395 736q0 13-10 23l-466 466q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l393 393 393-393q10-10 23-10t23 10l50 50q10 10 10 23z" fill="currentColor"/>
-						</svg>
-					</span>
-					<?php endif; ?>
 				</span>
+				<?php if ( 'true' !== $this->atts['show-description'] ) : ?>
+				<span class="event__arrow-container">
+					<svg width="1792" height="1792" viewBox="0 0 1792 1792" class="down-arrow-svg">
+						<title>Show More</title>
+						<path d="M1395 736q0 13-10 23l-466 466q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l393 393 393-393q10-10 23-10t23 10l50 50q10 10 10 23z" fill="currentColor"/>
+					</svg>
+				</span>
+				<?php endif; ?>
 			</<?php echo 'true' !== $this->atts['show-description'] ? 'button' : 'div'; ?>>
 			<?php if ( 'true' !== $this->atts['show-description'] ) : ?>
 			<div class="collapsible-panel" aria-hidden="true">

@@ -57,22 +57,28 @@ class ScheduleBlock {
 		ob_start();
 
 		if ( isset( $atts['tag-selector'] ) && 'true' === $atts['tag-selector'] ) : ?>
-<form class="schedule__tag-form">
-	<ul class="schedule__tag-list text-center">
-	<?php foreach ( $tags as $tag ) : ?>
-		<li>
-			<label>
-				<input
-					type="checkbox"
-					name="event-tag"
-					value="<?php echo WP::esc_attr( $tag->term_id ); ?>"
-					<?php echo null === $term || in_array( $tag->name, $active_tags, true ) ? 'checked' : ''; ?>>
-				<?php echo $tag->name; ?>
-			</label>
-		</li>
-	<?php endforeach; ?>
-	</ul>
-</form>
+<div class="tag-selector">
+	<button data-all-events-button class="btn highlight tag-selector-btn">
+		Show all events
+	</button>
+	<form class="schedule__tag-form">
+		<div class="schedule__list-description">Event categories</div>
+		<ul class="schedule__tag-list">
+		<?php foreach ( $tags as $tag ) : ?>
+			<li>
+				<label>
+					<input
+						type="checkbox"
+						name="event-tag"
+						value="<?php echo WP::esc_attr( $tag->term_id ); ?>"
+						<?php echo null === $term || in_array( $tag->name, $active_tags, true ) ? 'checked' : ''; ?>>
+					<span><?php echo $tag->name; ?></span>
+				</label>
+			</li>
+		<?php endforeach; ?>
+		</ul>
+	</form>
+</div>
 <?php endif; ?>
 <aside class="schedule__print-email">
 	<div class="schedule__print">
@@ -130,16 +136,16 @@ class ScheduleBlock {
 			function( $post ) use ( &$parent_term ) {
 				$terms = get_the_terms( $post, 'schedule_category' );
 
+				if ( count( $terms ) === 1 && '0' === $terms[0]->parent ) {
+					return true;
+				}
+
 				$parent_term = $parent_term ?? array_filter(
 					$terms,
 					function( $term ) {
 						return in_array( $term->parent, [ 0, '0' ], true );
 					}
 				)[0]->term_id;
-
-				if ( count( $terms ) === 1 ) {
-					return true;
-				}
 
 				$has_other_term = false;
 				foreach ( $terms as $term ) {

@@ -26,9 +26,10 @@ class SchedulePickerBlock {
 	 * The shortcode callback.
 	 *
 	 * @param array $atts Block attributes.
+	 * @param string $content The shortcode content.
 	 * @return string The shortcode output.
 	 */
-	public static function schedule_picker( $atts = [] ) : string {
+	public static function schedule_picker( $atts = [], $content = '' ) : string {
 		if ( ! $atts['schedule'] ) {
 			return '';
 		}
@@ -45,15 +46,10 @@ class SchedulePickerBlock {
 			return '';
 		}
 
-		$link = WP::get_term_link( $parent_term->term_id );
-		$extra = "
-			<h4 class=\"mt-4\">
-				<a href=\"$link\">View all events</a>
-			</h4>";
-		$output = '
-			<section class="text-center">
-				<h2 class="section-title">Choose Your Class Year</h2>
-				<ul class="schedule-picker">';
+		$output = "
+			$content
+			<section class=\"text-center\">
+				<ul class=\"schedule-picker\">";
 
 		$output .= array_reduce(
 			$terms,
@@ -65,6 +61,6 @@ class SchedulePickerBlock {
 			''
 		);
 
-		return "$output</ul>$extra</section>";
+		return "$output</ul></section>";
 	}
 }

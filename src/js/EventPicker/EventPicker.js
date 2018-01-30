@@ -14,6 +14,7 @@ class EventPicker {
     this.checkboxElements = [...checkboxes];
     this.events = events;
     this.days = days;
+    this.allButton = document.querySelector('[data-all-events-button]');
   }
 
   /**
@@ -56,6 +57,23 @@ class EventPicker {
 
     [...this.checkboxes].forEach(this.addCheckboxListener);
     this.showActiveEvents();
+
+    if (this.allButton) {
+      this.runAllButton();
+    }
+  }
+
+  runAllButton() {
+    this.allButton.addEventListener('click', () => {
+      this.checkboxes.forEach(checkbox => {
+        checkbox.check();
+      });
+
+      this.activeTags = this.checkboxElements.map(element =>
+        element.getAttribute('value')
+      );
+      this.showActiveEvents();
+    });
   }
 
   addCheckboxListener(checkbox) {
@@ -82,11 +100,13 @@ class EventPicker {
     this.activeTags = this.activeTags.filter(activeTag => activeTag !== tag);
   }
 
-  onCheckBoxChange({ target: { checked, value: tag } }) {
-    if (checked) {
-      this.activate(tag);
+  onCheckBoxChange(event) {
+    if (event.target.checked) {
+      this.activate(event.target.value);
+      event.target.setAttribute('checked', true);
     } else {
-      this.deactivate(tag);
+      this.deactivate(event.target.value);
+      event.target.removeAttribute('checked');
     }
 
     this.showActiveEvents();

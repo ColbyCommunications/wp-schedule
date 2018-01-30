@@ -9,10 +9,12 @@ class Checkbox {
 
   check() {
     this.element.checked = true;
+    this.element.setAttribute('checked', true);
   }
 
   uncheck() {
     this.element.checked = false;
+    this.element.removeAttribute('checked');
   }
 }
 
