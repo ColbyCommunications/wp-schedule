@@ -58,7 +58,7 @@ class ScheduleBlock {
 
 		if ( isset( $atts['tag-selector'] ) && 'true' === $atts['tag-selector'] ) : ?>
 <form class="schedule__tag-form">
-	<ul class="schedule__tag-list">
+	<ul class="schedule__tag-list text-center">
 	<?php foreach ( $tags as $tag ) : ?>
 		<li>
 			<label>

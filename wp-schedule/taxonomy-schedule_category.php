@@ -65,6 +65,7 @@ echo apply_filters( Schedules::BEFORE_SCHEDULE_ARCHIVE_FILTER, '', $queried_obje
 	<div class="wp-schedule">
 		<div class="wp-schedule__content">
 		<?php echo apply_filters( 'the_content', $queried_object->description ); ?>
+		<hr />
 		</div>
 		<div class="wp-schedule__schedule">
 		<?php render_taxonomy_schedule_category( $queried_object ); ?>
