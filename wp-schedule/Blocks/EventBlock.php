@@ -307,7 +307,7 @@ class EventBlock {
 				<span class="event__time">
 					<?php echo Event::get_formatted_event_time(); ?>
 				</span>	
-				<span class="event__info"
+				<span class="event__info">
 					<span class="event__details">
 						<?php if ( $this->always_visible ) : ?>
 						<span class="event__always-visible-text">
