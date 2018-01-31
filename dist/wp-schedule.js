@@ -17486,8 +17486,7 @@ var _initAddToCalender = __webpack_require__(145);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-(0, _EventPicker.initEventPicker)();
-
+window.addEventListener('load', _EventPicker.initEventPicker);
 window.addEventListener('load', _colbyWpCollapsible2.default.init);
 window.addEventListener('load', _initAddToCalender.initAddToCalendar);
 window.addEventListener('load', _initMaps.initMaps);
@@ -17792,7 +17791,7 @@ var EventPicker = function () {
   }, {
     key: 'maybeToggleEvent',
     value: function maybeToggleEvent(event) {
-      event.style.display = this.shouldShow(event) ? 'initial' : 'none';
+      event.setAttribute('style', 'display: ' + (this.shouldShow(event) ? 'initial' : 'none'));
     }
   }]);
 

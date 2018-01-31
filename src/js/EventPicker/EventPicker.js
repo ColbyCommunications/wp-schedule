@@ -130,7 +130,10 @@ class EventPicker {
   }
 
   maybeToggleEvent(event) {
-    event.style.display = this.shouldShow(event) ? 'initial' : 'none';
+    event.setAttribute(
+      'style',
+      `display: ${this.shouldShow(event) ? 'initial' : 'none'}`
+    );
   }
 }
 
