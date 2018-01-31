@@ -17832,7 +17832,6 @@ var Checkbox = function () {
     key: 'check',
     value: function check() {
       this.element.checked = true;
-      console.log(this.element);
       this.element.setAttribute('checked', true);
     }
   }, {

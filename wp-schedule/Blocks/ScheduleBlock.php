@@ -62,7 +62,7 @@ class ScheduleBlock {
 		Show all events
 	</button>
 	<form class="schedule__tag-form">
-		<div class="schedule__list-description">Event categories</div>
+		<div class="schedule__list-description">Select by event category</div>
 		<ul class="schedule__tag-list">
 		<?php foreach ( $tags as $tag ) : ?>
 			<li>
@@ -100,6 +100,21 @@ class ScheduleBlock {
 	}
 
 	/**
+	 * Usort callback for putting tags in order by name.
+	 *
+	 * @param object $tag1 The first tag.
+	 * @param object $tag2 The second tag.
+	 * @return integer
+	 */
+	public static function sort_tags( $tag1, $tag2 ) : int {
+		if ( $tag1->name === $tag2->name ) {
+			return 0;
+		}
+
+		return $tag1->name < $tag2->name ? -1 : 1;
+	}
+
+	/**
 	 * Set up variables to send to the template.
 	 *
 	 * @param \WP_Query $events_query A query for events posts.
@@ -112,6 +127,7 @@ class ScheduleBlock {
 		$posts = self::filter_posts_not_in_this_category( $events_query->posts );
 		$days = self::sort_posts_by_day( $posts );
 		$tags = self::get_all_post_tag_ids( $events_query->posts );
+		usort( $tags, [ __CLASS__, 'sort_tags' ] );
 
 		// Make an array from the active tags passed to the shortcode.
 		$active_tags = array_map( 'trim', explode( ',', isset( $atts['active'] ) ? $atts['active'] : '' ) );

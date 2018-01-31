@@ -1,5 +1,7 @@
 .tag-selector {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   margin-bottom: 1rem;
 }
 
@@ -9,8 +11,16 @@
   }
 }
 
-.tag-selector-btn {
+.btn.tag-selector-btn {
   flex: 1 1 auto;
+  order: 99;
+  padding: 1.5rem;
+}
+
+@media screen and (min-width: 768px) {
+  .btn.tag-selector-btn {
+    order: -1;
+  }
 }
 
 .schedule__tag-form {
@@ -212,7 +222,7 @@ button.event__heading {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 100px;
+  width: 75px;
   padding: 0.75rem;
   font-family: var(--serif);
   font-size: 106%;

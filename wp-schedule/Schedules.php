@@ -41,7 +41,7 @@ class Schedules {
 	 *
 	 * @var bool
 	 */
-	const PROD = false;
+	const PROD = true;
 
 	/**
 	 * A string prepended to all filter names.

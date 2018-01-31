@@ -293,7 +293,7 @@ class EventBlock {
 
 		ob_start(); ?>
 		<div data-event
-		class="col-12 event-container <?php self::term_slugs_to_class_list( $this->terms ); ?>"
+		class="col-12 event-container <?php echo self::term_slugs_to_class_list( $this->terms ); ?>"
 		data-event-always-visible="<?php echo $this->always_visible ? 'true' : 'false'; ?>"
 		data-event-tag-ids="<?php self::term_ids( $this->terms ); ?>"
 		<?php if ( $this->should_display_none() ) : ?>
