@@ -17779,7 +17779,7 @@ var EventPicker = function () {
       if (visibleEvents.length) {
         day.removeAttribute('style');
       } else {
-        day.style.display = 'none';
+        day.setAttribute('style', 'display: none');
       }
     }
   }, {
