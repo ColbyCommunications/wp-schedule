@@ -41,7 +41,7 @@ class Schedules {
 	 *
 	 * @var bool
 	 */
-	const PROD = true;
+	const PROD = false;
 
 	/**
 	 * A string prepended to all filter names.
@@ -153,6 +153,7 @@ class Schedules {
 		 * @param bool Yes or no.
 		 */
 		if ( apply_filters( self::ENQUEUE_SCRIPT_FILTER, true ) === true ) {
+			wp_die();
 			wp_enqueue_script(
 				self::TEXT_DOMAIN,
 				"{$dist}wp-schedule$min.js",

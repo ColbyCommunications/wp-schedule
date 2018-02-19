@@ -1906,7 +1906,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             try {
                 oldLocale = globalLocale._abbr;
                 var aliasedRequire = require;
-                __webpack_require__(159)("./" + name);
+                __webpack_require__(157)("./" + name);
                 getSetGlobalLocale(oldLocale);
             } catch (e) {}
         }
@@ -4746,9 +4746,9 @@ module.exports = emptyFunction;
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(146);
+  module.exports = __webpack_require__(144);
 } else {
-  module.exports = __webpack_require__(147);
+  module.exports = __webpack_require__(145);
 }
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
@@ -5013,7 +5013,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.initEventPicker = undefined;
 
-var _initEventPicker = __webpack_require__(140);
+var _initEventPicker = __webpack_require__(138);
 
 Object.defineProperty(exports, 'initEventPicker', {
   enumerable: true,
@@ -5022,7 +5022,7 @@ Object.defineProperty(exports, 'initEventPicker', {
   }
 });
 
-var _EventPicker = __webpack_require__(141);
+var _EventPicker = __webpack_require__(139);
 
 var _EventPicker2 = _interopRequireDefault(_EventPicker);
 
@@ -5049,7 +5049,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 if (process.env.NODE_ENV !== 'production') {
   var invariant = __webpack_require__(6);
   var warning = __webpack_require__(7);
-  var ReactPropTypesSecret = __webpack_require__(148);
+  var ReactPropTypesSecret = __webpack_require__(146);
   var loggedTypeFailures = {};
 }
 
@@ -5350,7 +5350,7 @@ module.exports = shallowEqual;
  * 
  */
 
-var isTextNode = __webpack_require__(151);
+var isTextNode = __webpack_require__(149);
 
 /*eslint-disable no-bitwise */
 
@@ -17474,111 +17474,37 @@ module.exports = __webpack_require__(160);
 "use strict";
 
 
-var _colbyWpCollapsible = __webpack_require__(138);
-
-var _colbyWpCollapsible2 = _interopRequireDefault(_colbyWpCollapsible);
-
-var _EventPicker = __webpack_require__(8);
-
-var _initMaps = __webpack_require__(143);
-
-var _initAddToCalender = __webpack_require__(145);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-window.addEventListener('load', _EventPicker.initEventPicker);
-window.addEventListener('load', _colbyWpCollapsible2.default.init);
-window.addEventListener('load', _initAddToCalender.initAddToCalendar);
-window.addEventListener('load', _initMaps.initMaps);
-
-/***/ }),
-/* 138 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _collapsiblize = __webpack_require__(139);
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-window.addEventListener('load', function () {
-  [].concat(_toConsumableArray(document.querySelectorAll('[data-collapsible]'))).forEach(function (container) {
-    var heading = container.querySelector('.collapsible-heading');
-    var panel = container.querySelector('.collapsible-panel');
-
-    if (heading && panel) {
-      (0, _collapsiblize.collapsiblize)({ heading: heading, panel: panel });
-    }
-  });
-});
-
-/***/ }),
-/* 139 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+var _EventPicker = __webpack_require__(8);
 
-var removeEmptyParagraphs = function removeEmptyParagraphs(container) {
-  [].concat(_toConsumableArray(container.querySelectorAll('p'))).forEach(function (p) {
-    if (p.innerHTML.trim().length === 0) {
-      container.removeChild(p);
-    }
-  });
-};
+var _initMaps = __webpack_require__(141);
 
-var ensureTypeAndPressedAttributes = function ensureTypeAndPressedAttributes(heading) {
-  if (!heading.hasAttribute('aria-pressed')) {
-    heading.setAttribute('aria-pressed', 'false');
-  }
+var _initAddToCalender = __webpack_require__(143);
 
-  if (!heading.hasAttribute('type')) {
-    heading.setAttribute('type', 'button');
-  }
-};
+var _colbyWpCollapsible = __webpack_require__(158);
 
-var ensureAriaHiddenAttribute = function ensureAriaHiddenAttribute(panel) {
-  if (!panel.hasAttribute('aria-hidden')) {
-    panel.setAttribute('aria-hidden', 'true');
+var _colbyWpCollapsible2 = _interopRequireDefault(_colbyWpCollapsible);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var startSchedule = function startSchedule() {
+  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+  (0, _initMaps.initMaps)();
+  (0, _initAddToCalender.initAddToCalendar)();
+  (0, _EventPicker.initEventPicker)();
+  if (options.doCollapsibles) {
+    _colbyWpCollapsible2.default.init();
   }
 };
 
-var togglePress = function togglePress(heading) {
-  heading.setAttribute('aria-pressed', heading.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
-};
-
-var toggle = function toggle(panel) {
-  var wasHidden = panel.getAttribute('aria-hidden');
-  panel.setAttribute('aria-hidden', wasHidden === 'true' ? 'false' : 'true');
-
-  panel.dispatchEvent(new CustomEvent('change', {
-    detail: { open: wasHidden === 'true' }
-  }));
-};
-
-var collapsiblize = exports.collapsiblize = function collapsiblize(_ref) {
-  var heading = _ref.heading,
-      panel = _ref.panel;
-
-  removeEmptyParagraphs(panel);
-  ensureTypeAndPressedAttributes(heading);
-  ensureAriaHiddenAttribute(panel);
-
-  heading.addEventListener('click', function () {
-    togglePress(heading);
-    toggle(panel);
-  });
-};
+exports.default = startSchedule;
 
 /***/ }),
-/* 140 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17609,7 +17535,7 @@ var initEventPicker = exports.initEventPicker = function initEventPicker() {
 };
 
 /***/ }),
-/* 141 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17621,7 +17547,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _CheckBox = __webpack_require__(142);
+var _CheckBox = __webpack_require__(140);
 
 var _CheckBox2 = _interopRequireDefault(_CheckBox);
 
@@ -17801,7 +17727,7 @@ var EventPicker = function () {
 exports.default = EventPicker;
 
 /***/ }),
-/* 142 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17847,7 +17773,7 @@ var Checkbox = function () {
 exports.default = Checkbox;
 
 /***/ }),
-/* 143 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17858,7 +17784,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.initMaps = undefined;
 
-var _GoogleMap = __webpack_require__(144);
+var _GoogleMap = __webpack_require__(142);
 
 var _GoogleMap2 = _interopRequireDefault(_GoogleMap);
 
@@ -17876,7 +17802,7 @@ var initMaps = exports.initMaps = function initMaps() {
 };
 
 /***/ }),
-/* 144 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17950,7 +17876,7 @@ var GoogleMap = function () {
 exports.default = GoogleMap;
 
 /***/ }),
-/* 145 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17965,11 +17891,11 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(149);
+var _reactDom = __webpack_require__(147);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactAddToCalendar = __webpack_require__(158);
+var _reactAddToCalendar = __webpack_require__(156);
 
 var _reactAddToCalendar2 = _interopRequireDefault(_reactAddToCalendar);
 
@@ -17997,7 +17923,7 @@ var initAddToCalendar = exports.initAddToCalendar = function initAddToCalendar()
 };
 
 /***/ }),
-/* 146 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18126,7 +18052,7 @@ var U = { Children: { map: function map(a, b, e) {
     W = V && U || V;module.exports = W["default"] ? W["default"] : W;
 
 /***/ }),
-/* 147 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19486,7 +19412,7 @@ if (process.env.NODE_ENV !== "production") {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 148 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19504,7 +19430,7 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 module.exports = ReactPropTypesSecret;
 
 /***/ }),
-/* 149 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19539,14 +19465,14 @@ if (process.env.NODE_ENV === 'production') {
   // DCE check should happen before ReactDOM bundle executes so that
   // DevTools can report bad minification during injection.
   checkDCE();
-  module.exports = __webpack_require__(150);
+  module.exports = __webpack_require__(148);
 } else {
-  module.exports = __webpack_require__(153);
+  module.exports = __webpack_require__(151);
 }
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 150 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21543,7 +21469,7 @@ Z.injectIntoDevTools({ findFiberByHostInstance: pb, bundleType: 0, version: "16.
     Ug = Tg && Sg || Tg;module.exports = Ug["default"] ? Ug["default"] : Ug;
 
 /***/ }),
-/* 151 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21558,7 +21484,7 @@ Z.injectIntoDevTools({ findFiberByHostInstance: pb, bundleType: 0, version: "16.
  * @typechecks
  */
 
-var isNode = __webpack_require__(152);
+var isNode = __webpack_require__(150);
 
 /**
  * @param {*} object The object to check.
@@ -21571,7 +21497,7 @@ function isTextNode(object) {
 module.exports = isTextNode;
 
 /***/ }),
-/* 152 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21602,7 +21528,7 @@ function isNode(object) {
 module.exports = isNode;
 
 /***/ }),
-/* 153 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21613,7 +21539,7 @@ module.exports = isNode;
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
- */var _typeof=typeof Symbol==="function"&&typeof Symbol.iterator==="symbol"?function(obj){return typeof obj;}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj;};if(process.env.NODE_ENV!=="production"){(function(){'use strict';var React=__webpack_require__(3);var invariant=__webpack_require__(6);var warning=__webpack_require__(7);var ExecutionEnvironment=__webpack_require__(10);var _assign=__webpack_require__(4);var emptyFunction=__webpack_require__(2);var EventListener=__webpack_require__(11);var getActiveElement=__webpack_require__(12);var shallowEqual=__webpack_require__(13);var containsNode=__webpack_require__(14);var focusNode=__webpack_require__(15);var emptyObject=__webpack_require__(5);var checkPropTypes=__webpack_require__(9);var hyphenateStyleName=__webpack_require__(154);var camelizeStyleName=__webpack_require__(156);/**
+ */var _typeof=typeof Symbol==="function"&&typeof Symbol.iterator==="symbol"?function(obj){return typeof obj;}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj;};if(process.env.NODE_ENV!=="production"){(function(){'use strict';var React=__webpack_require__(3);var invariant=__webpack_require__(6);var warning=__webpack_require__(7);var ExecutionEnvironment=__webpack_require__(10);var _assign=__webpack_require__(4);var emptyFunction=__webpack_require__(2);var EventListener=__webpack_require__(11);var getActiveElement=__webpack_require__(12);var shallowEqual=__webpack_require__(13);var containsNode=__webpack_require__(14);var focusNode=__webpack_require__(15);var emptyObject=__webpack_require__(5);var checkPropTypes=__webpack_require__(9);var hyphenateStyleName=__webpack_require__(152);var camelizeStyleName=__webpack_require__(154);/**
  * WARNING: DO NOT manually require this module.
  * This is a replacement for `invariant(...)` used by the error code system
  * and will _only_ be required by the corresponding babel pass.
@@ -24586,7 +24512,7 @@ var reactDom=ReactDOM$3['default']?ReactDOM$3['default']:ReactDOM$3;module.expor
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 154 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24601,7 +24527,7 @@ var reactDom=ReactDOM$3['default']?ReactDOM$3['default']:ReactDOM$3;module.expor
 
 
 
-var hyphenate = __webpack_require__(155);
+var hyphenate = __webpack_require__(153);
 
 var msPattern = /^ms-/;
 
@@ -24628,7 +24554,7 @@ function hyphenateStyleName(string) {
 module.exports = hyphenateStyleName;
 
 /***/ }),
-/* 155 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24664,7 +24590,7 @@ function hyphenate(string) {
 module.exports = hyphenate;
 
 /***/ }),
-/* 156 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24679,7 +24605,7 @@ module.exports = hyphenate;
 
 
 
-var camelize = __webpack_require__(157);
+var camelize = __webpack_require__(155);
 
 var msPattern = /^-ms-/;
 
@@ -24707,7 +24633,7 @@ function camelizeStyleName(string) {
 module.exports = camelizeStyleName;
 
 /***/ }),
-/* 157 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24742,7 +24668,7 @@ function camelize(string) {
 module.exports = camelize;
 
 /***/ }),
-/* 158 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24914,7 +24840,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16)(module)))
 
 /***/ }),
-/* 159 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -25171,7 +25097,122 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 159;
+webpackContext.id = 157;
+
+/***/ }),
+/* 158 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _collapsiblize = __webpack_require__(159);
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Collapsibles = function () {
+  function Collapsibles() {
+    _classCallCheck(this, Collapsibles);
+  }
+
+  _createClass(Collapsibles, null, [{
+    key: 'init',
+    value: function init() {
+      if (!Collapsibles.hasStarted) {
+        Collapsibles.run();
+      }
+    }
+  }, {
+    key: 'run',
+    value: function run() {
+      Collapsibles.hasStarted = true;
+      [].concat(_toConsumableArray(document.querySelectorAll('[data-collapsible]'))).forEach(function (container) {
+        var heading = container.querySelector('.collapsible-heading');
+        var panel = container.querySelector('.collapsible-panel');
+
+        if (heading && panel) {
+          (0, _collapsiblize.collapsiblize)({ heading: heading, panel: panel });
+        }
+      });
+    }
+  }]);
+
+  return Collapsibles;
+}();
+
+exports.default = Collapsibles;
+
+/***/ }),
+/* 159 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var removeEmptyParagraphs = function removeEmptyParagraphs(container) {
+  [].concat(_toConsumableArray(container.querySelectorAll('p'))).forEach(function (p) {
+    if (p.innerHTML.trim().length === 0) {
+      container.removeChild(p);
+    }
+  });
+};
+
+var ensureTypeAndPressedAttributes = function ensureTypeAndPressedAttributes(heading) {
+  if (!heading.hasAttribute('aria-pressed')) {
+    heading.setAttribute('aria-pressed', 'false');
+  }
+
+  if (!heading.hasAttribute('type')) {
+    heading.setAttribute('type', 'button');
+  }
+};
+
+var ensureAriaHiddenAttribute = function ensureAriaHiddenAttribute(panel) {
+  if (!panel.hasAttribute('aria-hidden')) {
+    panel.setAttribute('aria-hidden', 'true');
+  }
+};
+
+var togglePress = function togglePress(heading) {
+  heading.setAttribute('aria-pressed', heading.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+};
+
+var toggle = function toggle(panel) {
+  var wasHidden = panel.getAttribute('aria-hidden');
+  panel.setAttribute('aria-hidden', wasHidden === 'true' ? 'false' : 'true');
+
+  panel.dispatchEvent(new CustomEvent('change', {
+    detail: { open: wasHidden === 'true' }
+  }));
+};
+
+var collapsiblize = exports.collapsiblize = function collapsiblize(_ref) {
+  var heading = _ref.heading,
+      panel = _ref.panel;
+
+  removeEmptyParagraphs(panel);
+  ensureTypeAndPressedAttributes(heading);
+  ensureAriaHiddenAttribute(panel);
+
+  heading.addEventListener('click', function () {
+    togglePress(heading);
+    toggle(panel);
+  });
+};
 
 /***/ }),
 /* 160 */

@@ -2,7 +2,7 @@
   "name": "wp-schedule",
   "version": "1.0.0",
   "description": "",
-  "main": "src/js/wp-schedule.js",
+  "main": "src/js",
   "scripts": {
     "start": "webpack -w",
     "build": "webpack -p",
