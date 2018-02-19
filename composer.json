@@ -5,15 +5,16 @@
   "scripts": {
     "phpcbf": "phpcbf --extensions=php",
     "lint": "phpcs --extensions=php -s",
-    "test": "phpunit"
+    "test": "phpunit",
+    "post-install-cmd": "yarn"
   },
   "authors": [
     {
-      "name": "Iavor Dekov",
-      "email": "ivdekov@colby.edu"
+      "name": "John Watkins",
+      "email": "john.watkins@colby.edu"
     }
   ],
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "require": {
     "htmlburger/carbon-fields": "^2.1",
     "phpunit/phpunit": "*",
