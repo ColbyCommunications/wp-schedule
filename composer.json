@@ -6,7 +6,8 @@
     "phpcbf": "phpcbf --extensions=php",
     "lint": "phpcs --extensions=php -s",
     "test": "phpunit",
-    "post-install-cmd": "yarn"
+    "post-install-cmd": "yarn",
+    "post-update-cmd": "yarn"
   },
   "authors": [
     {
