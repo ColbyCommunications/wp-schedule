@@ -40,7 +40,7 @@ class ThemeOptions {
 	 */
 	public static function get_fields() : array {
 		return [
-			Field::make( 'text', 'wp_schedule_google_maps_api_key', 'Google Maps API key.' )
+			Field::make( 'text', self::GOOGLE_MAPS_API_KEY_KEY, 'Google Maps API key.' )
 				->set_help_text( 'An API key from <a href="https://developers.google.com/maps/documentation/javascript/get-api-key">Google</a>.' ),
 		];
 	}
