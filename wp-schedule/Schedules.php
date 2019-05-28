@@ -153,7 +153,6 @@ class Schedules {
 		 * @param bool Yes or no.
 		 */
 		if ( apply_filters( self::ENQUEUE_SCRIPT_FILTER, true ) === true ) {
-			wp_die();
 			wp_enqueue_script(
 				self::TEXT_DOMAIN,
 				"{$dist}wp-schedule$min.js",
