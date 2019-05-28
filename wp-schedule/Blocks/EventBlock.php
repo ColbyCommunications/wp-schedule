@@ -323,7 +323,7 @@ class EventBlock {
 						<span class="event__description">
 							<?php the_content(); ?>
 						</span>
-						<?php echo Event::get_calendar_data(); ?>
+							<?php echo Event::get_calendar_data(); ?>
 						<?php endif; ?>
 					</span>
 				</span>
@@ -339,8 +339,8 @@ class EventBlock {
 			<?php if ( 'true' !== $this->atts['show-description'] ) : ?>
 			<div class="collapsible-panel" aria-hidden="true">
 				<?php if ( ! $this->do_map ) : ?>
-				<?php WP::the_content(); ?>
-				<?php echo Event::get_calendar_data(); ?>
+					<?php WP::the_content(); ?>
+					<?php echo Event::get_calendar_data(); ?>
 				<?php else : ?>
 				<div class="row">
 					<div class="col-12 col-md-6">
@@ -360,7 +360,7 @@ class EventBlock {
 			<?php endif; ?>
 		</div>
 	</div>
-	<?php
+		<?php
 		return ob_get_clean();
 	}
 }

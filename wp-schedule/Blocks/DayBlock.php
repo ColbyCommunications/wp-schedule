@@ -25,7 +25,7 @@ class DayBlock {
 		?>
 
 <section class="row day"
-	<?php if ( 'true' === $atts['tag-selector'] ) : ?>
+		<?php if ( 'true' === $atts['tag-selector'] ) : ?>
 	style="display: none;"
 	<?php endif; ?>
 >
@@ -34,12 +34,12 @@ class DayBlock {
 			<?php echo date_create( $date )->format( 'l, F j' ); ?>
 		</h3>
 	</header>
-	<?php
-	foreach ( $events as $event ) :
-		$event_block = new EventBlock( $event, $term );
-		echo $event_block->render_block( $atts );
+		<?php
+		foreach ( $events as $event ) :
+			$event_block = new EventBlock( $event, $term );
+			echo $event_block->render_block( $atts );
 	endforeach;
-	?>
+		?>
 </section>
 		<?php
 

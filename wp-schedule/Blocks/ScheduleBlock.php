@@ -64,7 +64,7 @@ class ScheduleBlock {
 	<form class="schedule__tag-form">
 		<div class="schedule__list-description">Select by event category</div>
 		<ul class="schedule__tag-list">
-		<?php foreach ( $tags as $tag ) : ?>
+			<?php foreach ( $tags as $tag ) : ?>
 			<li>
 				<label>
 					<input
@@ -86,13 +86,13 @@ class ScheduleBlock {
 	</div>
 </aside>
 <div class="schedule">
-	<?php
-	foreach ( $days as $date => $events ) :
+		<?php
+		foreach ( $days as $date => $events ) :
 
-		echo DayBlock::render( $atts, $date, $events, $term );
+			echo DayBlock::render( $atts, $date, $events, $term );
 
 	endforeach;
-	?>
+		?>
 </div>
 
 		<?php

@@ -17,19 +17,20 @@
   ],
   "minimum-stability": "stable",
   "require": {
-    "htmlburger/carbon-fields": "^2.1",
-    "phpunit/phpunit": "*",
-    "colbycomms/wp-collapsible": "dev-master",
-    "colbycomms/colby-svg": "dev-master"
+    "htmlburger/carbon-fields": "^3.1",
+    "colbycomms/colby-svg": "^1.0"
   },
   "require-dev": {
+    "phpunit/phpunit": "*",
     "squizlabs/php_codesniffer": "*",
-    "wp-coding-standards/wpcs": "dev-master"
+    "wp-coding-standards/wpcs": "^2.1"
   },
   "autoload": {
     "psr-4": {
       "ColbyComms\\Schedules\\": "wp-schedule/"
     },
-    "files": ["wp-schedule/index.php"]
+    "files": [
+      "wp-schedule/index.php"
+    ]
   }
 }

@@ -102,7 +102,8 @@ class ScheduleCategoryArchive {
 		}
 
 		$query->set(
-			'meta_query', [
+			'meta_query',
+			[
 				'relation'     => 'AND',
 				'schedule_date' => [
 					'key'     => '_' . EventMeta::DATE_KEY,
@@ -117,7 +118,8 @@ class ScheduleCategoryArchive {
 		);
 
 		$query->set(
-			'orderby', [
+			'orderby',
+			[
 				'schedule_date' => 'ASC',
 				'schedule_time' => 'ASC',
 			]
