@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "24f559bc0723fbf7c3c5e06d77cc5f9f",
+    "content-hash": "e8c98890c2677562cee32c70f9c76771",
     "packages": [
         {
             "name": "colbycomms/colby-svg",
@@ -49,16 +49,16 @@
         },
         {
             "name": "htmlburger/carbon-fields",
-            "version": "v3.1.1",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/htmlburger/carbon-fields.git",
-                "reference": "65bd40b6e70ccbaeb9d0989c5589299f0983de04"
+                "reference": "f2e7e7b306f872b606b16909d2a2ee906381d5d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/htmlburger/carbon-fields/zipball/65bd40b6e70ccbaeb9d0989c5589299f0983de04",
-                "reference": "65bd40b6e70ccbaeb9d0989c5589299f0983de04",
+                "url": "https://api.github.com/repos/htmlburger/carbon-fields/zipball/f2e7e7b306f872b606b16909d2a2ee906381d5d1",
+                "reference": "f2e7e7b306f872b606b16909d2a2ee906381d5d1",
                 "shasum": ""
             },
             "require": {
@@ -164,21 +164,11 @@
                     "name": "Viktor Vasilev",
                     "email": "liberalcho@gmail.com",
                     "role": "Developer"
-                },
-                {
-                    "name": "Georgi Georgiev",
-                    "email": "george.georgiev96@gmail.com",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Atanas Vasilev",
-                    "email": "atanasvasilev91@gmail.com",
-                    "role": "Developer"
                 }
             ],
             "description": "WordPress developer-friendly custom fields for post types, taxonomy terms, users, comments, widgets, options and more.",
             "homepage": "http://carbonfields.net/",
-            "time": "2019-04-11T09:46:37+00:00"
+            "time": "2018-03-16T09:06:14+00:00"
         }
     ],
     "packages-dev": [
@@ -857,16 +847,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.5.11",
+            "version": "7.5.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "64cb33f5b520da490a7b13149d39b43cf3c890c6"
+                "reference": "9ba59817745b0fe0c1a5a3032dfd4a6d2994ad1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/64cb33f5b520da490a7b13149d39b43cf3c890c6",
-                "reference": "64cb33f5b520da490a7b13149d39b43cf3c890c6",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/9ba59817745b0fe0c1a5a3032dfd4a6d2994ad1c",
+                "reference": "9ba59817745b0fe0c1a5a3032dfd4a6d2994ad1c",
                 "shasum": ""
             },
             "require": {
@@ -937,7 +927,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-05-14T04:53:02+00:00"
+            "time": "2019-05-28T11:59:40+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
