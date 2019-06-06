@@ -15,7 +15,7 @@
   ],
   "minimum-stability": "stable",
   "require": {
-    "htmlburger/carbon-fields": "^3.1",
+    "htmlburger/carbon-fields": "^2.1",
     "colbycomms/colby-svg": "^1.0"
   },
   "require-dev": {
