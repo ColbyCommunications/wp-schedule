@@ -108,7 +108,7 @@ class ScheduleCategoryArchive {
 				'schedule_date' => [
 					'key'     => '_' . EventMeta::DATE_KEY,
 					'value'   => date( 'Y-m-d' ),
-					'compare' => '>',
+					'compare' => '>=',
 				],
 				'schedule_time' => [
 					'key'     => '_' . EventMeta::START_TIME_KEY,
